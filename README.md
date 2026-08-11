@@ -52,6 +52,28 @@ Already running an earlier version? The scheduling column is additive:
 alter table public.leads add column if not exists scheduled_at timestamptz;
 ```
 
+## How a lead is protected
+
+A quote request is written to the database **first**, then emailed. That order
+matters: a notification never arrives for a lead that was not recorded, and the
+email can state whether it made it to the dashboard.
+
+Every submission therefore ends up in two independent places — the `leads`
+table and `admin@tarmaxasphalt.com`. Losing one still leaves the other.
+
+If the database write fails, the email is sent anyway, with `[NOT SAVED]` in
+the subject line and a warning at the top of the message. It is then the only
+record, and it says so.
+
+If both the database and the email fail, the complete request is written to the
+server log as JSON, tagged `LEAD NOT CAPTURED`, so it can still be recovered
+from the host's log viewer. Only then does the customer see an error — and that
+error carries both directors' phone numbers, so the enquiry has somewhere to go.
+
+A note on why there is no local file fallback: on Vercel and similar hosts the
+filesystem is ephemeral and per-instance, so a file written during a request can
+vanish with the container. The email inbox is the durable second copy instead.
+
 ## Scheduling estimates
 
 Customers never pick a slot. The flow stays: customer sends an address →

@@ -48,16 +48,18 @@ export async function submitQuote(input: QuoteInput): Promise<QuoteResult> {
     return { ok: true, firstName: lead.fullName.split(" ")[0], propertyAddress: lead.propertyAddress };
   }
 
-  const [saved, emailed] = await Promise.all([
-    saveLead(lead).catch((e) => {
-      console.error("[quote] save threw:", e);
-      return { ok: false as const, reason: "error" as const };
-    }),
-    sendQuoteEmails(lead).catch((e) => {
-      console.error("[quote] email threw:", e);
-      return { admin: false, customer: false, skipped: false as const };
-    }),
-  ]);
+  // Record first, notify second. Writing the durable copy before sending the
+  // email means a notification never arrives for a lead that was not stored,
+  // and the email can state plainly whether it reached the dashboard.
+  const saved = await saveLead(lead).catch((e) => {
+    console.error("[quote] save threw:", e);
+    return { ok: false as const, reason: "error" as const };
+  });
+
+  const emailed = await sendQuoteEmails(lead, { stored: saved.ok }).catch((e) => {
+    console.error("[quote] email threw:", e);
+    return { admin: false, customer: false, skipped: false as const };
+  });
 
   // The request is captured if it reached storage or reached TARMAX's inbox.
   // Only when both fail has the lead genuinely been lost.
@@ -80,11 +82,26 @@ export async function submitQuote(input: QuoteInput): Promise<QuoteResult> {
       };
     }
 
-    console.error("[quote] lead not captured", { storageDown, emailSkipped: emailed.skipped });
+    // Last line of defence. Neither the database nor the inbox took it, so the
+    // full request goes to the server log where it can still be recovered from
+    // the host's log viewer. Better an awkward copy-paste than a lost customer.
+    console.error(
+      "[quote] LEAD NOT CAPTURED — recover this manually:",
+      JSON.stringify({ ...lead, company: undefined, receivedAt: new Date().toISOString() }),
+      { storageDown, emailSkipped: emailed.skipped },
+    );
     return {
       ok: false,
       formError: "We couldn't submit your request right now. Please contact TARMAX directly.",
     };
+  }
+
+  // Captured, but only in one place. Worth a log line so a silently failing
+  // integration is visible before it becomes a pattern.
+  if (!saved.ok && emailed.admin) {
+    console.warn("[quote] emailed but NOT stored — check Supabase:", lead.propertyAddress);
+  } else if (saved.ok && !emailed.admin && !emailed.skipped) {
+    console.warn("[quote] stored but admin email failed — check Resend:", lead.propertyAddress);
   }
 
   return {

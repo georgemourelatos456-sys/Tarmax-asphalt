@@ -50,13 +50,28 @@ const row = (label: string, value: string) => `
     <td style="padding:8px 0;border-bottom:1px solid #eeebe3;font-size:14px;vertical-align:top">${esc(value)}</td>
   </tr>`;
 
-/** Notifies TARMAX. This is the message the business actually works from. */
-async function sendAdminEmail(lead: QuoteData) {
+/**
+ * Notifies TARMAX. This is the message the business actually works from, and
+ * the second durable copy of a lead — so it is sent even when the database
+ * write failed, carrying a warning that says exactly that.
+ */
+async function sendAdminEmail(lead: QuoteData, stored: boolean) {
   if (!client) return false;
 
   const mapsUrl = mapsSearchUrl(lead.propertyAddress);
+  const warning = stored
+    ? ""
+    : `<p style="margin:0 0 18px;padding:14px 16px;background:#fdecec;border-left:4px solid #b51f24;font-size:14px;line-height:1.5">
+        <strong>This lead was not saved to the dashboard.</strong> The database
+        did not accept it, so this email is the only record. Copy the details
+        below somewhere safe before replying.
+      </p>`;
+
   const body =
-    header(`New quote request — ${lead.propertyAddress}`) +
+    header(
+      `${stored ? "" : "[NOT SAVED] "}New quote request — ${lead.propertyAddress}`,
+    ) +
+    warning +
     `<table style="width:100%;border-collapse:collapse">
       ${row("Customer name", lead.fullName)}
       ${row("Phone", lead.phone ?? "Not provided")}
@@ -74,7 +89,9 @@ async function sendAdminEmail(lead: QuoteData) {
     from,
     to: BUSINESS.generalEmail,
     replyTo: lead.email ?? undefined,
-    subject: `New TARMAX Quote Request — ${lead.propertyAddress}`,
+    // The prefix makes an unsaved lead obvious in the inbox list, before
+    // the message is even opened.
+    subject: `${stored ? "" : "[NOT SAVED] "}New TARMAX Quote Request — ${lead.propertyAddress}`,
     html: shell(body),
   });
 
@@ -122,9 +139,15 @@ async function sendCustomerEmail(lead: QuoteData) {
  * Sends both messages. The admin notification is the one that matters; a
  * failed customer confirmation is logged but never fails the submission.
  */
-export async function sendQuoteEmails(lead: QuoteData) {
+export async function sendQuoteEmails(
+  lead: QuoteData,
+  { stored }: { stored: boolean } = { stored: true },
+) {
   if (!client) return { admin: false, customer: false, skipped: true as const };
 
-  const [admin, customer] = await Promise.all([sendAdminEmail(lead), sendCustomerEmail(lead)]);
+  const [admin, customer] = await Promise.all([
+    sendAdminEmail(lead, stored),
+    sendCustomerEmail(lead),
+  ]);
   return { admin, customer, skipped: false as const };
 }
