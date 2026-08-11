@@ -16,7 +16,7 @@ export function Wordmark({
 }) {
   return (
     <Image
-      src="/brand/tarmax-logo.png"
+      src="/brand/tarmax-logo-v2.png"
       alt="TARMAX Asphalt"
       width={1090}
       height={300}
