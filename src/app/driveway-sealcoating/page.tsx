@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SITE_URL } from "@/config/business";
+import { SEALER, SITE_URL } from "@/config/business";
 import { Surface } from "@/components/ui/Surface";
 import { Arrow, DataLabel, Eyebrow } from "@/components/ui/Labels";
 import { Reveal } from "@/components/ui/Reveal";
@@ -64,7 +64,24 @@ const BENEFITS = [
   },
 ];
 
+/**
+ * The technical detail lives here rather than in the marketing sections above.
+ * Anyone who wants the chemistry can find it; nobody has to read past it to
+ * reach a quote.
+ */
 const EXPECTATIONS = [
+  {
+    question: "What exactly is in the sealer?",
+    answer:
+      "Blackmac, manufactured in Canada by McAsphalt Industries. Its safety data sheet lists asphalt/bitumen (40–70%) carried in hydrotreated heavy naphtha (30–60%). The carrier is what lets it soak into the surface instead of forming a film; it flashes off as the sealer cures and the bitumen stays in the pavement. There is no coal tar in it.",
+  },
+  {
+    question: "Can I see the safety data sheet?",
+    /** Rendered with a real link below; this plain text is for FAQ schema. */
+    answer:
+      "Yes. McAsphalt publishes the Blackmac safety data sheet and we link to their copy directly, so you are always reading the current revision rather than one we saved.",
+    sdsLink: true,
+  },
   {
     question: "Is the sealer safe once it has cured?",
     answer:
@@ -243,12 +260,9 @@ export default function DrivewaySealcoatingPage() {
 
           <div className="mt-14 max-w-[62ch]">
             <p className="text-bone/75">
-              Blackmac is a penetrating sealer manufactured in Canada by McAsphalt Industries. Its
-              safety data sheet lists it as asphalt/bitumen (40–70%) carried in hydrotreated heavy
-              naphtha (30–60%). That solvent carrier is what lets it soak into the surface and
-              re-moisturize the asphalt rather than sit on top of it, so the pavement regains
-              flexibility and can withstand ground movement. The carrier flashes off as it cures;
-              the bitumen stays in the surface.
+              Blackmac is a penetrating sealer manufactured in Canada by McAsphalt Industries. It
+              soaks into the surface and re-moisturizes the asphalt rather than sitting on top of
+              it, so the pavement regains flexibility and can withstand ground movement.
             </p>
             <p className="mt-5 text-bone/75">
               We source it locally rather than buying buckets off a hardware store shelf, because a
@@ -305,7 +319,21 @@ export default function DrivewaySealcoatingPage() {
               <Reveal key={item.question} delay={i * 60}>
                 <div className="grid gap-3 border-b border-white/12 py-7 md:grid-cols-[1fr_1.5fr] md:gap-12">
                   <dt className="display-sm">{item.question}</dt>
-                  <dd className="max-w-[58ch] text-bone/70">{item.answer}</dd>
+                  <dd className="max-w-[58ch] text-bone/70">
+                    {item.answer}
+                    {"sdsLink" in item && (
+                      <a
+                        href={SEALER.sdsUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="link-action mt-2 flex text-bone"
+                      >
+                        {SEALER.product} safety data sheet (PDF)
+                        <Arrow />
+                        <span className="sr-only"> — opens on the {SEALER.manufacturer} website</span>
+                      </a>
+                    )}
+                  </dd>
                 </div>
               </Reveal>
             ))}

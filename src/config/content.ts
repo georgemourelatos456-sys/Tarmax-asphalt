@@ -89,7 +89,7 @@ export const SERVICES: Service[] = [
     // not describe it as water-based or eco-friendly; neither is accurate and
     // an unsubstantiated environmental claim is a Competition Act problem.
     detail:
-      "We apply Blackmac, a solvent-carried penetrating sealer manufactured in Canada by McAsphalt Industries and sourced locally. Rather than forming a film on top, it soaks into the surface and reconditions oxidized binder, which helps protect aging asphalt, helps reduce surface deterioration and restores a darker, maintained appearance. It contains no coal tar. Sealcoating is preventative maintenance — it does not structurally restore damaged asphalt.",
+      "We apply Blackmac, a penetrating sealer manufactured in Canada by McAsphalt Industries and sourced locally. Rather than forming a film on top, it soaks into the surface and reconditions oxidized binder, which helps protect aging asphalt, helps reduce surface deterioration and restores a darker, maintained appearance. It contains no coal tar. Sealcoating is preventative maintenance — it does not structurally restore damaged asphalt.",
     bestFor: [
       "Faded or oxidized asphalt",
       "Aging surfaces still in sound condition",
@@ -179,29 +179,5 @@ export const FREEZE_THAW = [
     step: "04",
     title: "Damage can grow",
     body: "Repeated cycles can contribute to larger cracks, surface deterioration and potholes.",
-  },
-] as const;
-
-/** Why TARMAX. Statements about method, not claims about outcomes. */
-export const PILLARS = [
-  {
-    title: "Assess first",
-    body: "We inspect pavement condition before recommending work.",
-  },
-  {
-    title: "Proper preparation",
-    body: "Preparation is part of the job, not an afterthought.",
-  },
-  {
-    title: "Industrial equipment",
-    body: "Professional crack-sealing and infrared repair equipment.",
-  },
-  {
-    title: "Calgary focused",
-    body: "Our maintenance approach is designed around Alberta conditions.",
-  },
-  {
-    title: "Responsible application",
-    body: "Weather, drainage, curing conditions, surrounding surfaces and runoff routes are considered before work begins.",
   },
 ] as const;

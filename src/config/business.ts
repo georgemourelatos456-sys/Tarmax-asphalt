@@ -58,6 +58,20 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://tarmaxasphalt.com"
 ).replace(/\/$/, "");
 
+/**
+ * Safety data sheet for the sealer, hosted by the manufacturer.
+ *
+ * Deliberately linked rather than copied into /public: SDS documents get
+ * revised, and serving a stale one is worse than serving none. If McAsphalt
+ * moves the file, update this single constant.
+ */
+export const SEALER = {
+  product: "Blackmac",
+  manufacturer: "McAsphalt Industries",
+  sdsUrl:
+    "https://mcasphalt.com/wp-content/uploads/download-manager-files/1681505199wpdm_Blackmac.pdf",
+} as const;
+
 /** `tel:` href for a contact. */
 export const telHref = (c: Contact) => `tel:${c.phoneHref}`;
 

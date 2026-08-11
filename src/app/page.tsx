@@ -3,15 +3,25 @@ import { Problems } from "@/components/sections/Problems";
 import { FreezeThaw } from "@/components/sections/FreezeThaw";
 import { Services } from "@/components/sections/Services";
 import { Mission } from "@/components/sections/Mission";
-import { WhyTarmax } from "@/components/sections/WhyTarmax";
+import { Method } from "@/components/sections/Method";
 import { PropertySplit } from "@/components/sections/PropertySplit";
 import { Contact } from "@/components/sections/Contact";
-import { FinalCta } from "@/components/sections/FinalCta";
+import { QuoteCta } from "@/components/sections/QuoteCta";
 
 /**
- * The homepage follows the customer's own sequence: see the problem,
- * understand why it worsens, see the solution, understand freeze-thaw, decide
- * TARMAX is competent, then call or send an address.
+ * The homepage follows the customer's own sequence, and every section earns
+ * its place by doing one of four jobs: name a problem, show the solution,
+ * build trust, or take the quote.
+ *
+ *   Hero            what TARMAX does, in five seconds
+ *   Problems        the three conditions people actually recognise
+ *   FreezeThaw      why an Alberta surface gets worse on its own
+ *   Services        what we do about it
+ *   Mission         maintenance before replacement
+ *   Method          why the sealer and the equipment matter
+ *   PropertySplit   route residential vs commercial
+ *   Contact         talk to a director directly
+ *   QuoteCta        submit the address without leaving the page
  */
 export default function HomePage() {
   return (
@@ -21,10 +31,10 @@ export default function HomePage() {
       <FreezeThaw />
       <Services />
       <Mission />
-      <WhyTarmax />
+      <Method />
       <PropertySplit />
       <Contact />
-      <FinalCta />
+      <QuoteCta />
     </>
   );
 }

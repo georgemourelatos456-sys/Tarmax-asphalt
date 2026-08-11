@@ -12,7 +12,13 @@ import { Arrow } from "@/components/ui/Labels";
 
 type Success = { firstName: string; propertyAddress: string };
 
-export function QuoteForm() {
+/**
+ * `compact` drops the three optional fields, leaving only what TARMAX actually
+ * needs: where the property is and how to reach you. Used on the homepage so a
+ * visitor can send a request without a page navigation — the same action, one
+ * step earlier. Both modes post through the same schema and server action.
+ */
+export function QuoteForm({ compact = false }: { compact?: boolean }) {
   const [success, setSuccess] = useState<Success | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const params = useSearchParams();
@@ -157,7 +163,7 @@ export function QuoteForm() {
         </div>
       </fieldset>
 
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className={`grid gap-6 sm:grid-cols-2 ${compact ? "hidden" : ""}`}>
         <Field
           label="Property type"
           id={fieldId("propertyType")}
@@ -193,15 +199,22 @@ export function QuoteForm() {
         </Field>
       </div>
 
-      <Field
-        label="Message"
-        id={fieldId("message")}
-        optional
-        error={errors.message?.message}
-        errorId={errorId("message")}
-      >
-        <textarea id={fieldId("message")} className="field-input" rows={4} {...register("message")} />
-      </Field>
+      {!compact && (
+        <Field
+          label="Message"
+          id={fieldId("message")}
+          optional
+          error={errors.message?.message}
+          errorId={errorId("message")}
+        >
+          <textarea
+            id={fieldId("message")}
+            className="field-input"
+            rows={4}
+            {...register("message")}
+          />
+        </Field>
+      )}
 
       {/* Honeypot. Hidden from people and from screen readers; bots fill it.
           Kept out of the layout entirely so it is not a stray tap target. */}
@@ -210,15 +223,22 @@ export function QuoteForm() {
         <input id={fieldId("company")} tabIndex={-1} autoComplete="off" {...register("company")} />
       </div>
 
-      <button type="submit" className="btn btn-primary mt-2 w-full sm:w-auto" disabled={isSubmitting}>
+      <button
+        type="submit"
+        className={`btn btn-primary mt-2 ${compact ? "w-full" : "w-full sm:w-auto"}`}
+        disabled={isSubmitting}
+      >
         {isSubmitting ? "Sending…" : "Request my free quote"}
         {!isSubmitting && <Arrow />}
       </button>
 
-      <p className="text-xs text-muted">
-        No photos, measurements or account needed. TARMAX measures the property from the map or on
-        site.
-      </p>
+      {/* The compact layout already states this beside the form. */}
+      {!compact && (
+        <p className="text-xs text-muted">
+          No photos, measurements or account needed. TARMAX measures the property from the map or on
+          site.
+        </p>
+      )}
     </form>
   );
 }
