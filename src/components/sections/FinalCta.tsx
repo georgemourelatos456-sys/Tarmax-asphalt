@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { DIRECTORS, telHref } from "@/config/business";
 import { Surface } from "@/components/ui/Surface";
 import { Arrow } from "@/components/ui/Labels";
+import { CallButton } from "@/components/ui/CallButton";
 
 export function FinalCta() {
   return (
@@ -22,9 +22,7 @@ export function FinalCta() {
             Get a Free Quote
             <Arrow />
           </Link>
-          <a href={telHref(DIRECTORS[0])} className="btn btn-ghost">
-            Call TARMAX
-          </a>
+          <CallButton />
         </div>
       </div>
     </section>

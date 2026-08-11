@@ -9,6 +9,7 @@ import { quoteSchema, PROPERTY_TYPES, SERVICE_OPTIONS, type QuoteInput } from "@
 import { submitQuote } from "@/app/actions/submit-quote";
 import { BUSINESS, DIRECTORS, mailtoHref, telHref } from "@/config/business";
 import { Arrow } from "@/components/ui/Labels";
+import { CallButton } from "@/components/ui/CallButton";
 
 type Success = { firstName: string; propertyAddress: string };
 
@@ -325,9 +326,7 @@ function SuccessState({ firstName, propertyAddress }: Success) {
       <p className="mt-4 text-bone/75">and contact you using the information you provided.</p>
 
       <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-        <a href={telHref(DIRECTORS[0])} className="btn btn-primary">
-          Call TARMAX
-        </a>
+        <CallButton className="btn btn-primary" />
         <Link href="/" className="btn btn-ghost">
           Return home
         </Link>

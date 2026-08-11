@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { DIRECTORS, telHref } from "@/config/business";
 import { Surface } from "@/components/ui/Surface";
 import { Arrow } from "@/components/ui/Labels";
+import { CallButton } from "@/components/ui/CallButton";
 
 const TRUST = ["Calgary based", "Residential", "Commercial", "Free estimates"];
 
@@ -35,9 +35,7 @@ export function Hero() {
             Get a Free Quote
             <Arrow />
           </Link>
-          <a href={telHref(DIRECTORS[0])} className="btn btn-ghost">
-            Call TARMAX
-          </a>
+          <CallButton />
         </div>
 
         <ul className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/12 pt-6">
