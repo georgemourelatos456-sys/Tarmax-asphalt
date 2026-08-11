@@ -18,7 +18,9 @@ const APP = join(dirname(fileURLToPath(import.meta.url)), "..", "src", "app");
 const INK = "#0B0B0C";
 const RED = "#C8171E";
 
-// The T from scripts/generate-logo.mjs, in the same 0-100 cap-height space.
+// A T traced from the supplied wordmark, in a 0-100 cap-height space. Drawn
+// rather than cropped: in the artwork the T and A touch, so there is no clean
+// rectangle to cut a favicon from.
 const T = [
   [0, 0],
   [78, 0],

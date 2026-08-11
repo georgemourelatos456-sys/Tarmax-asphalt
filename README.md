@@ -173,16 +173,16 @@ direction.
 ```bash
 node scripts/generate-textures.mjs    # asphalt surfaces -> public/textures/*.svg
 node scripts/rasterize-textures.mjs   # bake to JPEG (needs: npm i -D playwright)
-node scripts/generate-logo.mjs        # wordmark -> public/brand/*.svg
 node scripts/fetch-fonts.mjs          # refresh self-hosted fonts
 ```
 
 **Textures** are layered fractal noise run through an SVG diffuse-lighting
-filter, producing real aggregate relief for each surface state the business
-sells against — sealed, oxidized, cracked, potholed. They are baked to JPEG so
-browsers never pay filter cost at paint time. To swap in real photography later,
-replace the files in `public/textures/` and update the dimensions in
-`src/components/ui/Surface.tsx`; no component changes are needed.
+filter. They are placeholders only — good enough as abstract material, but they
+do not pass as photographs, and no amount of further tuning will make them.
+Anything dropped into `public/photos/` overrides them automatically; see the
+README in that folder.
+
+**The wordmark** in `public/brand/tarmax-logo.png` is the supplied artwork.
 
 **Fonts** (Manrope and Inter, both OFL) are self-hosted in `src/fonts/` rather
 than fetched by `next/font/google`. That removes a network dependency from

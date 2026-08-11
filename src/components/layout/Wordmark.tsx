@@ -1,33 +1,27 @@
 import Image from "next/image";
 
 /**
- * The TARMAX wordmark.
+ * The TARMAX wordmark — the supplied artwork, not a reconstruction.
  *
- * Vector asset built by scripts/generate-logo.mjs — a reconstruction of the
- * supplied logo, so it stays sharp at any size and costs a few KB. If the
- * original vector file is available it can replace public/brand/tarmax-logo.svg
- * with no other change.
- *
- * `mono` swaps to the warm-white lockup for places where the red mark would
- * compete with a red call to action.
+ * Transparent PNG, so it sits correctly on the dark nav, the footer and any
+ * photograph behind it. Rendered at roughly a seventh of its native width, so
+ * it stays crisp on high-density screens.
  */
 export function Wordmark({
-  mono = false,
   className = "",
   priority = false,
 }: {
-  mono?: boolean;
   className?: string;
   priority?: boolean;
 }) {
   return (
     <Image
-      src={mono ? "/brand/tarmax-logo-mono.svg" : "/brand/tarmax-logo.svg"}
+      src="/brand/tarmax-logo.png"
       alt="TARMAX Asphalt"
-      width={605}
-      height={176}
+      width={1090}
+      height={300}
       priority={priority}
-      className={`h-auto w-[8.25rem] md:w-[9.5rem] ${className}`}
+      className={`h-auto w-[8.5rem] md:w-[10rem] ${className}`}
     />
   );
 }
