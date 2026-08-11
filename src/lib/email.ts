@@ -27,10 +27,31 @@ const client = apiKey ? new Resend(apiKey) : null;
 /**
  * Everyone who should receive a new lead. Deduplicated and lowercased because
  * some providers treat a repeated recipient as an error.
+ *
+ * LEAD_EMAIL_TO overrides the list. That exists for one specific situation: an
+ * unverified Resend account may only send to the address it was registered
+ * with, and it rejects the *entire* message if any recipient fails that check —
+ * so the default three-address list means nothing arrives at all until the
+ * sending domain is verified. Setting LEAD_EMAIL_TO to that one address makes
+ * the pipeline testable on day one. Clear it once the domain is verified.
  */
-const RECIPIENTS = Array.from(
-  new Set([BUSINESS.generalEmail, ...DIRECTORS.map((d) => d.email)].map((e) => e.toLowerCase())),
+export const RECIPIENTS = Array.from(
+  new Set(
+    (process.env.LEAD_EMAIL_TO
+      ? process.env.LEAD_EMAIL_TO.split(",")
+      : [BUSINESS.generalEmail, ...DIRECTORS.map((d) => d.email)]
+    )
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean),
+  ),
 );
+
+/**
+ * The customer confirmation is a courtesy, and on an unverified account it is
+ * guaranteed to fail. Suppressing it there keeps the logs honest — a failure
+ * line should mean something is wrong, not something is merely unconfigured.
+ */
+const customerConfirmationEnabled = !process.env.LEAD_EMAIL_TO;
 
 /** Escapes interpolated values so customer input cannot inject markup. */
 function esc(value: string) {
@@ -130,7 +151,7 @@ async function sendAdminEmail(lead: QuoteData) {
 
 /** Confirms receipt to the customer. Deliberately promises no timeframe. */
 async function sendCustomerEmail(lead: QuoteData) {
-  if (!client || !lead.email) return false;
+  if (!client || !lead.email || !customerConfirmationEnabled) return false;
 
   const firstName = lead.fullName.split(" ")[0];
   const contacts = DIRECTORS.map(

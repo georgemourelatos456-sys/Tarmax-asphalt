@@ -39,10 +39,24 @@ Resend gives every account a test sender that works straight away:
 RESEND_FROM=TARMAX Asphalt <onboarding@resend.dev>
 ```
 
-The catch: an unverified account can only send **to the address you signed up
-with**. So if you signed up as `admin@tarmaxasphalt.com`, lead notifications
-arrive right away — but they will not reach Nova's or George's inboxes, and
-customer confirmations will not send at all. Fine for testing, not for launch.
+**There is a catch that will otherwise cost you an afternoon.** An unverified
+Resend account may only send to the address the account was registered with,
+and it rejects the **entire message** if any other recipient is on it. This
+site emails three addresses by default — admin, Nova and George — so on an
+unverified account *nothing arrives at all*. Not a partial delivery. Nothing.
+
+So while you are testing, also set:
+
+```
+LEAD_EMAIL_TO=admin@tarmaxasphalt.com
+```
+
+(or whichever address your Resend account is registered to). That narrows the
+send to one permitted recipient and proves the pipeline works today. It also
+suppresses the customer confirmation, which would fail for the same reason.
+
+**Delete `LEAD_EMAIL_TO` once your domain is verified** — leaving it set means
+Nova and George never get copies and customers never get a receipt.
 
 ---
 
@@ -57,7 +71,8 @@ Vercel → your project → **Settings** → **Environment Variables**. Tick
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | `https://tarmaxasphalt.com` |
 | `RESEND_API_KEY` | from step 1 — **secret** |
-| `RESEND_FROM` | `TARMAX Asphalt <quotes@tarmaxasphalt.com>` |
+| `RESEND_FROM` | `TARMAX Asphalt <onboarding@resend.dev>` until your domain verifies, then `TARMAX Asphalt <quotes@tarmaxasphalt.com>` |
+| `LEAD_EMAIL_TO` | your Resend account address — **temporary**, delete once the domain verifies |
 
 Optional: `QUOTE_RATE_LIMIT_MAX` — submissions per visitor per 15 minutes,
 defaults to 10.
@@ -84,6 +99,24 @@ From then on every push to `main` rebuilds automatically and picks them up.
 ## 3. Verify it actually works
 
 Do not skip this.
+
+**First, check the deployment can see the key.** Open:
+
+```
+https://<your-site>/api/health
+```
+
+It answers in one line whether the running build is configured, without you
+having to submit anything:
+
+- `"ready": true` — the key and sender reached this build. Go submit a test.
+- `"ready": false` — read the `diagnosis` field; it names the missing piece.
+
+The most common cause of `false` is a variable that was saved in Vercel but
+never redeployed. Environment variables are read at build time, so a build that
+already happened will never see them.
+
+Then:
 
 1. Open the live site → **Get a free quote**.
 2. Submit a real-looking request with your own email in the email field.
