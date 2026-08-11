@@ -410,8 +410,56 @@
     resize: vertical;
   }
 
+  /* Multi-select service picker. A whole row is the target rather than the box
+     alone, so it is comfortable to tap on a phone — the label wraps the input,
+     which also means no id wiring and no way for the two to drift apart. */
+  .field-check {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0.75rem 1rem;
+    background-color: rgb(244 242 237 / 0.04);
+    border: 1px solid rgb(244 242 237 / 0.18);
+    border-radius: 2px;
+    color: var(--color-bone);
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition: border-color 160ms ease, background-color 160ms ease;
+  }
+
+  .field-check:hover {
+    border-color: rgb(244 242 237 / 0.34);
+  }
+
+  /* Checked state is not colour alone: the border and background shift too. */
+  .field-check:has(input:checked) {
+    border-color: var(--color-red);
+    background-color: rgb(200 23 30 / 0.12);
+  }
+
+  .field-check input {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex-shrink: 0;
+    accent-color: var(--color-red);
+    cursor: pointer;
+  }
+
+  /* The open dropdown is drawn by the operating system, not by this page, and
+     it does not inherit the 4%-white wash above — it takes the OS popup
+     background instead. On a machine in light mode that is a white panel, and
+     the light `color` inherited from .field-input then renders the options
+     white on white. Both are set explicitly here so the list is legible
+     regardless of the visitor's system theme. */
+  select.field-input option {
+    background-color: #16161a;
+    color: var(--color-bone);
+  }
+
   select.field-input {
     appearance: none;
+    color-scheme: dark;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%239C9DA0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 1rem center;

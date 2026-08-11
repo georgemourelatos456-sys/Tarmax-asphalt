@@ -43,6 +43,25 @@ const optionalText = (max: number) =>
 const optionalEnum = <T extends readonly [string, ...string[]]>(values: T) =>
   z.preprocess((v) => (v === "" || v === null ? undefined : v), z.enum(values).optional());
 
+/**
+ * A checkbox group, where a customer may want several things at once — a
+ * driveway can need crack sealing *and* sealcoating, and forcing a single
+ * choice hides half the job from the quote.
+ *
+ * React Hook Form gives an array when several are ticked, a bare string when
+ * the markup collapses to one, and `false` or undefined when none are. All of
+ * those normalise to "absent" or "a clean list of strings" before the enum
+ * sees them, so an untouched group never fails the form.
+ */
+const optionalMultiEnum = <T extends readonly [string, ...string[]]>(values: T) =>
+  z.preprocess((v) => {
+    if (v === undefined || v === null || v === "" || v === false) return undefined;
+    const list = (Array.isArray(v) ? v : [v]).filter(
+      (item): item is string => typeof item === "string" && item !== "",
+    );
+    return list.length > 0 ? list : undefined;
+  }, z.array(z.enum(values)).optional());
+
 export const quoteSchema = z
   .object({
     propertyAddress: z
@@ -74,7 +93,7 @@ export const quoteSchema = z
         message: "Enter a valid email address, or leave it blank.",
       }),
     propertyType: optionalEnum(PROPERTY_TYPES),
-    service: optionalEnum(SERVICE_OPTIONS),
+    services: optionalMultiEnum(SERVICE_OPTIONS),
     message: optionalText(2000),
     /**
      * Honeypot. Real people leave it empty; bots fill it in.

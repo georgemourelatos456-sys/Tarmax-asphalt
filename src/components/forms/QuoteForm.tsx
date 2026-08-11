@@ -164,40 +164,59 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
         </div>
       </fieldset>
 
-      <div className={`grid gap-6 sm:grid-cols-2 ${compact ? "hidden" : ""}`}>
-        <Field
-          label="Property type"
-          id={fieldId("propertyType")}
-          optional
-          error={errors.propertyType?.message}
-          errorId={errorId("propertyType")}
-        >
-          <select id={fieldId("propertyType")} className="field-input" {...register("propertyType")}>
-            <option value="">Select</option>
-            {PROPERTY_TYPES.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
-        </Field>
+      <div className={compact ? "hidden" : "flex flex-col gap-6"}>
+        <div className="sm:max-w-[calc(50%-0.75rem)]">
+          <Field
+            label="Property type"
+            id={fieldId("propertyType")}
+            optional
+            error={errors.propertyType?.message}
+            errorId={errorId("propertyType")}
+          >
+            <select
+              id={fieldId("propertyType")}
+              className="field-input"
+              {...register("propertyType")}
+            >
+              <option value="">Select</option>
+              {PROPERTY_TYPES.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+          </Field>
+        </div>
 
-        <Field
-          label="What do you need?"
-          id={fieldId("service")}
-          optional
-          error={errors.service?.message}
-          errorId={errorId("service")}
-        >
-          <select id={fieldId("service")} className="field-input" {...register("service")}>
-            <option value="">Select</option>
+        {/* A property often needs more than one thing done — crack sealing and
+            sealcoating usually go together. A single choice would hide half the
+            job, so this is a checkbox group, not a dropdown. */}
+        <fieldset className="border-0 p-0">
+          <legend className="label text-[0.6875rem] text-muted">
+            What do you need?
+            <span className="ml-2 normal-case tracking-normal opacity-60">
+              Optional — tick as many as apply
+            </span>
+          </legend>
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
             {SERVICE_OPTIONS.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
+              <label key={s} className="field-check">
+                <input type="checkbox" value={s} {...register("services")} />
+                <span>{s}</span>
+              </label>
             ))}
-          </select>
-        </Field>
+          </div>
+          {errors.services?.message && (
+            <p
+              id={errorId("services")}
+              role="alert"
+              className="mt-2 flex items-start gap-2 text-sm text-alert"
+            >
+              <span aria-hidden="true">↳</span>
+              {errors.services.message}
+            </p>
+          )}
+        </fieldset>
       </div>
 
       {!compact && (

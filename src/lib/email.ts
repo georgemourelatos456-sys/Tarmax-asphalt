@@ -102,7 +102,7 @@ async function sendAdminEmail(lead: QuoteData) {
     `Email: ${lead.email ?? "Not provided"}`,
     `Address: ${lead.propertyAddress}`,
     `Property: ${lead.propertyType ?? "Not specified"}`,
-    `Service: ${lead.service ?? "Not specified"}`,
+    `Service: ${lead.services?.join(", ") ?? "Not specified"}`,
     `Message: ${lead.message ?? "None"}`,
   ].join("\n");
 
@@ -114,7 +114,7 @@ async function sendAdminEmail(lead: QuoteData) {
       ${row("Email", lead.email ?? "Not provided")}
       ${row("Property address", lead.propertyAddress)}
       ${row("Property type", lead.propertyType ?? "Not specified")}
-      ${row("Requested service", lead.service ?? "Not specified")}
+      ${row(lead.services && lead.services.length > 1 ? "Requested services" : "Requested service", lead.services?.join(", ") ?? "Not specified")}
       ${row("Message", lead.message ?? "None")}
     </table>
 

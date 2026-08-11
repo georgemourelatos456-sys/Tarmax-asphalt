@@ -20,7 +20,7 @@ function details(lead: QuoteData) {
     lead.phone ? `Phone: ${lead.phone}` : null,
     lead.email ? `Email: ${lead.email}` : null,
     lead.propertyType ? `Property: ${lead.propertyType}` : null,
-    lead.service ? `Requested: ${lead.service}` : null,
+    lead.services?.length ? `Requested: ${lead.services.join(", ")}` : null,
     lead.message ? `Notes: ${lead.message}` : null,
     "",
     `Map: ${mapsSearchUrl(lead.propertyAddress)}`,
