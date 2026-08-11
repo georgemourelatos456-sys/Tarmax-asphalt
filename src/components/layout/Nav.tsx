@@ -64,7 +64,7 @@ export function Nav() {
             <Link
               key={link.href}
               href={link.href}
-              className="label text-[0.6875rem] text-muted transition-colors hover:text-bone"
+              className="label whitespace-nowrap text-[0.6875rem] text-muted transition-colors hover:text-bone"
             >
               {link.label}
             </Link>
