@@ -32,11 +32,11 @@ const DECISIONS = [
 
 export function Method() {
   return (
-    <section className="section bg-bone text-ink">
+    <section className="section bg-bone text-ink !pt-12 md:!pt-16">
       <div className="shell">
         <div className="flex flex-col items-center text-center">
           <Eyebrow tone="light">Why it matters what we use</Eyebrow>
-          <h2 className="display-lg mt-4 max-w-[18ch]">Maintenance done properly.</h2>
+          <h2 className="display-lg mt-4 text-balance">Maintenance done properly.</h2>
         </div>
 
         <ul className="mt-8 border-t border-ink/15">
