@@ -11,7 +11,7 @@ export function Eyebrow({
   className?: string;
 }) {
   return (
-    <p className={`label ${tone === "dark" ? "text-muted" : "text-ink/55"} ${className}`}>
+    <p className={`label ${tone === "dark" ? "text-muted" : "text-ink/65"} ${className}`}>
       {children}
     </p>
   );
@@ -34,7 +34,7 @@ export function DataLabel({
   tone?: "dark" | "light";
 }) {
   const line = tone === "dark" ? "border-white/15" : "border-ink/15";
-  const fieldTone = tone === "dark" ? "text-muted" : "text-ink/50";
+  const fieldTone = tone === "dark" ? "text-muted" : "text-ink/65";
   const valueTone = tone === "dark" ? "text-bone" : "text-ink";
 
   return (

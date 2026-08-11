@@ -34,6 +34,15 @@ const optionalText = (max: number) =>
     .optional()
     .transform((v) => (v === "" ? undefined : v));
 
+/**
+ * An unselected `<select>` submits "", which `z.enum().optional()` rejects as
+ * an invalid value rather than treating as absent. Left unhandled that fails
+ * the whole form for anyone who ignores the optional dropdowns — which is most
+ * people — so empty is normalised to undefined before the enum sees it.
+ */
+const optionalEnum = <T extends readonly [string, ...string[]]>(values: T) =>
+  z.preprocess((v) => (v === "" || v === null ? undefined : v), z.enum(values).optional());
+
 export const quoteSchema = z
   .object({
     propertyAddress: z
@@ -64,8 +73,8 @@ export const quoteSchema = z
       .refine((v) => v === undefined || z.string().email().safeParse(v).success, {
         message: "Enter a valid email address, or leave it blank.",
       }),
-    propertyType: z.enum(PROPERTY_TYPES).optional(),
-    service: z.enum(SERVICE_OPTIONS).optional(),
+    propertyType: optionalEnum(PROPERTY_TYPES),
+    service: optionalEnum(SERVICE_OPTIONS),
     message: optionalText(2000),
     /** Hidden field. Real people leave it empty; bots fill it in. */
     company: z.string().max(0).optional(),

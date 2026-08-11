@@ -67,12 +67,12 @@ export function Footer() {
                     <span className="ml-2 font-normal text-muted">{d.role}</span>
                   </p>
                   <p className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-                    <a href={telHref(d)} className="text-bone/85 transition-colors hover:text-red">
+                    <a href={telHref(d)} className="text-bone/85 transition-colors hover:text-alert">
                       {d.phone}
                     </a>
                     <a
                       href={mailtoHref(d.email)}
-                      className="break-all text-bone/85 transition-colors hover:text-red"
+                      className="break-all text-bone/85 transition-colors hover:text-alert"
                     >
                       {d.email}
                     </a>
@@ -83,7 +83,7 @@ export function Footer() {
                 <p className="label text-[0.625rem] text-muted">General</p>
                 <a
                   href={mailtoHref(BUSINESS.generalEmail)}
-                  className="mt-1 block break-all text-sm text-bone/85 transition-colors hover:text-red"
+                  className="mt-1 block break-all text-sm text-bone/85 transition-colors hover:text-alert"
                 >
                   {BUSINESS.generalEmail}
                 </a>
@@ -96,7 +96,7 @@ export function Footer() {
           <p className="text-xs text-muted">
             © {new Date().getFullYear()} {BUSINESS.name}. Serving {BUSINESS.serviceArea}.
           </p>
-          <Link href="/free-quote" className="label text-[0.625rem] text-bone hover:text-red">
+          <Link href="/free-quote" className="label text-[0.625rem] text-bone hover:text-alert">
             Get a Free Quote
           </Link>
         </div>

@@ -172,6 +172,14 @@ const SEALED = {
   brightness: 0,
 };
 
+// The same surface under more light, for images that stand alone on a
+// warm-white section instead of sitting behind a dark scrim.
+const SEALED_LIT = {
+  ...SEALED,
+  lightColor: "#43464C",
+  surfaceScale: 3.6,
+};
+
 // Sun-bleached and oxidized: binder has burned off, so the aggregate stands
 // prouder (higher surfaceScale) and the whole surface lifts toward gray.
 const OXIDIZED = {
@@ -316,7 +324,12 @@ const textures = {
     <rect x="${w * 0.8}" y="${h * 0.18}" width="10" height="${h * 0.7}" fill="#E8E4D8" opacity="0.4"/>
   </g>
   <rect width="${w}" height="${h}" fill="url(#vig)"/>`,
-      surfaceFilter({ id: "s", ...SEALED }) + roughenFilter("rough", 88, 4) + vignette("vig", "#000000", "#000000", 0.6),
+      // Lifted above the hero's exposure: these two appear as standalone
+      // images on warm-white sections, where a near-black frame reads as an
+      // empty box rather than a photograph.
+      surfaceFilter({ id: "s", ...SEALED_LIT }) +
+        roughenFilter("rough", 88, 4) +
+        vignette("vig", "#000000", "#000000", 0.42),
     );
   },
 
@@ -330,11 +343,11 @@ const textures = {
       `  <rect width="${w}" height="${h}" fill="#141518" filter="url(#s)"/>
   <rect width="${w}" height="${h}" fill="url(#vig)"/>
   <rect width="${w}" height="${h}" fill="url(#sheen)"/>`,
-      surfaceFilter({ id: "s", ...SEALED, blotchSeed: 15 }) +
-        vignette("vig", "#000000", "#000000", 0.42) +
+      surfaceFilter({ id: "s", ...SEALED_LIT, blotchSeed: 15 }) +
+        vignette("vig", "#000000", "#000000", 0.3) +
         `<linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0.4">
-      <stop offset="0" stop-color="#7A7D85" stop-opacity="0.13"/>
-      <stop offset="1" stop-color="#000000" stop-opacity="0.1"/>
+      <stop offset="0" stop-color="#8A8D95" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.08"/>
     </linearGradient>`,
     );
   },

@@ -38,7 +38,7 @@ export function LeadTable({ leads }: { leads: Lead[] }) {
       </div>
 
       {error && (
-        <p role="alert" className="mt-4 text-sm text-[#F0888C]">
+        <p role="alert" className="mt-4 text-sm text-alert">
           {error}
         </p>
       )}
@@ -162,7 +162,7 @@ function LeadRow({ lead, onError }: { lead: Lead; onError: (m: string | null) =>
 /** Status is shown as a word, never colour alone. */
 function StatusBadge({ status }: { status: LeadStatus }) {
   const tone: Record<LeadStatus, string> = {
-    new: "border-red text-red",
+    new: "border-alert text-alert",
     contacted: "border-white/35 text-bone",
     quoted: "border-white/35 text-bone",
     won: "border-[#5FA463] text-[#8FD093]",

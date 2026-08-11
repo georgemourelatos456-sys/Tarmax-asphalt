@@ -80,7 +80,7 @@ export function SignIn({ configured }: { configured: boolean }) {
       </div>
 
       {error && (
-        <p role="alert" className="text-sm text-[#F0888C]">
+        <p role="alert" className="text-sm text-alert">
           {error}
         </p>
       )}

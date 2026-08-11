@@ -36,7 +36,7 @@ export default function FreeQuotePage() {
                     <p className="font-semibold">{d.name}</p>
                     <a
                       href={telHref(d)}
-                      className="font-display mt-1 block text-xl font-bold hover:text-red"
+                      className="font-display mt-1 inline-flex min-h-11 items-center text-xl font-bold hover:text-alert"
                     >
                       {d.phone}
                     </a>
@@ -55,7 +55,7 @@ export default function FreeQuotePage() {
                   <li key={address}>
                     <a
                       href={mailtoHref(address, EMAIL_SUBJECT)}
-                      className="break-all text-bone/85 underline decoration-white/25 underline-offset-4 transition-colors hover:text-red"
+                      className="inline-flex min-h-11 items-center break-all text-bone/85 underline decoration-white/25 underline-offset-4 transition-colors hover:text-alert"
                     >
                       {address}
                     </a>

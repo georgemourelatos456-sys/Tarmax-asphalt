@@ -41,7 +41,7 @@ export function PropertySplit() {
           </div>
 
           <div className="p-8 md:p-12 lg:p-16">
-            <p className="label text-[0.625rem] text-red">{side.kind}</p>
+            <p className="label text-[0.625rem] text-alert">{side.kind}</p>
             <h2 className="display-md mt-3 text-bone">{side.subject}</h2>
 
             <ul className="mt-7 flex flex-col gap-2">

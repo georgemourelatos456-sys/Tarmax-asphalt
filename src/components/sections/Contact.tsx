@@ -20,23 +20,28 @@ export function Contact() {
           {DIRECTORS.map((d) => (
             <Reveal key={d.email} className="bg-bone p-7 md:p-10">
               <p className="display-sm">{d.name}</p>
-              <p className="label mt-1 text-[0.625rem] text-ink/50">{d.role}</p>
+              <p className="label mt-1 text-[0.625rem] text-ink/65">{d.role}</p>
 
-              <dl className="mt-7 flex flex-col gap-3 text-sm">
-                <div className="flex flex-wrap items-baseline gap-x-3">
-                  <dt className="label text-[0.625rem] text-ink/45">Phone</dt>
+              {/* Links carry their own 44px tap height — they are real targets
+                  on a phone, not prose. */}
+              <dl className="mt-7 flex flex-col gap-1 text-sm">
+                <div className="flex flex-wrap items-center gap-x-3">
+                  <dt className="label text-[0.625rem] text-ink/65">Phone</dt>
                   <dd>
-                    <a href={telHref(d)} className="font-display text-lg font-bold hover:text-red">
+                    <a
+                      href={telHref(d)}
+                      className="font-display inline-flex min-h-11 items-center text-lg font-bold hover:text-red"
+                    >
                       {d.phone}
                     </a>
                   </dd>
                 </div>
-                <div className="flex flex-wrap items-baseline gap-x-3">
-                  <dt className="label text-[0.625rem] text-ink/45">Email</dt>
+                <div className="flex flex-wrap items-center gap-x-3">
+                  <dt className="label text-[0.625rem] text-ink/65">Email</dt>
                   <dd>
                     <a
                       href={mailtoHref(d.email, EMAIL_SUBJECT)}
-                      className="break-all hover:text-red"
+                      className="inline-flex min-h-11 items-center break-all hover:text-red"
                     >
                       {d.email}
                     </a>
@@ -58,10 +63,10 @@ export function Contact() {
 
         <Reveal className="mt-6 flex flex-col gap-5 border border-ink/15 p-7 sm:flex-row sm:items-center sm:justify-between md:p-10">
           <div>
-            <p className="label text-[0.625rem] text-ink/50">General enquiries</p>
+            <p className="label text-[0.625rem] text-ink/65">General enquiries</p>
             <a
               href={mailtoHref(BUSINESS.generalEmail, EMAIL_SUBJECT)}
-              className="display-sm mt-2 block break-all hover:text-red"
+              className="display-sm mt-2 inline-flex min-h-11 items-center break-all hover:text-red"
             >
               {BUSINESS.generalEmail}
             </a>

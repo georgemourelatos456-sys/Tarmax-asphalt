@@ -51,7 +51,7 @@ export default function ServicesPage() {
                   <h2 className="display-md">{service.name}</h2>
                   <p className="mt-5 max-w-[52ch] text-ink/70">{service.detail}</p>
 
-                  <h3 className="label mt-9 text-[0.625rem] text-ink/50">Best suited to</h3>
+                  <h3 className="label mt-9 text-[0.625rem] text-ink/65">Best suited to</h3>
                   <ul className="mt-4 flex flex-col gap-2">
                     {service.bestFor.map((item) => (
                       <li key={item} className="flex items-baseline gap-3 text-sm text-ink/75">

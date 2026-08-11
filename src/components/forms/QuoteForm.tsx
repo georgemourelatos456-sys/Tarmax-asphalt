@@ -61,8 +61,22 @@ export function QuoteForm() {
   const fieldId = (name: string) => `${ids}-${name}`;
   const errorId = (name: string) => `${ids}-${name}-error`;
 
+  /**
+   * Safety net. If validation ever blocks on a field whose error has nowhere
+   * to render, the visitor would click submit and see nothing happen — the
+   * worst possible failure for the one action this site exists to capture.
+   * Surface something rather than dying quietly.
+   */
+  function onInvalid() {
+    const shown = new Set(["propertyAddress", "fullName", "phone", "email"]);
+    const hidden = Object.keys(errors).filter((key) => !shown.has(key));
+    if (hidden.length > 0) {
+      setFormError("Something in the form couldn't be read. Please contact TARMAX directly.");
+    }
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-6">
+    <form onSubmit={handleSubmit(onSubmit, onInvalid)} noValidate className="flex flex-col gap-6">
       {formError && <SubmissionError message={formError} />}
 
       <Field
@@ -144,7 +158,13 @@ export function QuoteForm() {
       </fieldset>
 
       <div className="grid gap-6 sm:grid-cols-2">
-        <Field label="Property type" id={fieldId("propertyType")} optional>
+        <Field
+          label="Property type"
+          id={fieldId("propertyType")}
+          optional
+          error={errors.propertyType?.message}
+          errorId={errorId("propertyType")}
+        >
           <select id={fieldId("propertyType")} className="field-input" {...register("propertyType")}>
             <option value="">Select</option>
             {PROPERTY_TYPES.map((t) => (
@@ -155,7 +175,13 @@ export function QuoteForm() {
           </select>
         </Field>
 
-        <Field label="What do you need?" id={fieldId("service")} optional>
+        <Field
+          label="What do you need?"
+          id={fieldId("service")}
+          optional
+          error={errors.service?.message}
+          errorId={errorId("service")}
+        >
           <select id={fieldId("service")} className="field-input" {...register("service")}>
             <option value="">Select</option>
             {SERVICE_OPTIONS.map((s) => (
@@ -167,12 +193,19 @@ export function QuoteForm() {
         </Field>
       </div>
 
-      <Field label="Message" id={fieldId("message")} optional>
+      <Field
+        label="Message"
+        id={fieldId("message")}
+        optional
+        error={errors.message?.message}
+        errorId={errorId("message")}
+      >
         <textarea id={fieldId("message")} className="field-input" rows={4} {...register("message")} />
       </Field>
 
-      {/* Honeypot. Hidden from people and from screen readers; bots fill it. */}
-      <div aria-hidden="true" className="absolute h-px w-px overflow-hidden opacity-0">
+      {/* Honeypot. Hidden from people and from screen readers; bots fill it.
+          Kept out of the layout entirely so it is not a stray tap target. */}
+      <div aria-hidden="true" className="pointer-events-none absolute h-px w-px overflow-hidden opacity-0">
         <label htmlFor={fieldId("company")}>Company</label>
         <input id={fieldId("company")} tabIndex={-1} autoComplete="off" {...register("company")} />
       </div>
@@ -214,7 +247,7 @@ function Field({
       <label htmlFor={id} className="label text-[0.6875rem] text-muted">
         {label}
         {required && (
-          <span className="ml-1.5 text-red" aria-hidden="true">
+          <span className="ml-1.5 text-alert" aria-hidden="true">
             *
           </span>
         )}
@@ -225,7 +258,7 @@ function Field({
       {hint && !error && <p className="text-xs text-muted">{hint}</p>}
       {error && (
         // Errors sit next to their field and are announced, never colour-only.
-        <p id={errorId} role="alert" className="flex items-start gap-2 text-sm text-[#F0888C]">
+        <p id={errorId} role="alert" className="flex items-start gap-2 text-sm text-alert">
           <span aria-hidden="true">↳</span>
           {error}
         </p>
@@ -237,19 +270,19 @@ function Field({
 /** Shown when the request could not be recorded. Gives the customer a way out. */
 function SubmissionError({ message }: { message: string }) {
   return (
-    <div role="alert" className="border border-[#F0888C]/45 bg-[#F0888C]/8 p-5">
+    <div role="alert" className="border border-alert/45 bg-alert/8 p-5">
       <p className="font-semibold text-bone">{message}</p>
       <ul className="mt-4 flex flex-col gap-2 text-sm">
         {DIRECTORS.map((d) => (
           <li key={d.email} className="flex flex-wrap items-baseline gap-x-3">
             <span className="text-muted">{d.firstName}</span>
-            <a href={telHref(d)} className="font-display font-bold text-bone hover:text-red">
+            <a href={telHref(d)} className="font-display font-bold text-bone hover:text-alert">
               {d.phone}
             </a>
           </li>
         ))}
         <li>
-          <a href={mailtoHref(BUSINESS.generalEmail)} className="break-all text-bone hover:text-red">
+          <a href={mailtoHref(BUSINESS.generalEmail)} className="break-all text-bone hover:text-alert">
             {BUSINESS.generalEmail}
           </a>
         </li>
@@ -261,7 +294,7 @@ function SubmissionError({ message }: { message: string }) {
 function SuccessState({ firstName, propertyAddress }: Success) {
   return (
     <div className="border border-white/14 bg-white/[0.03] p-7 md:p-10">
-      <p className="label text-red">Quote request received</p>
+      <p className="label text-alert">Quote request received</p>
       <h2 className="display-md mt-4">Thanks, {firstName}.</h2>
 
       <p className="mt-5 text-bone/75">We&rsquo;ve received your property information.</p>

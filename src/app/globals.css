@@ -16,6 +16,11 @@
   --color-bone: #f4f2ed;
   --color-muted: #9c9da0;
 
+  /* Accessible red for small text and error states. The brand red is correct
+     for filled buttons but only reaches 3:1 as text on black, so anything
+     word-sized uses this instead. */
+  --color-alert: #e4565b;
+
   --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
@@ -389,7 +394,7 @@
   }
 
   .field-input[aria-invalid="true"] {
-    border-color: #e2565b;
+    border-color: var(--color-alert);
   }
 
   textarea.field-input {

@@ -41,10 +41,14 @@ function buildCrack() {
 const CRACK_PATH = buildCrack();
 
 export function FreezeThaw() {
+  // No overflow-hidden on the section: it would break the sticky heading
+  // column. The crack is confined to its own fixed-width track regardless.
   return (
-    <section id="freeze-thaw" className="on-dark relative overflow-hidden bg-ink">
-      <div className="section shell">
-        <div className="max-w-3xl">
+    <section id="freeze-thaw" className="on-dark relative bg-ink">
+      <div className="section shell grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24">
+        {/* The heading holds the left rail while the sequence scrolls past it,
+            so the wide viewport has something on both sides. */}
+        <div className="lg:sticky lg:top-32 lg:self-start">
           <Eyebrow>Why maintenance matters</Eyebrow>
           <h2 className="display-lg mt-4">Alberta&rsquo;s freeze-thaw cycle</h2>
           <p className="lede mt-5 text-bone/75">
@@ -52,7 +56,7 @@ export function FreezeThaw() {
           </p>
         </div>
 
-        <div className="mt-16 grid gap-8 md:mt-24 md:grid-cols-[80px_1fr] md:gap-14 lg:gap-20">
+        <div className="grid gap-8 md:grid-cols-[80px_1fr] md:gap-12">
           {/* The crack. Decorative — every stage it marks is stated in text. */}
           <div className="relative hidden md:block" aria-hidden="true">
             <svg
@@ -73,7 +77,7 @@ export function FreezeThaw() {
             </svg>
           </div>
 
-          <ol className="flex flex-col gap-12 md:gap-24">
+          <ol className="flex flex-col gap-12 md:gap-20">
             {FREEZE_THAW.map((stage, i) => (
               <Reveal as="li" key={stage.step} delay={i * 80}>
                 <div className="flex gap-5 md:gap-8">
@@ -84,7 +88,7 @@ export function FreezeThaw() {
                     style={i === FREEZE_THAW.length - 1 ? { background: "#B51F24" } : undefined}
                   />
                   <div>
-                    <span className="label block text-[0.6875rem] text-red">{stage.step}</span>
+                    <span className="label block text-[0.6875rem] text-alert">{stage.step}</span>
                     <h3 className="display-md mt-3">{stage.title}</h3>
                     <p className="mt-3 max-w-[42ch] text-bone/70">{stage.body}</p>
                   </div>
@@ -93,8 +97,10 @@ export function FreezeThaw() {
             ))}
           </ol>
         </div>
+      </div>
 
-        <Reveal className="mt-20 border-t border-white/12 pt-12 md:mt-28">
+      <div className="shell pb-20 md:pb-28">
+        <Reveal className="border-t border-white/12 pt-12">
           <p className="display-md max-w-[24ch]">
             You can&rsquo;t control Alberta&rsquo;s weather.
             <span className="mt-2 block text-muted">

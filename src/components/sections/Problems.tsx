@@ -52,7 +52,7 @@ export function Problems() {
                   </ul>
 
                   <div className="mt-9 border-t border-ink/15 pt-6">
-                    <p className="label text-[0.625rem] text-ink/50">TARMAX solution</p>
+                    <p className="label text-[0.625rem] text-ink/65">TARMAX solution</p>
                     <p className="display-sm mt-2">{problem.solution}</p>
                     <Link href={problem.solutionHref} className="link-action mt-2 text-ink">
                       {problem.cta}

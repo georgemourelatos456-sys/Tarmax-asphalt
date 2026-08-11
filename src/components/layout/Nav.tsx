@@ -48,7 +48,11 @@ export function Nav() {
       }`}
     >
       <div className="shell flex h-full items-center justify-between gap-6">
-        <Link href="/" className="shrink-0" aria-label={`TARMAX Asphalt — home`}>
+        <Link
+          href="/"
+          className="flex min-h-11 shrink-0 items-center"
+          aria-label="TARMAX Asphalt — home"
+        >
           <Wordmark />
         </Link>
 

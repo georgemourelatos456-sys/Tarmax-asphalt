@@ -48,7 +48,7 @@ export default function AboutPage() {
       <section className="section bg-bone text-ink">
         <div className="shell grid gap-12 md:grid-cols-[0.75fr_1.25fr] md:gap-20">
           <div>
-            <h2 className="label text-[0.625rem] text-ink/50">The why</h2>
+            <h2 className="label text-[0.625rem] text-ink/65">The why</h2>
           </div>
 
           <Reveal>
@@ -106,7 +106,7 @@ export default function AboutPage() {
             {DIRECTORS.map((d) => (
               <div key={d.email} className="bg-bone p-7 md:p-10">
                 <p className="display-sm">{d.name}</p>
-                <p className="label mt-1 text-[0.625rem] text-ink/50">{d.role}</p>
+                <p className="label mt-1 text-[0.625rem] text-ink/65">{d.role}</p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                   <a href={telHref(d)} className="btn btn-solid-dark flex-1">
                     Call {d.firstName}
