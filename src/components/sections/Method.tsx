@@ -40,12 +40,12 @@ export function Method() {
         <ul className="mt-14 border-t border-ink/15 md:mt-20">
           {DECISIONS.map((item, i) => (
             <Reveal as="li" key={item.title} delay={i * 70}>
-              <div className="grid gap-4 border-b border-ink/15 py-9 md:grid-cols-[1fr_1.6fr] md:gap-14">
+              <div className="border-b border-ink/15 py-9">
                 <div>
                   <p className="label text-[0.625rem] text-ink/65">{item.kicker}</p>
                   <h3 className="display-sm mt-3">{item.title}</h3>
                 </div>
-                <div>
+                <div className="mt-5">
                   <p className="max-w-[58ch] text-ink/70">{item.body}</p>
                   {item.link && (
                     <Link href={item.link.href} className="link-action mt-3 text-ink">
