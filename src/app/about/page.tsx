@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { DIRECTORS, mailtoHref, telHref } from "@/config/business";
+import { BUSINESS, DIRECTORS, mailtoHref, telHref } from "@/config/business";
 import { Surface } from "@/components/ui/Surface";
 import { Arrow, Eyebrow } from "@/components/ui/Labels";
 import { Reveal } from "@/components/ui/Reveal";
@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     "TARMAX was started by two Albertans who were tired of watching rushed asphalt work sold at premium prices. Our approach: assess honestly, prepare properly, and stand behind the product.",
   alternates: { canonical: "/about" },
 };
+
+/** The founding story is George's, so it is signed by him. */
+const GEORGE = DIRECTORS.find((d) => d.firstName === "George") ?? DIRECTORS[1];
 
 const COMMITMENTS = [
   {
@@ -51,8 +54,12 @@ export default function AboutPage() {
             <h2 className="label text-[0.625rem] text-ink/65">The why</h2>
           </div>
 
+          {/* Attributed rather than an unsigned "I" — on a page that goes on to
+              introduce two directors, an unattributed first person reads as a
+              mistake. The signature is the point: someone is standing behind it. */}
           <Reveal>
-            <div className="flex max-w-[58ch] flex-col gap-6 text-lg leading-relaxed text-ink/80">
+            <figure>
+              <blockquote className="flex max-w-[58ch] flex-col gap-6 text-lg leading-relaxed text-ink/80">
               <p className="display-sm text-ink">
                 I had a personal objection to how this industry operates.
               </p>
@@ -71,7 +78,18 @@ export default function AboutPage() {
                 side hustle. That decision is what gives the mission its clarity: we want to build a
                 service that does substantial, honest, good work.
               </p>
-            </div>
+              </blockquote>
+
+              <figcaption className="mt-8 flex max-w-[58ch] items-center gap-4 border-t border-ink/15 pt-6">
+                <span aria-hidden="true" className="h-px w-8 shrink-0 bg-red" />
+                <span>
+                  <span className="display-sm block">{GEORGE.name}</span>
+                  <span className="label mt-1 block text-[0.625rem] text-ink/65">
+                    {GEORGE.role}, {BUSINESS.shortName}
+                  </span>
+                </span>
+              </figcaption>
+            </figure>
           </Reveal>
         </div>
       </section>
