@@ -17,6 +17,23 @@ import { SITE_URL } from "@/config/business";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * Which of our own variable names the platform actually injected.
+ *
+ * Environment variable names are case sensitive, and a lowercase `resend_api_key`
+ * is a different variable from `RESEND_API_KEY` — invisible to the code and
+ * indistinguishable, from the outside, from not having set it at all. Listing
+ * the names as they really are turns that into a one-glance answer.
+ *
+ * Names only, and only ones matching the handful this site defines. No values,
+ * and nothing else in the environment is enumerated.
+ */
+const OURS = /^(resend_api_key|resend_from|lead_email_to|next_public_site_url|quote_rate_limit_max)$/i;
+
+function variableNamesFound() {
+  return Object.keys(process.env).filter((k) => OURS.test(k)).sort();
+}
+
 export function GET() {
   const from = process.env.RESEND_FROM ?? "";
   // "Name <local@domain.tld>" or a bare address; anything else Resend rejects.
@@ -24,15 +41,24 @@ export function GET() {
   const apiKeyPresent = Boolean(process.env.RESEND_API_KEY);
 
   const ready = apiKeyPresent && fromValid;
+  const found = variableNamesFound();
+  // Names that are ours but not spelled the way the code reads them.
+  const miscased = found.filter((k) => k !== k.toUpperCase());
 
   return Response.json(
     {
       ready,
       diagnosis: ready
         ? "This deployment can send email. If a submission still does not arrive, the send is being rejected — check Runtime Logs for a line starting [email]."
-        : !apiKeyPresent
-          ? "RESEND_API_KEY is not visible to this build. Add it in Vercel, then REDEPLOY — saving a variable does not affect a build that already happened."
-          : "RESEND_FROM is missing or malformed. It must look like: TARMAX Asphalt <onboarding@resend.dev>",
+        : miscased.length > 0
+          ? `Found ${miscased.join(", ")} — environment variable names are CASE SENSITIVE, so these are different variables from the ones the code reads. Rename them to uppercase in Vercel, then redeploy.`
+          : found.length === 0
+            ? "None of this site's variables reached this build at all. Check you are editing the same Vercel project that serves this URL, that the Environment includes Production, and that you redeployed afterwards."
+            : !apiKeyPresent
+              ? "RESEND_API_KEY is not visible to this build. Add it in Vercel, then REDEPLOY — saving a variable does not affect a build that already happened."
+              : "RESEND_FROM is missing or malformed. It must look like: TARMAX Asphalt <onboarding@resend.dev>",
+      // Exactly as the platform spelled them. Names only, never values.
+      variableNamesFound: found,
       email: {
         apiKeyPresent,
         fromSet: from.length > 0,
@@ -45,7 +71,11 @@ export function GET() {
       },
       siteUrl: SITE_URL,
       commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? "local",
-      deployedAt: process.env.VERCEL_DEPLOYMENT_ID ? "vercel" : "local",
+      // Changes on every deployment, including a redeploy of the same commit.
+      // The commit alone cannot tell you whether a redeploy actually landed;
+      // this can.
+      deployment: process.env.VERCEL_DEPLOYMENT_ID ?? "local",
+      branch: process.env.VERCEL_GIT_COMMIT_REF ?? "local",
     },
     {
       status: 200,
