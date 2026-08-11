@@ -10,7 +10,7 @@ import { FinalCta } from "@/components/sections/FinalCta";
 export const metadata: Metadata = {
   title: "Driveway Sealcoating in Calgary — How It Works and What It Costs You Not To",
   description:
-    "Why Calgary driveways fail early, what sealcoating actually does, and how a water-based emulsion sealer differs from coal tar. Free estimates from TARMAX Asphalt.",
+    "Why Calgary driveways fail early, what sealcoating actually does, and how a penetrating sealer differs from coal tar and surface emulsions. Free estimates from TARMAX Asphalt.",
   alternates: { canonical: "/driveway-sealcoating" },
 };
 
@@ -29,14 +29,14 @@ const COMPARISON = [
       "Forms a hard, brittle film on the surface. That film cracks under freeze-thaw movement. High in polycyclic aromatic hydrocarbons (PAHs) and increasingly restricted for environmental reasons.",
   },
   {
-    product: "Off-the-shelf sealers",
+    product: "Water-based emulsion",
     behaviour:
-      "Bucket products poured on from a hardware store shelf sit on top of the pavement and wear off comparatively quickly. They are not balanced for a climate that swings from summer heat to deep winter cold.",
+      "Better suited to cold climates than coal tar, and the option most bucket products off a hardware store shelf fall into. It still sits on top of the pavement and wears off comparatively quickly.",
   },
   {
-    product: "Black Mac (what we use)",
+    product: "Blackmac (what we use)",
     behaviour:
-      "A water-based emulsion that soaks into the asphalt instead of forming a film, reconditioning oxidized binder so the surface regains flexibility. No coal tar. Cures to a matte black finish that resists oil, gasoline and salt.",
+      "Soaks into the asphalt instead of forming a film, reconditioning oxidized binder so the surface regains flexibility. Contains no coal tar. Cures to a matte black finish that resists oil, gasoline and salt.",
     highlight: true,
   },
 ];
@@ -59,31 +59,31 @@ const BENEFITS = [
     body: "It brings back the rich black of fresh pavement. The surface stays glossy for about a week, then settles into a durable matte finish.",
   },
   {
-    title: "Water-based, not coal tar",
-    body: "An emulsion rather than a coal-tar product, so none of the polycyclic aromatic hydrocarbons that coal tar carries end up on a surface that drains into your yard.",
+    title: "No coal tar",
+    body: "Coal-tar sealers are high in polycyclic aromatic hydrocarbons and increasingly restricted. Blackmac contains none.",
   },
 ];
 
 const EXPECTATIONS = [
   {
-    question: "Is the sealer safe?",
+    question: "Is the sealer safe once it has cured?",
     answer:
-      "It is a water-based emulsion with no coal tar, which is the reason we chose it. Applied properly by a trained crew, it is safe and long-lasting.",
+      "The handling precautions apply to the wet product, which is why application is our job and not a DIY one. Our crews are trained in handling it. Once cured, the surface is a normal sealed driveway.",
   },
   {
     question: "How long before I can use the driveway?",
     answer:
-      "About 24 hours. Keep vehicles and foot traffic off the surface while it dries.",
+      "About 24 hours. Keep vehicles and foot traffic off the surface while it cures, and keep ignition sources away from it while it is still wet.",
   },
   {
     question: "What about the smell?",
     answer:
-      "Far less than a coal-tar or solvent-based product. There is a mild odour on application and it clears within a day.",
+      "There is a distinct asphaltic odour during application and while it cures. It dissipates within a day or two.",
   },
   {
     question: "What if it gets somewhere it shouldn't?",
     answer:
-      "Being water-based, it is far easier to deal with than a solvent product while still wet. We mask and prepare the edges before anything is applied, so it does not come up in the first place.",
+      "The product is not water-soluble, so overspray does not simply wash off. That is exactly why masking and preparation are part of the job rather than an afterthought.",
   },
 ];
 
@@ -243,12 +243,12 @@ export default function DrivewaySealcoatingPage() {
 
           <div className="mt-14 max-w-[62ch]">
             <p className="text-bone/75">
-              Black Mac is a water-based emulsion sealer manufactured in Canada for Canadian
-              conditions. Water-based means no coal tar and none of the polycyclic aromatic
-              hydrocarbons that come with it — a more environmentally responsible product to put on
-              a surface that drains into your yard and the storm system. It penetrates the surface
-              and re-moisturizes the asphalt, so the pavement regains flexibility and can withstand
-              ground movement.
+              Blackmac is a penetrating sealer manufactured in Canada by McAsphalt Industries. Its
+              safety data sheet lists it as asphalt/bitumen (40–70%) carried in hydrotreated heavy
+              naphtha (30–60%). That solvent carrier is what lets it soak into the surface and
+              re-moisturize the asphalt rather than sit on top of it, so the pavement regains
+              flexibility and can withstand ground movement. The carrier flashes off as it cures;
+              the bitumen stays in the surface.
             </p>
             <p className="mt-5 text-bone/75">
               We source it locally rather than buying buckets off a hardware store shelf, because a
