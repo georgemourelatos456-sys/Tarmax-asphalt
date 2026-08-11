@@ -21,7 +21,7 @@ export function Wordmark({
       width={1090}
       height={300}
       priority={priority}
-      className={`h-auto w-[8.5rem] md:w-[10rem] ${className}`}
+      className={`h-auto w-[8.5rem] drop-shadow-lg md:w-[10rem] ${className}`}
     />
   );
 }
