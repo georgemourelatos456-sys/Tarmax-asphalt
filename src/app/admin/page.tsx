@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { listLeads } from "@/lib/leads";
 import { supabaseConfigured } from "@/lib/supabase";
-import { getSession, signOut } from "@/app/admin/actions";
+import { getAuthState, getSession, signOut } from "@/app/admin/actions";
 import { SignIn } from "@/app/admin/SignIn";
 import { LeadTable } from "@/app/admin/LeadTable";
 import { Eyebrow } from "@/components/ui/Labels";
@@ -16,7 +16,10 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
-  const user = await getSession();
+  const auth = await getAuthState();
+  // Leads are only ever fetched behind the authorisation gate, never on the
+  // strength of the auth state alone.
+  const user = auth.status === "ok" ? await getSession() : null;
   const leads = user ? await listLeads() : [];
 
   return (
@@ -28,9 +31,9 @@ export default async function AdminPage() {
             <h1 className="display-lg mt-3">Leads</h1>
           </div>
 
-          {user && (
+          {auth.status !== "anonymous" && (
             <form action={signOut}>
-              <p className="mb-2 text-right text-xs text-muted">{user.email}</p>
+              <p className="mb-2 text-right text-xs text-muted">{auth.email}</p>
               <button type="submit" className="admin-action">
                 Sign out
               </button>
@@ -39,7 +42,19 @@ export default async function AdminPage() {
         </div>
 
         <div className="mt-12">
-          {user ? <LeadTable leads={leads} /> : <SignIn configured={supabaseConfigured} />}
+          {user ? (
+            <LeadTable leads={leads} />
+          ) : auth.status === "forbidden" ? (
+            <div className="max-w-md border border-alert/45 p-6">
+              <h2 className="display-sm">This account can&rsquo;t open the dashboard</h2>
+              <p className="mt-3 text-sm text-muted">
+                {auth.email} is signed in but is not a TARMAX director. Sign out and use a
+                director address, or ask for this one to be added.
+              </p>
+            </div>
+          ) : (
+            <SignIn configured={supabaseConfigured} />
+          )}
         </div>
       </div>
     </div>

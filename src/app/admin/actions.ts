@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { updateLeadSchedule, updateLeadStatus } from "@/lib/leads";
+import { BUSINESS, DIRECTORS } from "@/config/business";
 import { LEAD_STATUSES, type LeadStatus } from "@/types/lead";
 
 /**
@@ -28,6 +29,33 @@ async function client(canWriteCookies: boolean) {
   });
 }
 
+/**
+ * Who is allowed into the dashboard.
+ *
+ * Being signed in is NOT sufficient. Supabase projects permit public sign-up
+ * by default, so "has a session" would let anyone who registered an account
+ * read every customer's name, address and phone number. Access is restricted
+ * to a known set of addresses instead.
+ *
+ * Defaults to the two directors and the general mailbox. ADMIN_EMAILS (comma
+ * separated) adds others without a code change.
+ */
+function allowedEmails(): Set<string> {
+  const configured = [
+    ...DIRECTORS.map((d) => d.email),
+    BUSINESS.generalEmail,
+    ...(process.env.ADMIN_EMAILS ?? "").split(","),
+  ];
+  return new Set(
+    configured.map((e) => e.trim().toLowerCase()).filter((e) => e.length > 0),
+  );
+}
+
+/**
+ * Returns the signed-in director, or null. Null covers both "not signed in"
+ * and "signed in but not authorised" — the dashboard treats them identically,
+ * so an unauthorised account learns nothing from the difference.
+ */
 export async function getSession() {
   const supabase = await client(false);
   if (!supabase) return null;
@@ -35,7 +63,38 @@ export async function getSession() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  return user ?? null;
+  if (!user?.email) return null;
+
+  if (!allowedEmails().has(user.email.toLowerCase())) {
+    console.warn(`[admin] rejected sign-in from unauthorised address: ${user.email}`);
+    return null;
+  }
+  return user;
+}
+
+export type AuthState =
+  | { status: "anonymous" }
+  /** A valid Supabase account that is not on the allow-list. */
+  | { status: "forbidden"; email: string }
+  | { status: "ok"; email: string };
+
+/**
+ * Distinguishes "not signed in" from "signed in but not a director", purely so
+ * the page can explain itself. Authorisation decisions still go through
+ * getSession(); this never grants anything.
+ */
+export async function getAuthState(): Promise<AuthState> {
+  const supabase = await client(false);
+  if (!supabase) return { status: "anonymous" };
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user?.email) return { status: "anonymous" };
+
+  return allowedEmails().has(user.email.toLowerCase())
+    ? { status: "ok", email: user.email }
+    : { status: "forbidden", email: user.email };
 }
 
 export async function setLeadStatus(id: string, status: string) {
