@@ -76,8 +76,16 @@ export const quoteSchema = z
     propertyType: optionalEnum(PROPERTY_TYPES),
     service: optionalEnum(SERVICE_OPTIONS),
     message: optionalText(2000),
-    /** Hidden field. Real people leave it empty; bots fill it in. */
-    company: z.string().max(0).optional(),
+    /**
+     * Honeypot. Real people leave it empty; bots fill it in.
+     *
+     * Deliberately NOT validated as empty. Rejecting a filled value here would
+     * surface a validation error the bot can learn from, and — more seriously —
+     * would hard-block a real customer whose password manager autofills a field
+     * named "company". The value is accepted and quietly discarded in
+     * submitQuote instead.
+     */
+    company: z.string().max(200).optional(),
   })
   .refine((data) => Boolean(data.phone) || Boolean(data.email), {
     message: "Add a phone number or an email so we can send your quote.",

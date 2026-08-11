@@ -155,7 +155,7 @@ function LeadRow({ lead, onError }: { lead: Lead; onError: (m: string | null) =>
         <a
           href={mapsSearchUrl(lead.property_address)}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="admin-action"
         >
           Open in Google Maps

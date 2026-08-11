@@ -1,14 +1,46 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 /**
  * Fades content up once as it enters the viewport.
  *
- * The whole site's motion budget is this plus a hover zoom. Under
- * prefers-reduced-motion the CSS drops the transform entirely, so content is
- * simply present — the observer still runs but has nothing to animate.
+ * The homepage uses this around twenty times, so the implementation is
+ * deliberately cheap:
+ *
+ *   - One IntersectionObserver for the whole document, not one per element.
+ *   - The visible flag is written straight to the DOM node, so revealing does
+ *     not trigger a React re-render. React never renders `data-visible`, so it
+ *     has no reason to reconcile it away.
+ *   - Only opacity and transform animate, both composited on the GPU, so a
+ *     reveal never causes layout or paint mid-scroll.
+ *
+ * Under prefers-reduced-motion the CSS drops the transform entirely and the
+ * content is simply present.
  */
+
+let observer: IntersectionObserver | null = null;
+
+function sharedObserver() {
+  if (observer || typeof IntersectionObserver === "undefined") return observer;
+  observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        (entry.target as HTMLElement).dataset.visible = "true";
+        observer?.unobserve(entry.target);
+      }
+    },
+    // Bottom margin, not top: scrolling down, elements enter from below, so
+    // growing the root box downwards is what starts the reveal before the
+    // element is actually on screen. It has then settled by the time a
+    // scrolling reader can see it — triggering late is what looks like content
+    // popping in.
+    { rootMargin: "0px 0px 200px 0px", threshold: 0 },
+  );
+  return observer;
+}
+
 export function Reveal({
   children,
   delay = 0,
@@ -22,31 +54,20 @@ export function Reveal({
   as?: "div" | "li" | "section" | "article";
 }) {
   const ref = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
 
-    // Server-rendered content must never stay hidden if the observer is
-    // unavailable.
-    if (typeof IntersectionObserver === "undefined") {
-      setVisible(true);
+    const io = sharedObserver();
+    // No observer support: show the content rather than hiding it forever.
+    if (!io) {
+      node.dataset.visible = "true";
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.05 },
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
+    io.observe(node);
+    return () => io.unobserve(node);
   }, []);
 
   return (
@@ -54,7 +75,6 @@ export function Reveal({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ref={ref as any}
       className={`reveal ${className}`}
-      data-visible={visible || undefined}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}

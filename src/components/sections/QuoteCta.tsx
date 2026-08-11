@@ -56,7 +56,9 @@ export function QuoteCta() {
           </dl>
         </div>
 
-        <div className="border border-white/12 bg-ink/60 p-6 backdrop-blur-sm md:p-9">
+        {/* Solid rather than blurred: backdrop-filter is expensive to composite
+            while scrolling, and this panel sits over a full-bleed image. */}
+        <div className="border border-white/12 bg-asphalt/95 p-6 md:p-9">
           <Suspense fallback={<div className="h-80" aria-hidden="true" />}>
             <QuoteForm compact />
           </Suspense>

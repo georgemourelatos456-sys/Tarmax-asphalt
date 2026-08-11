@@ -1,6 +1,9 @@
 "use server";
 
+import { headers } from "next/headers";
+
 import { saveLead } from "@/lib/leads";
+import { checkRateLimit, clientKey } from "@/lib/rate-limit";
 import { sendQuoteEmails } from "@/lib/email";
 import { quoteSchema, type QuoteInput } from "@/lib/validation";
 
@@ -16,6 +19,16 @@ export type QuoteResult =
  * the route logs the detail and returns one plain sentence.
  */
 export async function submitQuote(input: QuoteInput): Promise<QuoteResult> {
+  // Throttle before doing any work, so a flood costs nothing downstream.
+  const limit = checkRateLimit(clientKey(await headers()));
+  if (!limit.allowed) {
+    return {
+      ok: false,
+      formError:
+        "That's a few requests in a short time. Please wait a few minutes, or contact TARMAX directly.",
+    };
+  }
+
   const parsed = quoteSchema.safeParse(input);
 
   if (!parsed.success) {

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { supabaseAdmin } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase-admin";
 import type { QuoteData } from "@/lib/validation";
 import type { Lead, LeadStatus } from "@/types/lead";
 

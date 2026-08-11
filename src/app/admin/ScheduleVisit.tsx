@@ -81,7 +81,7 @@ export function ScheduleVisit({
             <a
               href={googleCalendarUrl(lead, scheduled)}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="admin-action"
             >
               Add to Google Calendar

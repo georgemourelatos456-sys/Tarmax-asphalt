@@ -325,7 +325,7 @@ export default function DrivewaySealcoatingPage() {
                       <a
                         href={SEALER.sdsUrl}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         className="link-action mt-2 flex text-bone"
                       >
                         {SEALER.product} safety data sheet (PDF)

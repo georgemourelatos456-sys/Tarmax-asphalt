@@ -317,17 +317,24 @@
      reduced-motion switch by simply being visible.
   --------------------------------------------------------------------------- */
 
-  .reveal {
+  /* Content is visible by default and only hidden once JavaScript has
+     confirmed it is running (html.js, set by an inline script in the
+     layout). Without that gate a failed or blocked bundle would leave
+     most of the page at opacity 0 -- invisible, with no way to recover. */
+
+  .js .reveal {
     opacity: 0;
-    transform: translateY(18px);
+    /* Small offset, and only opacity/transform -- both composited on the GPU,
+       so a reveal never triggers layout or paint while the page is scrolling. */
+    transform: translate3d(0, 12px, 0);
     transition:
-      opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+      opacity 500ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .reveal[data-visible="true"] {
+  .js .reveal[data-visible="true"] {
     opacity: 1;
-    transform: none;
+    transform: translate3d(0, 0, 0);
   }
 
   .zoom-frame {
@@ -347,7 +354,8 @@
       scroll-behavior: auto;
     }
 
-    .reveal {
+    .reveal,
+    .js .reveal {
       opacity: 1;
       transform: none;
       transition: none;

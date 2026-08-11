@@ -1,35 +1,20 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 /**
- * Supabase clients.
+ * Browser-safe Supabase surface.
  *
- * Every integration on this site is optional at runtime: the marketing pages
- * must build and serve with no credentials configured, and a missing key must
- * never take down the quote form. Callers check `isConfigured` and degrade.
+ * This module is imported by client components, so it must never reference the
+ * service role key — not even by name. Next only inlines NEXT_PUBLIC_* values,
+ * so a stray reference would not leak the secret itself, but it would ship the
+ * privileged code path to the browser and leave one bundler-config change
+ * between us and a real disclosure. The admin client lives in
+ * `supabase-admin.ts`, which is marked server-only.
  */
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 export const supabaseConfigured = Boolean(url && anonKey);
-export const supabaseAdminConfigured = Boolean(url && serviceKey);
-
-/**
- * Server-only client. The service role key bypasses row level security, so
- * this must never be imported into a client component — importing it from the
- * browser would not even have the key, but the guard below makes the mistake
- * loud rather than silent.
- */
-export function supabaseAdmin(): SupabaseClient | null {
-  if (typeof window !== "undefined") {
-    throw new Error("supabaseAdmin() is server-only.");
-  }
-  if (!url || !serviceKey) return null;
-  return createClient(url, serviceKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-}
 
 /** Public client, safe for the browser. Used by the /admin sign-in flow. */
 export function supabaseBrowser(): SupabaseClient | null {

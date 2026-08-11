@@ -39,11 +39,14 @@ export function Nav() {
     };
   }, [open]);
 
+  // The bar is solid once scrolled rather than blurred: backdrop-filter makes
+  // the compositor re-sample the page behind it on every frame, which is the
+  // biggest single cause of scroll stutter on phones.
   return (
     <header
       className={`on-dark fixed inset-x-0 top-0 z-50 border-b transition-[height,background-color,border-color] duration-300 ${
         scrolled || open
-          ? "h-16 border-white/10 bg-ink/92 backdrop-blur-md md:h-[4.5rem]"
+          ? "h-16 border-white/10 bg-ink md:h-[4.5rem]"
           : "h-20 border-transparent bg-transparent md:h-24"
       }`}
     >

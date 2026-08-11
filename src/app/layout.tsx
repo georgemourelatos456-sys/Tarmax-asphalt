@@ -75,6 +75,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-CA" className={`${manrope.variable} ${inter.variable}`}>
       <body>
+        {/* Marks the document as JavaScript-capable before any revealed
+            content paints. The scroll-reveal CSS is scoped to this class, so
+            if the bundle is blocked or fails, the page renders fully visible
+            instead of a screen of invisible sections. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add("js")`,
+          }}
+        />
         <a
           href="#main"
           className="label sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-bone focus:px-4 focus:py-3 focus:text-ink"

@@ -33,14 +33,20 @@ const SIDES = [
 export function PropertySplit() {
   return (
     <section className="on-dark grid md:grid-cols-2">
+      {/* The panels themselves are never animated. Fading a 30rem image block
+          in as one lump is what reads as a glitch mid-scroll, so only the copy
+          inside each panel moves. */}
       {SIDES.map((side) => (
-        <Reveal key={side.kind} as="article" className="relative isolate flex min-h-[30rem] flex-col justify-end">
+        <article
+          key={side.kind}
+          className="relative isolate flex min-h-[30rem] flex-col justify-end"
+        >
           <div className="absolute inset-0 -z-10">
             <Surface name={side.surface} alt={side.alt} sizes="(min-width: 768px) 50vw, 100vw" />
             <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/30" />
           </div>
 
-          <div className="p-8 md:p-12 lg:p-16">
+          <Reveal className="p-8 md:p-12 lg:p-16">
             <p className="label text-[0.625rem] text-alert">{side.kind}</p>
             <h2 className="display-md mt-3 text-bone">{side.subject}</h2>
 
@@ -57,8 +63,8 @@ export function PropertySplit() {
               {side.cta}
               <Arrow />
             </Link>
-          </div>
-        </Reveal>
+          </Reveal>
+        </article>
       ))}
     </section>
   );
