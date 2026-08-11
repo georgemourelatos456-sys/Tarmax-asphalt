@@ -46,6 +46,37 @@ key on the server.
 To give the directors dashboard access, create their users in Supabase Auth
 (Authentication → Users → Add user). There is no public sign-up.
 
+Already running an earlier version? The scheduling column is additive:
+
+```sql
+alter table public.leads add column if not exists scheduled_at timestamptz;
+```
+
+## Scheduling estimates
+
+Customers never pick a slot. The flow stays: customer sends an address →
+TARMAX reviews the property → a director makes contact → the visit is booked
+from the dashboard.
+
+Each lead in `/admin` has a **Schedule visit** control. Once a time is set the
+lead shows it inline, an **Upcoming visits** filter lists everything still
+ahead in date order, and two buttons hand the event to whatever calendar you
+already use:
+
+- **Add to Google Calendar** — opens a prefilled event on Google's public
+  template endpoint.
+- **Download .ics** — a standards-compliant calendar file that imports into
+  Google, Apple Calendar or Outlook.
+
+Both carry the customer's name, phone, email, requested service, notes and a
+Google Maps link to the property.
+
+Neither needs an API key, OAuth consent, or any third-party access to the
+directors' calendars — which is why scheduling works the day you deploy. If you
+later want events written directly into a shared TARMAX calendar, the visit
+time already lives on the lead; only the delivery step in `src/lib/calendar.ts`
+changes.
+
 ## Project layout
 
 ```

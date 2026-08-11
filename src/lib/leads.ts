@@ -58,6 +58,21 @@ export async function listLeads(): Promise<Lead[]> {
   return (data ?? []) as Lead[];
 }
 
+/**
+ * Sets or clears the planned site-visit time. Pass null to unschedule.
+ */
+export async function updateLeadSchedule(id: string, scheduledAt: string | null): Promise<boolean> {
+  const db = supabaseAdmin();
+  if (!db) return false;
+
+  const { error } = await db.from("leads").update({ scheduled_at: scheduledAt }).eq("id", id);
+  if (error) {
+    console.error("[leads] schedule update failed:", error.message);
+    return false;
+  }
+  return true;
+}
+
 export async function updateLeadStatus(id: string, status: LeadStatus): Promise<boolean> {
   const db = supabaseAdmin();
   if (!db) return false;

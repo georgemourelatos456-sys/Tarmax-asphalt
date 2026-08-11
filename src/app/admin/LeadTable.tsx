@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { mailtoHref, mapsSearchUrl } from "@/config/business";
 import { LEAD_STATUSES, STATUS_LABELS, type Lead, type LeadStatus } from "@/types/lead";
 import { setLeadStatus } from "@/app/admin/actions";
+import { ScheduleVisit } from "@/app/admin/ScheduleVisit";
 
 const DATE_FORMAT = new Intl.DateTimeFormat("en-CA", {
   year: "numeric",
@@ -13,8 +14,10 @@ const DATE_FORMAT = new Intl.DateTimeFormat("en-CA", {
   minute: "2-digit",
 });
 
+type Filter = LeadStatus | "all" | "upcoming";
+
 export function LeadTable({ leads }: { leads: Lead[] }) {
-  const [filter, setFilter] = useState<LeadStatus | "all">("all");
+  const [filter, setFilter] = useState<Filter>("all");
   const [error, setError] = useState<string | null>(null);
 
   const counts = LEAD_STATUSES.reduce(
@@ -22,11 +25,22 @@ export function LeadTable({ leads }: { leads: Lead[] }) {
     {} as Record<LeadStatus, number>,
   );
 
-  const visible = filter === "all" ? leads : leads.filter((l) => l.status === filter);
+  // Booked visits still ahead of now, soonest first — the working view for
+  // "what am I attending this week".
+  const upcoming = leads
+    .filter((l) => l.scheduled_at && new Date(l.scheduled_at).getTime() >= Date.now())
+    .sort((a, b) => new Date(a.scheduled_at!).getTime() - new Date(b.scheduled_at!).getTime());
+
+  const visible =
+    filter === "all"
+      ? leads
+      : filter === "upcoming"
+        ? upcoming
+        : leads.filter((l) => l.status === filter);
 
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by status">
+      <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter leads">
         <FilterChip active={filter === "all"} onClick={() => setFilter("all")}>
           All <Count n={leads.length} />
         </FilterChip>
@@ -35,6 +49,10 @@ export function LeadTable({ leads }: { leads: Lead[] }) {
             {STATUS_LABELS[s]} <Count n={counts[s]} />
           </FilterChip>
         ))}
+        <span aria-hidden="true" className="mx-1 h-6 w-px bg-white/15" />
+        <FilterChip active={filter === "upcoming"} onClick={() => setFilter("upcoming")}>
+          Upcoming visits <Count n={upcoming.length} />
+        </FilterChip>
       </div>
 
       {error && (
@@ -47,7 +65,9 @@ export function LeadTable({ leads }: { leads: Lead[] }) {
         <p className="mt-10 border border-white/12 p-8 text-muted">
           {leads.length === 0
             ? "No quote requests yet. They'll appear here as soon as the form is used."
-            : `No leads with status "${filter === "all" ? "" : STATUS_LABELS[filter]}".`}
+            : filter === "upcoming"
+              ? "No site visits booked. Schedule one from any lead below."
+              : `No leads marked ${filter === "all" ? "" : STATUS_LABELS[filter].toLowerCase()}.`}
         </p>
       ) : (
         <ul className="mt-8 flex flex-col gap-px bg-white/10">
@@ -155,6 +175,8 @@ function LeadRow({ lead, onError }: { lead: Lead; onError: (m: string | null) =>
           ))}
         </span>
       </div>
+
+      <ScheduleVisit lead={lead} onError={onError} />
     </li>
   );
 }

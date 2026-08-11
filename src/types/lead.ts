@@ -14,6 +14,12 @@ export type Lead = {
   service: string | null;
   message: string | null;
   status: LeadStatus;
+  /**
+   * When TARMAX plans to attend the property, as an ISO timestamp. Internal
+   * only — customers never see or choose this, and nothing is committed to
+   * them until a director has made contact.
+   */
+  scheduled_at: string | null;
 };
 
 /** Human labels for the pipeline columns. */

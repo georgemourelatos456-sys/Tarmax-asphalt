@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
-import { updateLeadStatus } from "@/lib/leads";
+import { updateLeadSchedule, updateLeadStatus } from "@/lib/leads";
 import { LEAD_STATUSES, type LeadStatus } from "@/types/lead";
 
 /**
@@ -48,6 +48,30 @@ export async function setLeadStatus(id: string, status: string) {
 
   const ok = await updateLeadStatus(id, status as LeadStatus);
   if (!ok) return { ok: false as const, error: "Couldn't update that lead." };
+
+  revalidatePath("/admin");
+  return { ok: true as const };
+}
+
+/**
+ * Books or clears a site visit. Internal only — this never notifies the
+ * customer, because a director confirms the time with them by phone first.
+ */
+export async function setLeadSchedule(id: string, isoOrNull: string | null) {
+  const user = await getSession();
+  if (!user) return { ok: false as const, error: "Not signed in." };
+
+  let value: string | null = null;
+  if (isoOrNull) {
+    const when = new Date(isoOrNull);
+    if (Number.isNaN(when.getTime())) {
+      return { ok: false as const, error: "That date and time couldn't be read." };
+    }
+    value = when.toISOString();
+  }
+
+  const ok = await updateLeadSchedule(id, value);
+  if (!ok) return { ok: false as const, error: "Couldn't save that visit time." };
 
   revalidatePath("/admin");
   return { ok: true as const };

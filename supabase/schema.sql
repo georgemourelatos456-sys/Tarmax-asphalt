@@ -23,13 +23,23 @@ create table if not exists public.leads (
   message          text,
   status           lead_status not null default 'new',
 
+  -- When TARMAX plans to attend the property. Set from the dashboard only;
+  -- customers never choose a slot.
+  scheduled_at     timestamptz,
+
   -- Mirrors the form rule: an address is useless without a way to reply.
   constraint leads_contact_present check (phone is not null or email is not null)
 );
 
--- The dashboard lists newest first and filters by status.
+-- Already have a leads table from before scheduling was added? Run just this:
+alter table public.leads add column if not exists scheduled_at timestamptz;
+
+-- The dashboard lists newest first, filters by status, and shows upcoming
+-- visits in date order.
 create index if not exists leads_created_at_idx on public.leads (created_at desc);
 create index if not exists leads_status_idx on public.leads (status);
+create index if not exists leads_scheduled_at_idx on public.leads (scheduled_at)
+  where scheduled_at is not null;
 
 alter table public.leads enable row level security;
 
