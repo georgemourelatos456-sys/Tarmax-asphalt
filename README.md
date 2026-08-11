@@ -114,6 +114,34 @@ is hard-coded in components. Change a number there and it updates the nav,
 footer, contact section, quote page, mobile call sheet and transactional email
 together.
 
+## Security
+
+Headers are set in `next.config.ts`. The Content Security Policy is the part
+that matters: every resource is pinned to this origin, so no external script
+can run, no iframe can load and no injected form can post off-site. That closes
+the routes injected ads and pop-ups arrive through. Alongside it: HSTS,
+`Permissions-Policy`, `Cross-Origin-Opener-Policy`, `frame-ancestors 'none'`
+and `nosniff`.
+
+**This is a browser-side control, not a server firewall.** WAF rules, bot
+filtering and DDoS absorption come from the host (Vercel, Cloudflare) and need
+enabling there as well.
+
+Other measures:
+
+- **Lead table.** RLS on with no public policies, so the anon key cannot read
+  or write it. All access is through the service-role key, which lives only in
+  `src/lib/supabase-admin.ts` behind a `server-only` import.
+- **Rate limiting.** Ten quote submissions per client per 15 minutes
+  (`QUOTE_RATE_LIMIT_MAX`). Deliberately generous — blocking a real customer is
+  the expensive mistake — and a throttled visitor is still shown both
+  directors' phone numbers.
+- **Honeypot.** A hidden `company` field. Filled values are accepted and
+  discarded silently rather than rejected, so neither a bot nor a customer
+  whose password manager autofills it ever sees an error.
+- **Escaping.** No user-supplied HTML is ever rendered. React escapes form
+  input; the transactional email templates escape it explicitly.
+
 ## Generated assets
 
 The site ships no stock photography. Imagery is generated from the material
