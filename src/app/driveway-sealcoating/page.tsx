@@ -10,7 +10,7 @@ import { FinalCta } from "@/components/sections/FinalCta";
 export const metadata: Metadata = {
   title: "Driveway Sealcoating in Calgary — How It Works and What It Costs You Not To",
   description:
-    "Why Calgary driveways fail early, what sealcoating actually does, and how a penetrating sealer differs from coal tar and surface emulsions. Free estimates from TARMAX Asphalt.",
+    "Why Calgary driveways fail early, what sealcoating actually does, and how a water-based emulsion sealer differs from coal tar. Free estimates from TARMAX Asphalt.",
   alternates: { canonical: "/driveway-sealcoating" },
 };
 
@@ -29,14 +29,14 @@ const COMPARISON = [
       "Forms a hard, brittle film on the surface. That film cracks under freeze-thaw movement. High in polycyclic aromatic hydrocarbons (PAHs) and increasingly restricted for environmental reasons.",
   },
   {
-    product: "Water-based emulsion",
+    product: "Off-the-shelf sealers",
     behaviour:
-      "Better suited to cold climates than coal tar, but it still sits on top of the pavement and wears off comparatively quickly.",
+      "Bucket products poured on from a hardware store shelf sit on top of the pavement and wear off comparatively quickly. They are not balanced for a climate that swings from summer heat to deep winter cold.",
   },
   {
     product: "Black Mac (what we use)",
     behaviour:
-      "Soaks into the asphalt instead of forming a film, reconditioning oxidized binder so the surface regains flexibility. Cures to a matte black finish that resists oil, gasoline and salt.",
+      "A water-based emulsion that soaks into the asphalt instead of forming a film, reconditioning oxidized binder so the surface regains flexibility. No coal tar. Cures to a matte black finish that resists oil, gasoline and salt.",
     highlight: true,
   },
 ];
@@ -58,13 +58,17 @@ const BENEFITS = [
     title: "The look of new asphalt",
     body: "It brings back the rich black of fresh pavement. The surface stays glossy for about a week, then settles into a durable matte finish.",
   },
+  {
+    title: "Water-based, not coal tar",
+    body: "An emulsion rather than a coal-tar product, so none of the polycyclic aromatic hydrocarbons that coal tar carries end up on a surface that drains into your yard.",
+  },
 ];
 
 const EXPECTATIONS = [
   {
-    question: "Is an oil-based sealer safe?",
+    question: "Is the sealer safe?",
     answer:
-      "Our crews are trained in handling petroleum products safely. Applied properly, the sealer is safe and long-lasting.",
+      "It is a water-based emulsion with no coal tar, which is the reason we chose it. Applied properly by a trained crew, it is safe and long-lasting.",
   },
   {
     question: "How long before I can use the driveway?",
@@ -73,12 +77,13 @@ const EXPECTATIONS = [
   },
   {
     question: "What about the smell?",
-    answer: "There is an odour on application, and it dissipates within a day or two.",
+    answer:
+      "Far less than a coal-tar or solvent-based product. There is a mild odour on application and it clears within a day.",
   },
   {
     question: "What if it gets somewhere it shouldn't?",
     answer:
-      "Oil-based product cannot be removed with water. Overspray is cleaned with a commercial cleaner such as Goof Off — which is why masking and preparation are part of the job rather than an afterthought.",
+      "Being water-based, it is far easier to deal with than a solvent product while still wet. We mask and prepare the edges before anything is applied, so it does not come up in the first place.",
   },
 ];
 
@@ -142,10 +147,10 @@ export default function DrivewaySealcoatingPage() {
               </p>
             </Reveal>
             <Reveal delay={140}>
-              <DataLabel field="Full replacement" value="$5,000–$10,000" tone="light" />
+              <DataLabel field="Full replacement" value="~$8 per sq ft" tone="light" />
               <p className="mt-4 max-w-[34ch] text-sm text-ink/70">
-                Common cost of replacing an average asphalt driveway. Maintenance runs a small
-                fraction of that — in the region of a tenth.
+                Average cost of replacing asphalt — around twenty times what it costs to seal the
+                same area.
               </p>
             </Reveal>
           </div>
@@ -238,11 +243,12 @@ export default function DrivewaySealcoatingPage() {
 
           <div className="mt-14 max-w-[62ch]">
             <p className="text-bone/75">
-              Black Mac is an oil-based penetrating sealer manufactured in Canada for Canadian
-              conditions. The supplier&rsquo;s safety data sheet lists it as a blend of
-              asphalt/bitumen (40–70%) and hydrotreated heavy petroleum naphtha (30–60%). That
-              chemistry is what lets it penetrate the surface and re-moisturize the asphalt, so the
-              pavement regains flexibility and can withstand ground movement.
+              Black Mac is a water-based emulsion sealer manufactured in Canada for Canadian
+              conditions. Water-based means no coal tar and none of the polycyclic aromatic
+              hydrocarbons that come with it — a more environmentally responsible product to put on
+              a surface that drains into your yard and the storm system. It penetrates the surface
+              and re-moisturizes the asphalt, so the pavement regains flexibility and can withstand
+              ground movement.
             </p>
             <p className="mt-5 text-bone/75">
               We source it locally rather than buying buckets off a hardware store shelf, because a
@@ -274,7 +280,7 @@ export default function DrivewaySealcoatingPage() {
       <section className="section bg-bone text-ink">
         <div className="shell">
           <Eyebrow tone="light">What you get</Eyebrow>
-          <h2 className="display-lg mt-4 max-w-[16ch]">Four things it actually does.</h2>
+          <h2 className="display-lg mt-4 max-w-[16ch]">Five things it actually does.</h2>
           <ul className="mt-14 grid gap-x-16 gap-y-10 md:grid-cols-2">
             {BENEFITS.map((b, i) => (
               <Reveal as="li" key={b.title} delay={i * 60}>

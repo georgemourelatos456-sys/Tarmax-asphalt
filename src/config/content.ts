@@ -83,11 +83,11 @@ export const SERVICES: Service[] = [
     name: "Sealcoating",
     summary:
       "Professional penetrating sealcoating to help protect and refresh suitable asphalt surfaces.",
-    // NOTE: the product described here is Black Mac, an oil-based penetrating
-    // sealer manufactured in Canada. See /driveway-sealcoating for the full
-    // product detail and how it differs from coal tar and surface emulsions.
+    // NOTE: the product is Black Mac, a water-based emulsion sealer made in
+    // Canada. See /driveway-sealcoating for the full product detail and how it
+    // differs from coal tar.
     detail:
-      "We apply Black Mac, an oil-based penetrating sealer sourced locally and manufactured in Canada for Canadian conditions. Rather than forming a film on top, it soaks into the surface and reconditions oxidized binder, which helps protect aging asphalt, helps reduce surface deterioration and restores a darker, maintained appearance. Sealcoating is preventative maintenance — it does not structurally restore damaged asphalt.",
+      "We apply Black Mac, a water-based emulsion sealer sourced locally and manufactured in Canada for Canadian conditions. Rather than forming a film on top, it soaks into the surface and reconditions oxidized binder, which helps protect aging asphalt, helps reduce surface deterioration and restores a darker, maintained appearance. Sealcoating is preventative maintenance — it does not structurally restore damaged asphalt.",
     bestFor: [
       "Faded or oxidized asphalt",
       "Aging surfaces still in sound condition",
