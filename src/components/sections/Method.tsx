@@ -34,10 +34,12 @@ export function Method() {
   return (
     <section className="section bg-bone text-ink">
       <div className="shell">
-        <Eyebrow tone="light">Why it matters what we use</Eyebrow>
-        <h2 className="display-lg mt-4 max-w-[18ch]">Maintenance done properly.</h2>
+        <div className="flex flex-col items-center text-center">
+          <Eyebrow tone="light">Why it matters what we use</Eyebrow>
+          <h2 className="display-lg mt-4 max-w-[18ch]">Maintenance done properly.</h2>
+        </div>
 
-        <ul className="mt-14 border-t border-ink/15 md:mt-20">
+        <ul className="mt-8 border-t border-ink/15">
           {DECISIONS.map((item, i) => (
             <Reveal as="li" key={item.title} delay={i * 70}>
               <div className="flex flex-col items-center border-b border-ink/15 py-9 text-center">
