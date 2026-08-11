@@ -7,14 +7,16 @@ The site has one job: get a free quote request. A visitor should understand what
 TARMAX does in about five seconds and be able to send their property address in
 under a minute.
 
-**Going live?** Follow [`SETUP.md`](SETUP.md). Until Supabase and Resend are
-configured, a submitted quote is validated and logged but not stored or
-emailed — the form looks like it worked and nothing arrives.
+**Going live?** Follow [`SETUP.md`](SETUP.md). Until Resend is configured, a
+submitted quote is validated and logged but never emailed — the form looks like
+it worked and nothing arrives.
 
 ## Stack
 
-Next.js 15 (App Router) · TypeScript · Tailwind v4 · Supabase (Postgres + Auth) ·
-Resend
+Next.js 15 (App Router) · TypeScript · Tailwind v4 · Resend
+
+No database, no accounts, no sign-in. A quote request is emailed to the shared
+mailbox and both directors, and that email is the lead record.
 
 ## Getting started
 
@@ -24,10 +26,9 @@ cp .env.example .env.local   # fill in, or leave blank for local development
 npm run dev
 ```
 
-The site builds and runs with **no credentials configured**. Supabase and Resend
-degrade gracefully: quote submissions are validated and logged to the server
-console instead of being stored or emailed, so the whole flow is testable
-without accounts.
+The site builds and runs with **no credentials configured**. Email degrades
+gracefully: quote submissions are validated and logged to the server console
+instead of being sent, so the whole flow is testable without an account.
 
 ```bash
 npm run typecheck   # tsc --noEmit
@@ -37,71 +38,44 @@ npm run build       # production build
 
 ## Environment
 
-See `.env.example`. `SUPABASE_SERVICE_ROLE_KEY` and `RESEND_API_KEY` are server
-only and must never be prefixed with `NEXT_PUBLIC_`.
-
-## Database
-
-Run `supabase/schema.sql` once in the Supabase SQL editor. It creates the
-`leads` table and enables row level security **with no public policies**, so the
-anon key cannot read or write leads. All access goes through the service role
-key on the server.
-
-To give the directors dashboard access, create their users in Supabase Auth
-(Authentication → Users → Add user). There is no public sign-up.
-
-Already running an earlier version? The scheduling column is additive:
-
-```sql
-alter table public.leads add column if not exists scheduled_at timestamptz;
-```
+See `.env.example`. `RESEND_API_KEY` is server only and must never be prefixed
+with `NEXT_PUBLIC_`.
 
 ## How a lead is protected
 
-A quote request is written to the database **first**, then emailed. That order
-matters: a notification never arrives for a lead that was not recorded, and the
-email can state whether it made it to the dashboard.
+There is no database. A validated request is emailed to
+`admin@tarmaxasphalt.com`, `Nova@tarmaxasphalt.com` and
+`George@tarmaxasphalt.com` — three inboxes, so a missed lead means three people
+missed it.
 
-Every submission therefore ends up in two independent places — the `leads`
-table and `admin@tarmaxasphalt.com`. Losing one still leaves the other.
+That email is written to be worked from directly: every submitted field, a
+Google Maps link to measure the property from, a plain-text block that survives
+copy-paste into a phone, and a **Book the estimate** button.
 
-If the database write fails, the email is sent anyway, with `[NOT SAVED]` in
-the subject line and a warning at the top of the message. It is then the only
-record, and it says so.
+If the send fails, the complete request is written to the server log as JSON,
+tagged `LEAD NOT CAPTURED`, so it can still be recovered from the host's log
+viewer. Only then does the customer see an error — and that error carries both
+directors' phone numbers, so the enquiry has somewhere to go.
 
-If both the database and the email fail, the complete request is written to the
-server log as JSON, tagged `LEAD NOT CAPTURED`, so it can still be recovered
-from the host's log viewer. Only then does the customer see an error — and that
-error carries both directors' phone numbers, so the enquiry has somewhere to go.
-
-A note on why there is no local file fallback: on Vercel and similar hosts the
-filesystem is ephemeral and per-instance, so a file written during a request can
-vanish with the container. The email inbox is the durable second copy instead.
+**The trade-off, stated plainly:** with no database that email is the only
+copy. If the email provider is down at the moment a customer submits, the
+request exists only in the runtime log until someone reads it. A second channel
+— a webhook into a spreadsheet, or a database — would remove that single point
+of failure. It was dropped on purpose, to remove every account and login from
+the system.
 
 ## Scheduling estimates
 
-Customers never pick a slot. The flow stays: customer sends an address →
-TARMAX reviews the property → a director makes contact → the visit is booked
-from the dashboard.
+Customers never pick a slot. The flow is: customer sends an address → TARMAX
+reviews the property → a director makes contact → the visit is booked.
 
-Each lead in `/admin` has a **Schedule visit** control. Once a time is set the
-lead shows it inline, an **Upcoming visits** filter lists everything still
-ahead in date order, and two buttons hand the event to whatever calendar you
-already use:
+The notification email carries a **Book the estimate** button. It opens Google
+Calendar's public template endpoint with the customer, address and notes
+prefilled and **the time left blank**, so whoever takes the job sets it against
+their own availability rather than against a guess made by this code.
 
-- **Add to Google Calendar** — opens a prefilled event on Google's public
-  template endpoint.
-- **Download .ics** — a standards-compliant calendar file that imports into
-  Google, Apple Calendar or Outlook.
-
-Both carry the customer's name, phone, email, requested service, notes and a
-Google Maps link to the property.
-
-Neither needs an API key, OAuth consent, or any third-party access to the
-directors' calendars — which is why scheduling works the day you deploy. If you
-later want events written directly into a shared TARMAX calendar, the visit
-time already lives on the lead; only the delivery step in `src/lib/calendar.ts`
-changes.
+No API key, no OAuth consent, no third-party access to anyone's calendar — it
+is a URL, built in `src/lib/calendar.ts`.
 
 ## Project layout
 
@@ -114,7 +88,6 @@ src/
     commercial/                 parking lot maintenance
     driveway-sealcoating/       homeowner guide (lifespan, Black Mac, FAQ)
     about/                      why the company was started
-    admin/                      protected lead dashboard
     actions/submit-quote.ts     server action for the quote form
   components/
     layout/                     nav, footer, mobile action bar, wordmark
@@ -126,11 +99,11 @@ src/
     content.ts                  service and condition copy
   lib/
     validation.ts               one Zod schema, client and server
-    leads.ts                    lead storage
-    email.ts                    Resend notifications
+    email.ts                    the lead pipeline — Resend notifications
+    calendar.ts                 "Book the estimate" link for the email
+    rate-limit.ts               per-client submission throttle
     schema.ts                   LocalBusiness structured data
 scripts/                        asset generation (see below)
-supabase/schema.sql             database setup
 ```
 
 ### Contact details
@@ -155,9 +128,9 @@ enabling there as well.
 
 Other measures:
 
-- **Lead table.** RLS on with no public policies, so the anon key cannot read
-  or write it. All access is through the service-role key, which lives only in
-  `src/lib/supabase-admin.ts` behind a `server-only` import.
+- **No stored data and no accounts.** There is no database to breach, no
+  password to steal and no session to hijack. Leads live in email, protected by
+  whatever protects the directors' mailboxes.
 - **Rate limiting.** Ten quote submissions per client per 15 minutes
   (`QUOTE_RATE_LIMIT_MAX`). Deliberately generous — blocking a real customer is
   the expensive mistake — and a throttled visitor is still shown both
@@ -196,9 +169,8 @@ than fetched by `next/font/google`. That removes a network dependency from
 
 - **Google Places autocomplete** can be added to the address field later. The
   site deliberately works with no Google API credentials; `mapsSearchUrl()` in
-  `business.ts` builds a keyless Maps search link for the admin email and
-  dashboard.
-- **Google Calendar** is intentionally not integrated. The workflow is: customer
-  submits an address → TARMAX reviews the property → TARMAX makes contact →
-  TARMAX schedules internally.
+  `business.ts` builds a keyless Maps search link for the notification email.
+- **A second copy of each lead** is the one thing worth adding if the business
+  grows. A Resend webhook into a spreadsheet, or a database behind the same
+  `sendQuoteEmails()` call site, would end the reliance on a single send.
 - **Square footage** is not collected. TARMAX measures from the map or on site.

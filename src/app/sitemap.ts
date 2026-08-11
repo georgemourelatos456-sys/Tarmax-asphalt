@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/config/business";
 
-/** Public pages only — /admin is excluded and noindexed. */
+/** Every page on the site. There is no private area to exclude. */
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 

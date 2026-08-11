@@ -14,17 +14,6 @@ import type { NextConfig } from "next";
  * from the host (Vercel, Cloudflare) and should be enabled there too.
  */
 
-/** Supabase Auth is called from the browser on /admin, so its origin is allowed. */
-const supabaseOrigin = (() => {
-  const raw = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  if (!raw) return "";
-  try {
-    return new URL(raw).origin;
-  } catch {
-    return "";
-  }
-})();
-
 const csp = [
   // Nothing loads from anywhere unless a directive below says otherwise.
   "default-src 'self'",
@@ -42,7 +31,9 @@ const csp = [
 
   "img-src 'self' data: blob:",
   "font-src 'self'",
-  `connect-src 'self'${supabaseOrigin ? ` ${supabaseOrigin}` : ""}`,
+  // The browser talks to this origin and nothing else. With no database and
+  // no auth provider called from the client, there is no third party to allow.
+  "connect-src 'self'",
 
   // No plugins, no embedded frames: removes the injected-iframe pop-up vector.
   "object-src 'none'",

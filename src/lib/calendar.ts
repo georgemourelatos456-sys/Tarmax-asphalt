@@ -1,109 +1,52 @@
-import { BUSINESS, mapsSearchUrl } from "@/config/business";
-import type { Lead } from "@/types/lead";
+import { mapsSearchUrl } from "@/config/business";
+import type { QuoteData } from "@/lib/validation";
 
 /**
- * Turns a scheduled estimate into something a calendar can accept.
+ * Turns a quote request into a calendar event a director can accept.
  *
- * Deliberately credential-free: a Google Calendar template URL and a generated
- * .ics file both work with no OAuth, no API key and no third-party access to
- * the directors' calendars. That covers Google, Apple and Outlook. If TARMAX
- * later wants events written directly into a shared calendar, the scheduling
- * data is already on the lead — only the delivery step changes.
+ * There is no database and no stored visit time — the link goes in the
+ * notification email and opens Google Calendar's public template endpoint with
+ * everything filled in except the time. Whoever picks up the lead chooses when
+ * to attend, in the calendar they already use.
+ *
+ * Deliberately credential-free: no OAuth, no API key, no third-party access to
+ * anyone's calendar. It is a URL.
  */
 
-/** Default length of a site visit, in minutes. */
-export const VISIT_MINUTES = 30;
-
-/** Calendar timestamps are basic-format UTC: 20260811T150000Z */
-function stamp(date: Date) {
-  return `${date.toISOString().replace(/[-:]/g, "").split(".")[0]}Z`;
-}
-
-function endOf(start: Date, minutes: number) {
-  return new Date(start.getTime() + minutes * 60_000);
-}
-
-/** Human summary of who and where, shared by both formats. */
-function details(lead: Lead) {
+/** Human summary of who and where, for the event body. */
+function details(lead: QuoteData) {
   return [
-    `Customer: ${lead.full_name}`,
+    `Customer: ${lead.fullName}`,
     lead.phone ? `Phone: ${lead.phone}` : null,
     lead.email ? `Email: ${lead.email}` : null,
-    lead.property_type ? `Property: ${lead.property_type}` : null,
+    lead.propertyType ? `Property: ${lead.propertyType}` : null,
     lead.service ? `Requested: ${lead.service}` : null,
     lead.message ? `Notes: ${lead.message}` : null,
     "",
-    `Map: ${mapsSearchUrl(lead.property_address)}`,
+    `Map: ${mapsSearchUrl(lead.propertyAddress)}`,
   ]
     .filter(Boolean)
     .join("\n");
 }
 
-export function eventTitle(lead: Lead) {
-  return `Estimate — ${lead.full_name}`;
+export function eventTitle(lead: QuoteData) {
+  return `Estimate — ${lead.fullName}`;
 }
 
 /**
- * Google Calendar's public "add event" endpoint. No API key involved; it just
- * opens a prefilled event the director confirms.
+ * Google Calendar's public "add event" endpoint.
+ *
+ * No `dates` parameter is sent on purpose. Google then opens the event editor
+ * with the customer, address and notes prefilled and the time left blank, so
+ * the director sets it against their real availability rather than against a
+ * guess made by this code.
  */
-export function googleCalendarUrl(lead: Lead, start: Date, minutes = VISIT_MINUTES) {
+export function googleCalendarUrl(lead: QuoteData) {
   const params = new URLSearchParams({
     action: "TEMPLATE",
     text: eventTitle(lead),
-    dates: `${stamp(start)}/${stamp(endOf(start, minutes))}`,
     details: details(lead),
-    location: lead.property_address,
+    location: lead.propertyAddress,
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
-}
-
-/** RFC 5545 escaping: backslash, semicolon, comma and newline. */
-function esc(value: string) {
-  return value
-    .replace(/\\/g, "\\\\")
-    .replace(/;/g, "\\;")
-    .replace(/,/g, "\\,")
-    .replace(/\r?\n/g, "\\n");
-}
-
-/** Folds long lines at 75 octets, as the spec requires. */
-function fold(line: string) {
-  if (line.length <= 75) return line;
-  const parts = [line.slice(0, 75)];
-  let rest = line.slice(75);
-  while (rest.length > 74) {
-    parts.push(` ${rest.slice(0, 74)}`);
-    rest = rest.slice(74);
-  }
-  if (rest) parts.push(` ${rest}`);
-  return parts.join("\r\n");
-}
-
-/** A single-event calendar file, importable by any calendar application. */
-export function buildIcs(lead: Lead, start: Date, minutes = VISIT_MINUTES) {
-  const lines = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    `PRODID:-//${BUSINESS.name}//Estimates//EN`,
-    "CALSCALE:GREGORIAN",
-    "METHOD:PUBLISH",
-    "BEGIN:VEVENT",
-    `UID:lead-${lead.id}@tarmaxasphalt.com`,
-    `DTSTAMP:${stamp(new Date())}`,
-    `DTSTART:${stamp(start)}`,
-    `DTEND:${stamp(endOf(start, minutes))}`,
-    `SUMMARY:${esc(eventTitle(lead))}`,
-    `LOCATION:${esc(lead.property_address)}`,
-    `DESCRIPTION:${esc(details(lead))}`,
-    "END:VEVENT",
-    "END:VCALENDAR",
-  ];
-  // CRLF throughout, per the spec.
-  return lines.map(fold).join("\r\n");
-}
-
-export function icsFilename(lead: Lead) {
-  const safe = lead.full_name.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
-  return `tarmax-estimate-${safe || "lead"}.ics`;
 }

@@ -2,15 +2,19 @@ import "server-only";
 
 import { Resend } from "resend";
 import { BUSINESS, DIRECTORS, mapsSearchUrl } from "@/config/business";
+import { googleCalendarUrl } from "@/lib/calendar";
 import type { QuoteData } from "@/lib/validation";
 
 /**
  * Transactional email for quote requests.
  *
- * Two messages go out: a work order to TARMAX and a confirmation to the
- * customer (only if they supplied an email). Both are plain and table-free
- * beyond what email clients handle reliably — this is an operational notice,
- * not a newsletter.
+ * There is no database. This email IS the lead record, which changes what it
+ * has to carry: every field the customer submitted, a map link to the property
+ * and a one-click calendar event, so the whole job can be worked from the
+ * inbox without opening anything else.
+ *
+ * It goes to the shared mailbox and to both directors, so a lead is sitting in
+ * three inboxes rather than one.
  */
 
 const apiKey = process.env.RESEND_API_KEY;
@@ -19,6 +23,14 @@ const from = process.env.RESEND_FROM || `TARMAX Asphalt <onboarding@resend.dev>`
 export const emailConfigured = Boolean(apiKey);
 
 const client = apiKey ? new Resend(apiKey) : null;
+
+/**
+ * Everyone who should receive a new lead. Deduplicated and lowercased because
+ * some providers treat a repeated recipient as an error.
+ */
+const RECIPIENTS = Array.from(
+  new Set([BUSINESS.generalEmail, ...DIRECTORS.map((d) => d.email)].map((e) => e.toLowerCase())),
+);
 
 /** Escapes interpolated values so customer input cannot inject markup. */
 function esc(value: string) {
@@ -50,28 +62,31 @@ const row = (label: string, value: string) => `
     <td style="padding:8px 0;border-bottom:1px solid #eeebe3;font-size:14px;vertical-align:top">${esc(value)}</td>
   </tr>`;
 
+const button = (href: string, label: string, primary = true) => `
+  <a href="${esc(href)}" style="display:inline-block;margin:0 8px 10px 0;background:${
+    primary ? "#b51f24" : "#0b0b0c"
+  };color:#ffffff;text-decoration:none;padding:13px 20px;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">${esc(label)}</a>`;
+
 /**
- * Notifies TARMAX. This is the message the business actually works from, and
- * the second durable copy of a lead — so it is sent even when the database
- * write failed, carrying a warning that says exactly that.
+ * Notifies TARMAX. Without a database this is the lead's only durable copy, so
+ * it is written to be worked from directly: contact details, a plain-text block
+ * that survives copy-paste, and the two actions that follow a new enquiry.
  */
-async function sendAdminEmail(lead: QuoteData, stored: boolean) {
+async function sendAdminEmail(lead: QuoteData) {
   if (!client) return false;
 
-  const mapsUrl = mapsSearchUrl(lead.propertyAddress);
-  const warning = stored
-    ? ""
-    : `<p style="margin:0 0 18px;padding:14px 16px;background:#fdecec;border-left:4px solid #b51f24;font-size:14px;line-height:1.5">
-        <strong>This lead was not saved to the dashboard.</strong> The database
-        did not accept it, so this email is the only record. Copy the details
-        below somewhere safe before replying.
-      </p>`;
+  const plain = [
+    `Name: ${lead.fullName}`,
+    `Phone: ${lead.phone ?? "Not provided"}`,
+    `Email: ${lead.email ?? "Not provided"}`,
+    `Address: ${lead.propertyAddress}`,
+    `Property: ${lead.propertyType ?? "Not specified"}`,
+    `Service: ${lead.service ?? "Not specified"}`,
+    `Message: ${lead.message ?? "None"}`,
+  ].join("\n");
 
   const body =
-    header(
-      `${stored ? "" : "[NOT SAVED] "}New quote request — ${lead.propertyAddress}`,
-    ) +
-    warning +
+    header(`New quote request — ${lead.propertyAddress}`) +
     `<table style="width:100%;border-collapse:collapse">
       ${row("Customer name", lead.fullName)}
       ${row("Phone", lead.phone ?? "Not provided")}
@@ -81,18 +96,29 @@ async function sendAdminEmail(lead: QuoteData, stored: boolean) {
       ${row("Requested service", lead.service ?? "Not specified")}
       ${row("Message", lead.message ?? "None")}
     </table>
-    <a href="${esc(mapsUrl)}" style="display:inline-block;margin-top:22px;background:#b51f24;color:#ffffff;text-decoration:none;padding:14px 22px;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase">Open in Google Maps</a>
-    <p style="margin:18px 0 0;font-size:12px;color:#77787b">Measure the property from the map view, then contact the customer using the details above.</p>
+
+    <div style="margin-top:24px">
+      ${button(mapsSearchUrl(lead.propertyAddress), "Open in Google Maps")}
+      ${button(googleCalendarUrl(lead), "Book the estimate", false)}
+    </div>
+
+    <p style="margin:14px 0 0;font-size:12px;color:#77787b;line-height:1.6">
+      Measure the property from the map view, then contact the customer.
+      &ldquo;Book the estimate&rdquo; opens a prefilled calendar event &mdash; pick the time
+      that suits you.
+    </p>
+
+    <p style="margin:22px 0 6px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#77787b">Plain text copy</p>
+    <pre style="margin:0;padding:14px 16px;background:#f4f2ed;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.6;white-space:pre-wrap;word-break:break-word">${esc(plain)}</pre>
   </div>`;
 
   const { error } = await client.emails.send({
     from,
-    to: BUSINESS.generalEmail,
+    to: RECIPIENTS,
     replyTo: lead.email ?? undefined,
-    // The prefix makes an unsaved lead obvious in the inbox list, before
-    // the message is even opened.
-    subject: `${stored ? "" : "[NOT SAVED] "}New TARMAX Quote Request — ${lead.propertyAddress}`,
+    subject: `New TARMAX Quote Request — ${lead.propertyAddress}`,
     html: shell(body),
+    text: `New quote request\n\n${plain}\n\nMap: ${mapsSearchUrl(lead.propertyAddress)}`,
   });
 
   if (error) {
@@ -136,18 +162,12 @@ async function sendCustomerEmail(lead: QuoteData) {
 }
 
 /**
- * Sends both messages. The admin notification is the one that matters; a
- * failed customer confirmation is logged but never fails the submission.
+ * Sends both messages. The admin notification is the one that matters — it is
+ * the lead record — so a failed customer confirmation is logged and ignored.
  */
-export async function sendQuoteEmails(
-  lead: QuoteData,
-  { stored }: { stored: boolean } = { stored: true },
-) {
+export async function sendQuoteEmails(lead: QuoteData) {
   if (!client) return { admin: false, customer: false, skipped: true as const };
 
-  const [admin, customer] = await Promise.all([
-    sendAdminEmail(lead, stored),
-    sendCustomerEmail(lead),
-  ]);
+  const [admin, customer] = await Promise.all([sendAdminEmail(lead), sendCustomerEmail(lead)]);
   return { admin, customer, skipped: false as const };
 }
