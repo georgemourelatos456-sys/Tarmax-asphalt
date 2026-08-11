@@ -22,17 +22,25 @@
   </filter>
   <filter id="rough" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
     <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="4" seed="31" result="warp"/>
-    <feDisplacementMap in="SourceGraphic" in2="warp" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="6" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
   <linearGradient id="vig" x1="0" y1="0" x2="0.35" y2="1">
     <stop offset="0" stop-color="#3A3A38" stop-opacity="0"/>
     <stop offset="1" stop-color="#3A3A38" stop-opacity="0.34"/>
   </linearGradient></defs>
   <rect width="1400" height="1000" fill="#8E8F8B" filter="url(#s)"/>
-  <g filter="url(#rough)" opacity="0.5">
-    <path d="M868.0,280.0 L854.3,315.7 L856.2,351.4 L833.9,387.1 L806.1,422.9 L778.0,458.6 L787.9,494.3 L791.9,530.0 L762.5,565.7 L780.6,601.4 L799.2,637.1 L774.3,672.9 L747.6,708.6 L748.1,744.3 L748.2,780.0" stroke="#5A5B5C" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-    <path d="M856.2,351.4 L893.7,378.2" stroke="#5A5B5C" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <path d="M791.9,530.0 L749.6,560.3" stroke="#5A5B5C" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <g filter="url(#rough)">
+    <path d="M812.0,-30.0 L791.4,30.0 L794.4,90.0 L760.9,150.0 L719.1,210.0 L677.1,270.0 L691.8,330.0 L697.9,390.0 L653.8,450.0 L680.9,510.0 L708.8,570.0 L671.5,630.0 L631.5,690.0 L632.2,750.0 L632.2,810.0 L657.9,870.0 L696.5,930.0 L709.5,990.0 L727.1,1050.0 L732.0,1110.0 L717.8,1170.0" stroke="#2B2C2D" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.8"/>
+    <path d="M760.9,150.0 L718.5,180.3" stroke="#3A3B3C" stroke-width="4.2" fill="none" stroke-linecap="round" opacity="0.65"/>
+    <path d="M708.8,570.0 L694.9,579.9" stroke="#3A3B3C" stroke-width="4.2" fill="none" stroke-linecap="round" opacity="0.65"/>
+    <path d="M657.9,870.0 L705.0,903.7" stroke="#3A3B3C" stroke-width="4.2" fill="none" stroke-linecap="round" opacity="0.65"/>
+    <path d="M696.5,930.0 L664.0,953.2" stroke="#3A3B3C" stroke-width="4.2" fill="none" stroke-linecap="round" opacity="0.65"/>
+    <path d="M336.0,-20.0 L321.4,43.9 L303.8,107.8 L320.1,171.7 L352.4,235.6 L365.6,299.4 L368.8,363.3 L402.5,427.2 L413.0,491.1 L395.8,555.0 L416.6,618.9 L429.1,682.8 L440.7,746.7 L427.1,810.6 L461.7,874.4 L472.7,938.3 L449.4,1002.2 L457.0,1066.1 L456.0,1130.0" stroke="#2B2C2D" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.8"/>
+    <path d="M413.0,491.1 L373.9,519.0" stroke="#3A3B3C" stroke-width="2.7" fill="none" stroke-linecap="round" opacity="0.65"/>
+    <path d="M449.4,1002.2 L465.8,1014.0" stroke="#3A3B3C" stroke-width="2.7" fill="none" stroke-linecap="round" opacity="0.65"/>
+    <path d="M1204.0,100.0 L1193.9,157.1 L1169.4,214.3 L1172.4,271.4 L1163.0,328.6 L1154.4,385.7 L1148.8,442.9 L1152.5,500.0 L1140.6,557.1 L1157.8,614.3 L1156.3,671.4 L1168.3,728.6 L1168.0,785.7 L1185.8,842.9 L1208.4,900.0" stroke="#2B2C2D" stroke-width="3.4" fill="none" stroke-linecap="round" opacity="0.8"/>
+    <path d="M1172.4,271.4 L1142.1,293.0" stroke="#3A3B3C" stroke-width="2.0" fill="none" stroke-linecap="round" opacity="0.65"/>
+    <path d="M1168.3,728.6 L1140.4,748.5" stroke="#3A3B3C" stroke-width="2.0" fill="none" stroke-linecap="round" opacity="0.65"/>
   </g>
   <rect width="1400" height="1000" fill="url(#vig)"/>
 </svg>

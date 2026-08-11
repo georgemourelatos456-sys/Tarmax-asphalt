@@ -29,11 +29,15 @@
     <stop offset="1" stop-color="#000000" stop-opacity="0.42"/>
   </linearGradient></defs>
   <rect width="1800" height="1000" fill="#141518" filter="url(#s)"/>
-  <g opacity="0.82" filter="url(#rough)">
-    <rect x="144" y="180" width="10" height="700" fill="#E8E4D8" opacity="0.55"/>
-    <rect x="576" y="180" width="10" height="700" fill="#E8E4D8" opacity="0.5"/>
-    <rect x="1008.0000000000001" y="180" width="10" height="700" fill="#E8E4D8" opacity="0.45"/>
-    <rect x="1440" y="180" width="10" height="700" fill="#E8E4D8" opacity="0.4"/>
+  <g filter="url(#rough)">
+    <path d="M216,300 L222,300 L-81,980 L-90,980 Z" fill="#E3B31C" opacity="0.62"/>
+    <path d="M450,300 L456,300 L255,980 L246,980 Z" fill="#E3B31C" opacity="0.63"/>
+    <path d="M684,300 L690,300 L591,980 L582,980 Z" fill="#E3B31C" opacity="0.64"/>
+    <path d="M918,300 L924,300 L927,980 L918,980 Z" fill="#E3B31C" opacity="0.65"/>
+    <path d="M1152,300 L1158,300 L1263,980 L1254,980 Z" fill="#E3B31C" opacity="0.66"/>
+    <path d="M1386,300 L1392,300 L1599,980 L1590,980 Z" fill="#E3B31C" opacity="0.67"/>
+    <path d="M1620,300 L1626,300 L1935,980 L1926,980 Z" fill="#E3B31C" opacity="0.68"/>
+    <path d="M108,300 L1692,300 L1692,308 L108,308 Z" fill="#E3B31C" opacity="0.5"/>
   </g>
   <rect width="1800" height="1000" fill="url(#vig)"/>
 </svg>
