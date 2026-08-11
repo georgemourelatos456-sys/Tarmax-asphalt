@@ -26,7 +26,7 @@ const SIDES = [
     cta: "Get a commercial quote",
     href: "/free-quote?property=commercial",
     surface: "lot" as SurfaceName,
-    alt: "A sealed commercial parking lot with fresh line markings",
+    alt: "Line-striping equipment on a freshly sealed and marked commercial parking lot",
   },
 ];
 

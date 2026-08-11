@@ -140,7 +140,7 @@ export const SERVICES: Service[] = [
       "Any managed parking area",
     ],
     surface: "lot",
-    imageAlt: "A sealed commercial parking lot with fresh line markings",
+    imageAlt: "Line-striping equipment on a freshly sealed and marked commercial parking lot",
   },
   {
     id: "residential",
