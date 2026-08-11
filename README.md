@@ -7,6 +7,10 @@ The site has one job: get a free quote request. A visitor should understand what
 TARMAX does in about five seconds and be able to send their property address in
 under a minute.
 
+**Going live?** Follow [`SETUP.md`](SETUP.md). Until Supabase and Resend are
+configured, a submitted quote is validated and logged but not stored or
+emailed — the form looks like it worked and nothing arrives.
+
 ## Stack
 
 Next.js 15 (App Router) · TypeScript · Tailwind v4 · Supabase (Postgres + Auth) ·
