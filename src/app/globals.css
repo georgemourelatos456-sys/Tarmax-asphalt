@@ -1,0 +1,408 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   TARMAX design tokens
+
+   Black dominates. Red is reserved for actions and the single highlight per
+   view — never for whole headings or section backgrounds.
+--------------------------------------------------------------------------- */
+
+@theme {
+  --color-ink: #0b0b0c;
+  --color-asphalt: #18191b;
+  --color-graphite: #27282b;
+  --color-red: #b51f24;
+  --color-red-deep: #7b1418;
+  --color-bone: #f4f2ed;
+  --color-muted: #9c9da0;
+
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --spacing-section: 7.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+
+   Everything below lives in an explicit cascade layer. Tailwind orders these
+   as theme < base < components < utilities, so a utility class always beats a
+   component class -- without that, `.btn` would override `hidden` and the nav
+   CTA would leak onto mobile.
+--------------------------------------------------------------------------- */
+
+@layer base {
+
+  :root {
+    /* Focus ring colour, flipped by .on-dark so the ring always clears 3:1. */
+    --ring: #0b0b0c;
+    /* Height of the fixed mobile action bar, so content can clear it. */
+    --action-bar: 4.25rem;
+    color-scheme: dark;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --action-bar: 0rem;
+    }
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Anchored sections must clear the sticky header. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Nothing on this site should ever scroll sideways. */
+    overflow-x: hidden;
+  }
+
+  /* Single global focus treatment. Two-tone so it survives any background. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  .on-dark {
+    --ring: #f4f2ed;
+  }
+
+  ::selection {
+    background: var(--color-red);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* ---------------------------------------------------------------------------
+     Type scale
+
+     Manrope carries every headline at heavy weight and tight tracking; Inter
+     handles body and the uppercase utility role. Sizes are fluid between the
+     375px and 1440px targets.
+  --------------------------------------------------------------------------- */
+
+  .display-xl,
+  .display-lg,
+  .display-md,
+  .display-sm {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  .display-xl {
+    font-size: clamp(2.5rem, 6.6vw, 5rem);
+    line-height: 0.97;
+  }
+
+  .display-lg {
+    font-size: clamp(2rem, 4.6vw, 3.5rem);
+    line-height: 1;
+  }
+
+  .display-md {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.028em;
+  }
+
+  .display-sm {
+    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  /* The utility role: eyebrows, data labels, button text. */
+  .label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .lede {
+    font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
+    line-height: 1.6;
+    max-width: 46ch;
+  }
+
+  .prose-tight {
+    max-width: 58ch;
+  }
+
+  /* ---------------------------------------------------------------------------
+     Layout
+  --------------------------------------------------------------------------- */
+
+  .shell {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .shell {
+      padding-inline: 3.5rem;
+    }
+  }
+
+  /* Vertical rhythm lives on one class only, so no element selector can cancel
+     it out later. Modifiers adjust, they don't redeclare. */
+  .section {
+    padding-block: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding-block: var(--spacing-section);
+    }
+  }
+
+  .section-tight {
+    padding-block: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-tight {
+      padding-block: 5rem;
+    }
+  }
+
+  /* ---------------------------------------------------------------------------
+     Buttons
+
+     Sharp-cornered, generous, and never smaller than the 44px touch target.
+  --------------------------------------------------------------------------- */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.875rem 1.5rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .btn-primary {
+    background-color: var(--color-red);
+    color: #fff;
+    border-color: var(--color-red);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-red-deep);
+    border-color: var(--color-red-deep);
+  }
+
+  /* Outline on dark surfaces. */
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--color-bone);
+    border-color: rgb(244 242 237 / 0.28);
+  }
+
+  .btn-ghost:hover:not(:disabled) {
+    border-color: var(--color-bone);
+    background-color: rgb(244 242 237 / 0.06);
+  }
+
+  /* Outline on bone surfaces. */
+  .btn-outline {
+    background-color: transparent;
+    color: var(--color-ink);
+    border-color: rgb(11 11 12 / 0.25);
+  }
+
+  .btn-outline:hover:not(:disabled) {
+    border-color: var(--color-ink);
+    background-color: rgb(11 11 12 / 0.05);
+  }
+
+  .btn-solid-dark {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    border-color: var(--color-ink);
+  }
+
+  .btn-solid-dark:hover:not(:disabled) {
+    background-color: var(--color-graphite);
+    border-color: var(--color-graphite);
+  }
+
+  /* A quiet text link that still reads as an action. */
+  .link-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 2.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: inherit;
+    transition: gap 180ms ease, color 180ms ease;
+  }
+
+  .link-action:hover {
+    gap: 0.9rem;
+    color: var(--color-red);
+  }
+
+  .link-action .arrow {
+    transition: transform 180ms ease;
+  }
+
+  /* ---------------------------------------------------------------------------
+     Hairlines
+  --------------------------------------------------------------------------- */
+
+  .rule-dark {
+    border-color: rgb(244 242 237 / 0.14);
+  }
+
+  .rule-light {
+    border-color: rgb(11 11 12 / 0.14);
+  }
+
+  /* ---------------------------------------------------------------------------
+     Motion
+
+     One reveal, used sparingly. Anything that moves must survive the
+     reduced-motion switch by simply being visible.
+  --------------------------------------------------------------------------- */
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .zoom-frame {
+    overflow: hidden;
+  }
+
+  .zoom-frame img {
+    transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .zoom-frame:hover img {
+    transform: scale(1.045);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .zoom-frame img,
+    .zoom-frame:hover img {
+      transition: none;
+      transform: none;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  /* ---------------------------------------------------------------------------
+     Forms
+  --------------------------------------------------------------------------- */
+
+  .field-input {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.875rem 1rem;
+    background-color: rgb(244 242 237 / 0.04);
+    border: 1px solid rgb(244 242 237 / 0.18);
+    border-radius: 2px;
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    transition: border-color 160ms ease, background-color 160ms ease;
+  }
+
+  .field-input::placeholder {
+    color: rgb(156 157 160 / 0.7);
+  }
+
+  .field-input:hover {
+    border-color: rgb(244 242 237 / 0.34);
+  }
+
+  .field-input[aria-invalid="true"] {
+    border-color: #e2565b;
+  }
+
+  textarea.field-input {
+    min-height: 7.5rem;
+    resize: vertical;
+  }
+
+  select.field-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%239C9DA0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+    padding-right: 2.75rem;
+  }
+}
