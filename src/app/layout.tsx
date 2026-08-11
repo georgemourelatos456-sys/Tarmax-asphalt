@@ -91,8 +91,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <Nav />
-        {/* Bottom padding clears the fixed mobile action bar. */}
-        <main id="main" style={{ paddingBottom: "var(--action-bar)" }}>
+        {/* Bottom padding clears the fixed mobile action bar. tabIndex -1 lets
+            the skip link actually move focus here; without it the browser
+            scrolls but keyboard focus stays at the top of the tab order, so
+            the next Tab sends the visitor straight back into the nav. */}
+        <main id="main" tabIndex={-1} style={{ paddingBottom: "var(--action-bar)" }}>
           {children}
         </main>
         <div style={{ paddingBottom: "var(--action-bar)" }}>
