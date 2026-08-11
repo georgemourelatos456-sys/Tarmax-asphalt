@@ -51,7 +51,7 @@ export function FreezeThaw() {
         <div className="lg:sticky lg:top-32 lg:self-start">
           <Eyebrow>Why maintenance matters</Eyebrow>
           <h2 className="display-lg mt-4">Alberta&rsquo;s freeze-thaw cycle</h2>
-          <p className="lede mt-5 text-bone/75">
+          <p className="lede mt-5 text-bone/75 lg:whitespace-nowrap">
             Every asphalt surface in Calgary is exposed to it.
           </p>
         </div>
