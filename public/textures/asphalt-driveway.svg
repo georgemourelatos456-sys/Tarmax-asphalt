@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" role="presentation">
+  <defs>
+  <filter id="s" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.10" numOctaves="6" seed="11" result="grain"/>
+    <feDiffuseLighting in="grain" lighting-color="#2A2C30" surfaceScale="3.3" diffuseConstant="1" result="lit">
+      <feDistantLight azimuth="228" elevation="52"/>
+    </feDiffuseLighting>
+    <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" seed="15" result="blotchRaw"/>
+    <feColorMatrix in="blotchRaw" type="saturate" values="0" result="blotchGray"/>
+    <feComponentTransfer in="blotchGray" result="blotch">
+      <feFuncR type="linear" slope="0.45" intercept="0.775"/>
+      <feFuncG type="linear" slope="0.45" intercept="0.775"/>
+      <feFuncB type="linear" slope="0.45" intercept="0.775"/>
+    </feComponentTransfer>
+    <feBlend in="lit" in2="blotch" mode="multiply" result="mixed"/>
+    <feComponentTransfer in="mixed" result="graded">
+      <feFuncR type="linear" slope="1" intercept="0"/>
+      <feFuncG type="linear" slope="1" intercept="0"/>
+      <feFuncB type="linear" slope="1" intercept="0"/>
+    </feComponentTransfer>
+    <feComposite in="graded" in2="SourceGraphic" operator="in"/>
+  </filter>
+  <linearGradient id="vig" x1="0" y1="0" x2="0.35" y2="1">
+    <stop offset="0" stop-color="#000000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000000" stop-opacity="0.42"/>
+  </linearGradient><linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0" stop-color="#7A7D85" stop-opacity="0.13"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.1"/>
+    </linearGradient></defs>
+  <rect width="1400" height="1000" fill="#141518" filter="url(#s)"/>
+  <rect width="1400" height="1000" fill="url(#vig)"/>
+  <rect width="1400" height="1000" fill="url(#sheen)"/>
+</svg>

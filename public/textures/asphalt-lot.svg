@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1000" viewBox="0 0 1800 1000" role="presentation">
+  <defs>
+  <filter id="s" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.10" numOctaves="6" seed="11" result="grain"/>
+    <feDiffuseLighting in="grain" lighting-color="#2A2C30" surfaceScale="3.3" diffuseConstant="1" result="lit">
+      <feDistantLight azimuth="228" elevation="52"/>
+    </feDiffuseLighting>
+    <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" seed="4" result="blotchRaw"/>
+    <feColorMatrix in="blotchRaw" type="saturate" values="0" result="blotchGray"/>
+    <feComponentTransfer in="blotchGray" result="blotch">
+      <feFuncR type="linear" slope="0.45" intercept="0.775"/>
+      <feFuncG type="linear" slope="0.45" intercept="0.775"/>
+      <feFuncB type="linear" slope="0.45" intercept="0.775"/>
+    </feComponentTransfer>
+    <feBlend in="lit" in2="blotch" mode="multiply" result="mixed"/>
+    <feComponentTransfer in="mixed" result="graded">
+      <feFuncR type="linear" slope="1" intercept="0"/>
+      <feFuncG type="linear" slope="1" intercept="0"/>
+      <feFuncB type="linear" slope="1" intercept="0"/>
+    </feComponentTransfer>
+    <feComposite in="graded" in2="SourceGraphic" operator="in"/>
+  </filter>
+  <filter id="rough" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="4" seed="88" result="warp"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <linearGradient id="vig" x1="0" y1="0" x2="0.35" y2="1">
+    <stop offset="0" stop-color="#000000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000000" stop-opacity="0.6"/>
+  </linearGradient></defs>
+  <rect width="1800" height="1000" fill="#141518" filter="url(#s)"/>
+  <g opacity="0.82" filter="url(#rough)">
+    <rect x="144" y="180" width="10" height="700" fill="#E8E4D8" opacity="0.55"/>
+    <rect x="576" y="180" width="10" height="700" fill="#E8E4D8" opacity="0.5"/>
+    <rect x="1008.0000000000001" y="180" width="10" height="700" fill="#E8E4D8" opacity="0.45"/>
+    <rect x="1440" y="180" width="10" height="700" fill="#E8E4D8" opacity="0.4"/>
+  </g>
+  <rect width="1800" height="1000" fill="url(#vig)"/>
+</svg>

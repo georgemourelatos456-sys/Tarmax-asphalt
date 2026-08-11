@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" role="presentation">
+  <defs>
+  <filter id="s" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.11" numOctaves="6" seed="23" result="grain"/>
+    <feDiffuseLighting in="grain" lighting-color="#8E8F8A" surfaceScale="4.4" diffuseConstant="1" result="lit">
+      <feDistantLight azimuth="228" elevation="52"/>
+    </feDiffuseLighting>
+    <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="3" seed="9" result="blotchRaw"/>
+    <feColorMatrix in="blotchRaw" type="saturate" values="0" result="blotchGray"/>
+    <feComponentTransfer in="blotchGray" result="blotch">
+      <feFuncR type="linear" slope="0.5" intercept="0.75"/>
+      <feFuncG type="linear" slope="0.5" intercept="0.75"/>
+      <feFuncB type="linear" slope="0.5" intercept="0.75"/>
+    </feComponentTransfer>
+    <feBlend in="lit" in2="blotch" mode="multiply" result="mixed"/>
+    <feComponentTransfer in="mixed" result="graded">
+      <feFuncR type="linear" slope="1.02" intercept="0.005"/>
+      <feFuncG type="linear" slope="1.02" intercept="0.005"/>
+      <feFuncB type="linear" slope="1.02" intercept="0.005"/>
+    </feComponentTransfer>
+    <feComposite in="graded" in2="SourceGraphic" operator="in"/>
+  </filter>
+  <filter id="rough" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="4" seed="31" result="warp"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <linearGradient id="vig" x1="0" y1="0" x2="0.35" y2="1">
+    <stop offset="0" stop-color="#3A3A38" stop-opacity="0"/>
+    <stop offset="1" stop-color="#3A3A38" stop-opacity="0.34"/>
+  </linearGradient></defs>
+  <rect width="1400" height="1000" fill="#8E8F8B" filter="url(#s)"/>
+  <g filter="url(#rough)" opacity="0.5">
+    <path d="M868.0,280.0 L854.3,315.7 L856.2,351.4 L833.9,387.1 L806.1,422.9 L778.0,458.6 L787.9,494.3 L791.9,530.0 L762.5,565.7 L780.6,601.4 L799.2,637.1 L774.3,672.9 L747.6,708.6 L748.1,744.3 L748.2,780.0" stroke="#5A5B5C" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M856.2,351.4 L893.7,378.2" stroke="#5A5B5C" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M791.9,530.0 L749.6,560.3" stroke="#5A5B5C" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  <rect width="1400" height="1000" fill="url(#vig)"/>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" role="presentation">
+  <defs>
+  <filter id="s" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.10" numOctaves="6" seed="11" result="grain"/>
+    <feDiffuseLighting in="grain" lighting-color="#2A2C30" surfaceScale="3.3" diffuseConstant="1" result="lit">
+      <feDistantLight azimuth="228" elevation="52"/>
+    </feDiffuseLighting>
+    <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" seed="4" result="blotchRaw"/>
+    <feColorMatrix in="blotchRaw" type="saturate" values="0" result="blotchGray"/>
+    <feComponentTransfer in="blotchGray" result="blotch">
+      <feFuncR type="linear" slope="0.45" intercept="0.775"/>
+      <feFuncG type="linear" slope="0.45" intercept="0.775"/>
+      <feFuncB type="linear" slope="0.45" intercept="0.775"/>
+    </feComponentTransfer>
+    <feBlend in="lit" in2="blotch" mode="multiply" result="mixed"/>
+    <feComponentTransfer in="mixed" result="graded">
+      <feFuncR type="linear" slope="1" intercept="0.008"/>
+      <feFuncG type="linear" slope="1" intercept="0.008"/>
+      <feFuncB type="linear" slope="1" intercept="0.008"/>
+    </feComponentTransfer>
+    <feComposite in="graded" in2="SourceGraphic" operator="in"/>
+  </filter>
+  <filter id="rough" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="4" seed="17" result="warp"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="14" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <linearGradient id="vig" x1="0" y1="0" x2="0.35" y2="1">
+    <stop offset="0" stop-color="#000000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000000" stop-opacity="0.45"/>
+  </linearGradient></defs>
+  <rect width="1400" height="1000" fill="#191A1D" filter="url(#s)"/>
+  <g filter="url(#rough)">
+    <path d="M616.0,-40.0 L588.2,17.5 L582.3,75.0 L622.3,132.5 L654.2,190.0 L639.6,247.5 L609.9,305.0 L657.3,362.5 L698.8,420.0 L699.3,477.5 L740.3,535.0 L758.6,592.5 L789.9,650.0 L766.3,707.5 L724.7,765.0 L669.7,822.5 L621.7,880.0 L614.5,937.5 L577.4,995.0 L566.3,1052.5 L530.8,1110.0" stroke="#4A4B4F" stroke-width="26" fill="none" stroke-linecap="round" opacity="0.55"/>
+    <path d="M616.0,-40.0 L588.2,17.5 L582.3,75.0 L622.3,132.5 L654.2,190.0 L639.6,247.5 L609.9,305.0 L657.3,362.5 L698.8,420.0 L699.3,477.5 L740.3,535.0 L758.6,592.5 L789.9,650.0 L766.3,707.5 L724.7,765.0 L669.7,822.5 L621.7,880.0 L614.5,937.5 L577.4,995.0 L566.3,1052.5 L530.8,1110.0" stroke="#0A0A0C" stroke-width="13" fill="none" stroke-linecap="round"/>
+    <path d="M616.0,-40.0 L588.2,17.5 L582.3,75.0 L622.3,132.5 L654.2,190.0 L639.6,247.5 L609.9,305.0 L657.3,362.5 L698.8,420.0 L699.3,477.5 L740.3,535.0 L758.6,592.5 L789.9,650.0 L766.3,707.5 L724.7,765.0 L669.7,822.5 L621.7,880.0 L614.5,937.5 L577.4,995.0 L566.3,1052.5 L530.8,1110.0" stroke="#000000" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M582.3,75.0 L618.1,100.6" stroke="#3E3F43" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <path d="M582.3,75.0 L618.1,100.6" stroke="#08080A" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M740.3,535.0 L763.7,551.7" stroke="#3E3F43" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <path d="M740.3,535.0 L763.7,551.7" stroke="#08080A" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M758.6,592.5 L779.8,607.6" stroke="#3E3F43" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <path d="M758.6,592.5 L779.8,607.6" stroke="#08080A" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M669.7,822.5 L712.9,853.3" stroke="#3E3F43" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <path d="M669.7,822.5 L712.9,853.3" stroke="#08080A" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>
+  <rect width="1400" height="1000" fill="url(#vig)"/>
+</svg>
