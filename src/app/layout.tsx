@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Manrope } from "next/font/google";
+import localFont from "next/font/local";
 import { BUSINESS, SITE_URL } from "@/config/business";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
@@ -7,18 +7,25 @@ import { MobileActionBar } from "@/components/layout/MobileActionBar";
 import { localBusinessSchema } from "@/lib/schema";
 import "./globals.css";
 
-const manrope = Manrope({
-  subsets: ["latin"],
+/**
+ * Fonts are self-hosted (see scripts/fetch-fonts.mjs) so the build has no
+ * network dependency and visitors make no third-party request. Both are
+ * variable woff2 covering the latin subset — about 72KB for the pair.
+ */
+const manrope = localFont({
+  src: "../fonts/Manrope-Variable.woff2",
   variable: "--font-manrope",
-  weight: ["500", "700", "800"],
+  weight: "500 800",
   display: "swap",
+  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
 });
 
-const inter = Inter({
-  subsets: ["latin"],
+const inter = localFont({
+  src: "../fonts/Inter-Variable.woff2",
   variable: "--font-inter",
-  weight: ["400", "500", "600", "700"],
+  weight: "400 700",
   display: "swap",
+  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
 });
 
 export const metadata: Metadata = {

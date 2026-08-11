@@ -34,7 +34,7 @@ export const PROBLEMS: Problem[] = [
     body: "Sunlight, weather, traffic and oxidation dry the surface over time. The binder that held it dark and tight gives way, and the pavement fades toward grey.",
     signs: ["Faded grey appearance", "Dry, porous surface", "Visible oxidation", "General surface wear"],
     solution: "Sealcoating",
-    solutionHref: "/services#sealcoating",
+    solutionHref: "/driveway-sealcoating",
     cta: "Learn about sealcoating",
     surface: "oxidized",
     imageAlt: "Sun-faded asphalt with an oxidized, grey, porous surface",
@@ -82,9 +82,12 @@ export const SERVICES: Service[] = [
     id: "sealcoating",
     name: "Sealcoating",
     summary:
-      "Professional water-based asphalt emulsion sealcoating to help protect and refresh suitable asphalt surfaces.",
+      "Professional penetrating sealcoating to help protect and refresh suitable asphalt surfaces.",
+    // NOTE: the product described here is Black Mac, an oil-based penetrating
+    // sealer manufactured in Canada. See /driveway-sealcoating for the full
+    // product detail and how it differs from coal tar and surface emulsions.
     detail:
-      "We apply a water-based asphalt emulsion sealer, sourced locally in Calgary, to suitable asphalt. It helps protect aging asphalt, helps reduce surface deterioration and restores a darker, maintained appearance. Sealcoating is preventative maintenance — it does not structurally restore damaged asphalt.",
+      "We apply Black Mac, an oil-based penetrating sealer sourced locally and manufactured in Canada for Canadian conditions. Rather than forming a film on top, it soaks into the surface and reconditions oxidized binder, which helps protect aging asphalt, helps reduce surface deterioration and restores a darker, maintained appearance. Sealcoating is preventative maintenance — it does not structurally restore damaged asphalt.",
     bestFor: [
       "Faded or oxidized asphalt",
       "Aging surfaces still in sound condition",

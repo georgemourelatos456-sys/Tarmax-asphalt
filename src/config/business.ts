@@ -77,6 +77,6 @@ export const NAV_LINKS = [
   { label: "Services", href: "/services" },
   { label: "Why Maintenance Matters", href: "/#freeze-thaw" },
   { label: "Commercial", href: "/commercial" },
-  { label: "About", href: "/#mission" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/#contact" },
 ] as const;

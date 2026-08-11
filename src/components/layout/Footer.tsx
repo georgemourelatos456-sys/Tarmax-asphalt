@@ -11,12 +11,18 @@ const SERVICE_LINKS = [
   { label: "Residential Driveways", href: "/services#residential" },
 ];
 
+const COMPANY_LINKS = [
+  { label: "Driveway Sealcoating Guide", href: "/driveway-sealcoating" },
+  { label: "Why We Started TARMAX", href: "/about" },
+  { label: "Get a Free Quote", href: "/free-quote" },
+];
+
 export function Footer() {
   return (
     <footer className="on-dark bg-ink">
       <Seam />
       <div className="shell section-tight">
-        <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1.4fr]">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr_1.3fr]">
           <div>
             <Wordmark />
             <p className="mt-5 max-w-xs text-sm text-muted">{BUSINESS.tagline}</p>
@@ -32,6 +38,19 @@ export function Footer() {
                 <li key={s.href}>
                   <Link href={s.href} className="text-sm text-bone/80 transition-colors hover:text-bone">
                     {s.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="Company">
+            <h2 className="label mb-4 text-[0.625rem] text-muted">Company</h2>
+            <ul className="flex flex-col gap-2.5">
+              {COMPANY_LINKS.map((c) => (
+                <li key={c.href}>
+                  <Link href={c.href} className="text-sm text-bone/80 transition-colors hover:text-bone">
+                    {c.label}
                   </Link>
                 </li>
               ))}
