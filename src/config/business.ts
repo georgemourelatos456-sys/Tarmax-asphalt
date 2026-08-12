@@ -45,7 +45,15 @@ export const BUSINESS = {
   regionName: "Alberta",
   country: "CA",
   serviceArea: "Calgary and surrounding communities",
-  generalEmail: "admin@tarmaxasphalt.com",
+  /**
+   * The only email address published on the site. One public address means a
+   * customer never has to guess who to write to, and TARMAX can change who
+   * actually reads it without the website going stale.
+   *
+   * The directors' own addresses stay in DIRECTORS below: they still receive
+   * every lead, they are simply not printed anywhere a visitor can see.
+   */
+  generalEmail: "sales@tarmaxasphalt.com",
   directors: DIRECTORS,
   /** Primary phone used for single-number contexts such as schema.org. */
   primaryPhone: DIRECTORS[0].phone,

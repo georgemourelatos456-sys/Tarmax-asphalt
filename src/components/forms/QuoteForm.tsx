@@ -314,7 +314,7 @@ function SubmissionError({ message }: { message: string }) {
       <p className="font-semibold text-bone">{message}</p>
       <ul className="mt-4 flex flex-col gap-2 text-sm">
         {DIRECTORS.map((d) => (
-          <li key={d.email} className="flex flex-wrap items-baseline gap-x-3">
+          <li key={d.name} className="flex flex-wrap items-baseline gap-x-3">
             <span className="text-muted">{d.firstName}</span>
             <a href={telHref(d)} className="font-display font-bold text-bone hover:text-alert">
               {d.phone}

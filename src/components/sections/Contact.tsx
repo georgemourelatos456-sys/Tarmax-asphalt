@@ -18,7 +18,7 @@ export function Contact() {
 
         <div className="mt-14 grid gap-px border border-ink/15 bg-ink/15 md:mt-20 md:grid-cols-2">
           {DIRECTORS.map((d) => (
-            <Reveal key={d.email} className="bg-bone p-7 md:p-10">
+            <Reveal key={d.name} className="bg-bone p-7 md:p-10">
               <p className="display-sm">{d.name}</p>
               <p className="label mt-1 text-[0.625rem] text-ink/65">{d.role}</p>
 
@@ -36,25 +36,14 @@ export function Contact() {
                     </a>
                   </dd>
                 </div>
-                <div className="flex flex-wrap items-center gap-x-3">
-                  <dt className="label text-[0.625rem] text-ink/65">Email</dt>
-                  <dd>
-                    <a
-                      href={mailtoHref(d.email, EMAIL_SUBJECT)}
-                      className="inline-flex min-h-11 items-center break-all hover:text-red"
-                    >
-                      {d.email}
-                    </a>
-                  </dd>
-                </div>
               </dl>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a href={telHref(d)} className="btn btn-solid-dark flex-1">
+              {/* Directors are reachable by phone. Email goes to the single
+                  published address below, so a customer never has to choose
+                  which of two people to write to. */}
+              <div className="mt-8">
+                <a href={telHref(d)} className="btn btn-solid-dark w-full">
                   Call {d.firstName}
-                </a>
-                <a href={mailtoHref(d.email, EMAIL_SUBJECT)} className="btn btn-outline flex-1">
-                  Email {d.firstName}
                 </a>
               </div>
             </Reveal>
@@ -63,7 +52,7 @@ export function Contact() {
 
         <Reveal className="mt-6 flex flex-col gap-5 border border-ink/15 p-7 sm:flex-row sm:items-center sm:justify-between md:p-10">
           <div>
-            <p className="label text-[0.625rem] text-ink/65">General enquiries</p>
+            <p className="label text-[0.625rem] text-ink/65">Email</p>
             <a
               href={mailtoHref(BUSINESS.generalEmail, EMAIL_SUBJECT)}
               className="display-sm mt-2 inline-flex min-h-11 items-center break-all hover:text-red"

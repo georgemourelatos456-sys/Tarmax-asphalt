@@ -61,20 +61,14 @@ export function Footer() {
             <h2 className="label mb-4 text-[0.625rem] text-muted">Contact</h2>
             <ul className="flex flex-col gap-4">
               {DIRECTORS.map((d) => (
-                <li key={d.email}>
+                <li key={d.name}>
                   <p className="text-sm font-semibold text-bone">
                     {d.name}
                     <span className="ml-2 font-normal text-muted">{d.role}</span>
                   </p>
-                  <p className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                  <p className="mt-1 text-sm">
                     <a href={telHref(d)} className="text-bone/85 transition-colors hover:text-alert">
                       {d.phone}
-                    </a>
-                    <a
-                      href={mailtoHref(d.email)}
-                      className="break-all text-bone/85 transition-colors hover:text-alert"
-                    >
-                      {d.email}
                     </a>
                   </p>
                 </li>

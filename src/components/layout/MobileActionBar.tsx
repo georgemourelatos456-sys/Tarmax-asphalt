@@ -53,7 +53,7 @@ export function MobileActionBar() {
           <p className="label mb-3 text-muted">Call a director</p>
           <ul className="flex flex-col gap-2">
             {DIRECTORS.map((d) => (
-              <li key={d.email}>
+              <li key={d.name}>
                 <a
                   href={telHref(d)}
                   className="flex min-h-[3.25rem] items-center justify-between border border-white/14 px-4"

@@ -147,7 +147,10 @@ export default function DrivewaySealcoatingPage() {
       <section className="section bg-bone text-ink">
         <div className="shell">
           <Eyebrow tone="light">The arithmetic</Eyebrow>
-          <h2 className="display-lg mt-4 max-w-[18ch]">Maintenance is the cheap decision.</h2>
+          {/* Not "the cheap decision". The numbers below already make the cost
+              argument; saying it in the headline attaches "cheap" to the work
+              itself, which is the opposite of how TARMAX sells. */}
+          <h2 className="display-lg mt-4 max-w-[18ch]">Maintenance is the right decision.</h2>
 
           <div className="mt-12 grid gap-8 md:grid-cols-3">
             <Reveal>

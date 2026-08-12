@@ -41,7 +41,7 @@ export function QuoteCta() {
               <dd className="mt-2 flex flex-wrap gap-x-6 gap-y-2">
                 {DIRECTORS.map((d) => (
                   <a
-                    key={d.email}
+                    key={d.name}
                     href={telHref(d)}
                     className="font-display inline-flex min-h-11 items-center text-lg font-bold text-bone hover:text-alert"
                   >

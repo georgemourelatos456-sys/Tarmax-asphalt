@@ -32,7 +32,7 @@ export default function FreeQuotePage() {
               <h2 className="label text-[0.6875rem] text-muted">Call</h2>
               <ul className="mt-5 flex flex-col gap-4">
                 {DIRECTORS.map((d) => (
-                  <li key={d.email} className="border border-white/14 p-5">
+                  <li key={d.name} className="border border-white/14 p-5">
                     <p className="font-semibold">{d.name}</p>
                     <a
                       href={telHref(d)}
@@ -48,20 +48,16 @@ export default function FreeQuotePage() {
               </ul>
             </section>
 
+            {/* One address, not three. A visitor deciding which of several
+                inboxes to write to is a visitor who writes to none of them. */}
             <section>
               <h2 className="label text-[0.6875rem] text-muted">Email</h2>
-              <ul className="mt-5 flex flex-col gap-2.5">
-                {[...DIRECTORS.map((d) => d.email), BUSINESS.generalEmail].map((address) => (
-                  <li key={address}>
-                    <a
-                      href={mailtoHref(address, EMAIL_SUBJECT)}
-                      className="inline-flex min-h-11 items-center break-all text-bone/85 underline decoration-white/25 underline-offset-4 transition-colors hover:text-alert"
-                    >
-                      {address}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <a
+                href={mailtoHref(BUSINESS.generalEmail, EMAIL_SUBJECT)}
+                className="mt-5 inline-flex min-h-11 items-center break-all text-bone/85 underline decoration-white/25 underline-offset-4 transition-colors hover:text-alert"
+              >
+                {BUSINESS.generalEmail}
+              </a>
             </section>
           </div>
 

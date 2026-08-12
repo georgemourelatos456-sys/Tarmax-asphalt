@@ -122,15 +122,19 @@ export default function AboutPage() {
 
           <div className="mt-12 grid gap-px border border-ink/15 bg-ink/15 md:grid-cols-2">
             {DIRECTORS.map((d) => (
-              <div key={d.email} className="bg-bone p-7 md:p-10">
+              <div key={d.name} className="bg-bone p-7 md:p-10">
                 <p className="display-sm">{d.name}</p>
                 <p className="label mt-1 text-[0.625rem] text-ink/65">{d.role}</p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                   <a href={telHref(d)} className="btn btn-solid-dark flex-1">
                     Call {d.firstName}
                   </a>
-                  <a href={mailtoHref(d.email, "Asphalt enquiry")} className="btn btn-outline flex-1">
-                    Email {d.firstName}
+                  {/* Email goes to the one published address, not to a person. */}
+                  <a
+                    href={mailtoHref(BUSINESS.generalEmail, "Asphalt enquiry")}
+                    className="btn btn-outline flex-1"
+                  >
+                    Email TARMAX
                   </a>
                 </div>
               </div>
