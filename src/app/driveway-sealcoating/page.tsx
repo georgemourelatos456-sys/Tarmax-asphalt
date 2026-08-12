@@ -5,6 +5,7 @@ import { Surface } from "@/components/ui/Surface";
 import { Arrow, DataLabel, Eyebrow } from "@/components/ui/Labels";
 import { Reveal } from "@/components/ui/Reveal";
 import { Seam } from "@/components/ui/Seam";
+import { AlligatorCracks } from "@/components/ui/AlligatorCracks";
 import { FinalCta } from "@/components/sections/FinalCta";
 
 export const metadata: Metadata = {
@@ -255,22 +256,36 @@ export default function DrivewaySealcoatingPage() {
         <div className="section shell">
           <Eyebrow>The product</Eyebrow>
           <h2 className="display-lg mt-4 max-w-[16ch]">Stitches, not a bandaid.</h2>
-          <p className="lede mt-6 text-bone/75">
-            A sealer that sits on top of the pavement is a waterproof layer over a problem. Black
-            Mac soaks in and reconditions the binder, so the asphalt can move the way it is supposed
-            to.
-          </p>
 
-          <div className="mt-14 max-w-[62ch]">
-            <p className="text-bone/75">
-              Blackmac is a penetrating sealer manufactured in Canada by McAsphalt Industries. It
-              soaks into the surface and re-moisturizes the asphalt rather than sitting on top of
-              it, so the pavement regains flexibility and can withstand ground movement.
-            </p>
-            <p className="mt-5 text-bone/75">
-              We source it locally rather than buying buckets off a hardware store shelf, because a
-              chemically balanced product built for freeze-thaw is the entire point.
-            </p>
+          {/* The copy previously ran full width with a 3.5rem hole between the
+              lede and the detail, which read as a mistake rather than a pause.
+              One column of prose at a comfortable measure, the cracking figure
+              filling the space beside it, and an even rhythm between
+              paragraphs. */}
+          <div className="mt-10 grid items-start gap-10 md:mt-12 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
+            <div className="max-w-[54ch]">
+              <p className="lede text-bone/75">
+                A sealer that sits on top of the pavement is a waterproof layer over a problem.
+                Black Mac soaks in and reconditions the binder, so the asphalt can move the way it
+                is supposed to.
+              </p>
+              <p className="mt-6 text-bone/75">
+                Blackmac is a penetrating sealer manufactured in Canada by McAsphalt Industries. It
+                soaks into the surface and re-moisturizes the asphalt rather than sitting on top of
+                it, so the pavement regains flexibility and can withstand ground movement.
+              </p>
+              <p className="mt-6 text-bone/75">
+                We source it locally rather than buying buckets off a hardware store shelf, because
+                a chemically balanced product built for freeze-thaw is the entire point.
+              </p>
+            </div>
+
+            <figure className="relative -mx-6 md:mx-0">
+              <AlligatorCracks className="h-auto w-full" />
+              <figcaption className="label mt-4 px-6 text-[0.625rem] text-muted md:px-0">
+                Alligator cracking — what a surface does once the binder can no longer flex
+              </figcaption>
+            </figure>
           </div>
 
           <h3 className="display-sm mt-16">How it compares</h3>

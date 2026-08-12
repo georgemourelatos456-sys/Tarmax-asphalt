@@ -11,7 +11,8 @@
     "textures": "node scripts/generate-textures.mjs",
     "build:cf": "node scripts/resolve-surfaces.mjs && opennextjs-cloudflare build",
     "preview:cf": "npm run build:cf && opennextjs-cloudflare preview",
-    "deploy:cf": "npm run build:cf && opennextjs-cloudflare deploy"
+    "deploy:cf": "npm run build:cf && opennextjs-cloudflare deploy",
+    "cracks": "node scripts/generate-cracks.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
