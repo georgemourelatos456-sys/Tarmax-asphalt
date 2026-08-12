@@ -67,17 +67,23 @@ export const SITE_URL = (
 ).replace(/\/$/, "");
 
 /**
- * Safety data sheet for the sealer, hosted by the manufacturer.
+ * The sealer TARMAX applies.
  *
- * Deliberately linked rather than copied into /public: SDS documents get
- * revised, and serving a stale one is worse than serving none. If McAsphalt
- * moves the file, update this single constant.
+ * `sdsUrl` is intentionally empty. It previously pointed at McAsphalt's SDS for
+ * a solvent-cutback Blackmac — a different product from the emulsion actually
+ * used here. Publishing the wrong safety sheet is worse than publishing none:
+ * a customer following that link would have read a hazard profile for
+ * something that never touches their driveway.
+ *
+ * To restore the link, put the URL of the *Blackmac Emulsion Sealer* sheet
+ * here. The FAQ switches from "available on request" to a direct link on its
+ * own once this is set. Link to McAsphalt's copy rather than a saved one, so
+ * visitors always get the current revision.
  */
 export const SEALER = {
-  product: "Blackmac",
+  product: "Blackmac Emulsion Sealer",
   manufacturer: "McAsphalt Industries",
-  sdsUrl:
-    "https://mcasphalt.com/wp-content/uploads/download-manager-files/1681505199wpdm_Blackmac.pdf",
+  sdsUrl: "",
 } as const;
 
 /** `tel:` href for a contact. */

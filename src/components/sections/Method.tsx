@@ -13,7 +13,7 @@ const DECISIONS = [
   {
     kicker: "The material",
     title: "The sealer is the job.",
-    body: "A sealer that sits on top of the pavement is a film waiting to crack. We use Blackmac, a penetrating sealer made in Canada by McAsphalt, because it soaks in and reconditions the binder instead of coating it. No coal tar. It is the difference between stitches and a bandaid.",
+    body: "Coal tar and acrylic put a different material over the top of your driveway and hope it holds. We use Blackmac Emulsion Sealer, made in Canada by McAsphalt — asphalt carried in water, not in a petroleum solvent. No coal tar, no solvent odour. Resealing asphalt with asphalt is the difference between stitches and a bandaid.",
     link: { label: "How the sealer works", href: "/driveway-sealcoating" },
   },
   {

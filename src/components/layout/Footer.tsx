@@ -5,8 +5,8 @@ import { Seam } from "@/components/ui/Seam";
 
 const SERVICE_LINKS = [
   { label: "Sealcoating", href: "/services#sealcoating" },
-  { label: "Hot Rubber Crack Sealing", href: "/services#crack-sealing" },
-  { label: "Infrared Asphalt Repair", href: "/services#infrared" },
+  { label: "Hot Rubber Crack Sealing", href: "/crack-sealing" },
+  { label: "Infrared Asphalt Repair", href: "/infrared-repair" },
   { label: "Parking Lot Maintenance", href: "/commercial" },
   { label: "Residential Driveways", href: "/services#residential" },
 ];

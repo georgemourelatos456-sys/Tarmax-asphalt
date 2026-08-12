@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SEALER, SITE_URL } from "@/config/business";
+import { BUSINESS, SEALER, SITE_URL, mailtoHref } from "@/config/business";
 import { Surface } from "@/components/ui/Surface";
 import { Arrow, DataLabel, Eyebrow } from "@/components/ui/Labels";
 import { Reveal } from "@/components/ui/Reveal";
@@ -11,7 +11,7 @@ import { FinalCta } from "@/components/sections/FinalCta";
 export const metadata: Metadata = {
   title: "Driveway Sealcoating in Calgary — How It Works and What It Costs You Not To",
   description:
-    "Why Calgary driveways fail early, what sealcoating actually does, and how a penetrating sealer differs from coal tar and surface emulsions. Free estimates from TARMAX Asphalt.",
+    "Why Calgary driveways fail early, what sealcoating actually does, and how a water-based asphalt emulsion compares with coal tar, acrylic and solvent sealers. Free estimates from TARMAX Asphalt.",
   alternates: { canonical: "/driveway-sealcoating" },
 };
 
@@ -23,21 +23,34 @@ export const metadata: Metadata = {
  * says so where it matters.
  */
 
+/**
+ * The four things a Calgary driveway actually gets sealed with.
+ *
+ * Written as behaviour rather than chemistry, because a homeowner is choosing
+ * between outcomes. Each row says what the material does on a surface that
+ * freezes and thaws forty times a winter, which is the only test that matters
+ * here.
+ */
 const COMPARISON = [
   {
     product: "Coal tar",
     behaviour:
-      "Forms a hard, brittle film on the surface. That film cracks under freeze-thaw movement. High in polycyclic aromatic hydrocarbons (PAHs) and increasingly restricted for environmental reasons.",
+      "Forms a hard, brittle film on the surface. That film cracks under freeze-thaw movement. High in polycyclic aromatic hydrocarbons (PAHs), which is why a growing number of jurisdictions restrict or ban it outright.",
   },
   {
-    product: "Water-based emulsion",
+    product: "Acrylic",
     behaviour:
-      "Better suited to cold climates than coal tar, and the option most bucket products off a hardware store shelf fall into. It still sits on top of the pavement and wears off comparatively quickly.",
+      "Water-based and low in odour, and it holds colour well. But it is a thin decorative film with limited fuel and oil resistance, and it is the most expensive option per square foot — so on a working driveway it tends to need redoing sooner than its price suggests.",
   },
   {
-    product: "Blackmac (what we use)",
+    product: "Oil-based / solvent",
     behaviour:
-      "Soaks into the asphalt instead of forming a film, reconditioning oxidized binder so the surface regains flexibility. Contains no coal tar. Cures to a matte black finish that resists oil, gasoline and salt.",
+      "Cuts asphalt with a petroleum solvent so it penetrates. It also carries a strong odour for days, a long cure, real handling hazards while wet, and VOC limits that restrict where and when it can be used at all.",
+  },
+  {
+    product: "Blackmac Emulsion Sealer (what we use)",
+    behaviour:
+      "A water-based asphalt emulsion made in Canada by McAsphalt Industries. No coal tar and no petroleum solvent carrier, so there is no solvent odour and no VOC problem — the water flashes off and asphalt is what stays on the driveway. It cures to a matte black finish that stands up to Alberta freeze-thaw, oil, gasoline and road salt.",
     highlight: true,
   },
 ];
@@ -48,8 +61,8 @@ const BENEFITS = [
     body: "The composition helps asphalt tolerate contraction in deep cold and expansion in summer heat. Brittle films crack; a flexible surface moves with the ground.",
   },
   {
-    title: "Protection that penetrates",
-    body: "Because it soaks in, it strengthens the top layer rather than covering it. That slows raveling and keeps water out of micro-voids, which is where freeze-thaw damage starts.",
+    title: "Seals the surface against water",
+    body: "It closes the micro-voids that open as asphalt ages, which is exactly where freeze-thaw damage starts — water gets in, freezes, and levers the surface apart. Keeping water out is most of the job.",
   },
   {
     title: "Long-lasting coverage",
@@ -60,8 +73,8 @@ const BENEFITS = [
     body: "It brings back the rich black of fresh pavement. The surface stays glossy for about a week, then settles into a durable matte finish.",
   },
   {
-    title: "No coal tar",
-    body: "Coal-tar sealers are high in polycyclic aromatic hydrocarbons and increasingly restricted. Blackmac contains none.",
+    title: "No coal tar, no solvent carrier",
+    body: "Coal-tar sealers are high in polycyclic aromatic hydrocarbons and increasingly restricted. Solvent-based sealers bring VOCs and days of odour. This is asphalt carried in water, so neither applies.",
   },
 ];
 
@@ -74,19 +87,19 @@ const EXPECTATIONS = [
   {
     question: "What exactly is in the sealer?",
     answer:
-      "Blackmac, manufactured in Canada by McAsphalt Industries. Its safety data sheet lists asphalt/bitumen (40–70%) carried in hydrotreated heavy naphtha (30–60%). The carrier is what lets it soak into the surface instead of forming a film; it flashes off as the sealer cures and the bitumen stays in the pavement. There is no coal tar in it.",
+      "Blackmac Emulsion Sealer, manufactured in Canada by McAsphalt Industries. It is an asphalt emulsion — asphalt carried in water rather than in a petroleum solvent. The water evaporates as the sealer cures and the asphalt is what stays on the driveway. There is no coal tar in it.",
   },
   {
     question: "Can I see the safety data sheet?",
     /** Rendered with a real link below; this plain text is for FAQ schema. */
     answer:
-      "Yes. McAsphalt publishes the Blackmac safety data sheet and we link to their copy directly, so you are always reading the current revision rather than one we saved.",
+      "Yes. Ask us and we will send you McAsphalt's current safety data sheet for it. We would rather hand you the live document than host a copy here that quietly goes out of date.",
     sdsLink: true,
   },
   {
     question: "Is the sealer safe once it has cured?",
     answer:
-      "The handling precautions apply to the wet product, which is why application is our job and not a DIY one. Our crews are trained in handling it. Once cured, the surface is a normal sealed driveway.",
+      "Once cured, the surface is a normal sealed driveway. Handling precautions apply to the wet product, as they do with any coating, which is one reason application is our job rather than a DIY one.",
   },
   {
     question: "How long before I can use the driveway?",
@@ -96,12 +109,12 @@ const EXPECTATIONS = [
   {
     question: "What about the smell?",
     answer:
-      "There is a distinct asphaltic odour during application and while it cures. It dissipates within a day or two.",
+      "Mild, and nothing like a solvent-based sealer. There is a faint asphaltic smell while it is wet that goes off as it dries. Nobody needs to leave the house for it.",
   },
   {
     question: "What if it gets somewhere it shouldn't?",
     answer:
-      "The product is not water-soluble, so overspray does not simply wash off. That is exactly why masking and preparation are part of the job rather than an afterthought.",
+      "Once it has cured it is asphalt, and it does not come off a garage door or a paving stone easily. Masking and preparation are part of the job for that reason rather than being an afterthought.",
   },
 ];
 
@@ -265,18 +278,19 @@ export default function DrivewaySealcoatingPage() {
           <div className="mt-10 grid items-start gap-10 md:mt-12 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
             <div className="max-w-[54ch]">
               <p className="lede text-bone/75">
-                A sealer that sits on top of the pavement is a waterproof layer over a problem.
-                Black Mac soaks in and reconditions the binder, so the asphalt can move the way it
-                is supposed to.
+                Coal tar and acrylic put a different material over the top of your driveway and
+                hope it holds. We reseal asphalt with asphalt.
               </p>
               <p className="mt-6 text-bone/75">
-                Blackmac is a penetrating sealer manufactured in Canada by McAsphalt Industries. It
-                soaks into the surface and re-moisturizes the asphalt rather than sitting on top of
-                it, so the pavement regains flexibility and can withstand ground movement.
+                Blackmac Emulsion Sealer is made in Canada by McAsphalt Industries. It is an asphalt
+                emulsion — asphalt carried in water instead of a petroleum solvent. The water
+                evaporates as it cures and what stays on the driveway is the same material the
+                surface is already made of, which is why it moves with the pavement instead of
+                cracking off it.
               </p>
               <p className="mt-6 text-bone/75">
                 We source it locally rather than buying buckets off a hardware store shelf, because
-                a chemically balanced product built for freeze-thaw is the entire point.
+                a product built for freeze-thaw is the entire point.
               </p>
             </div>
 
@@ -339,18 +353,32 @@ export default function DrivewaySealcoatingPage() {
                   <dt className="display-sm">{item.question}</dt>
                   <dd className="max-w-[58ch] text-bone/70">
                     {item.answer}
-                    {"sdsLink" in item && (
-                      <a
-                        href={SEALER.sdsUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="link-action mt-2 flex text-bone"
-                      >
-                        {SEALER.product} safety data sheet (PDF)
-                        <Arrow />
-                        <span className="sr-only"> — opens on the {SEALER.manufacturer} website</span>
-                      </a>
-                    )}
+                    {/* Links to the manufacturer's sheet when one is configured;
+                        offers it by email until then. Never links a guess. */}
+                    {"sdsLink" in item &&
+                      (SEALER.sdsUrl ? (
+                        <a
+                          href={SEALER.sdsUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="link-action mt-2 flex text-bone"
+                        >
+                          {SEALER.product} safety data sheet (PDF)
+                          <Arrow />
+                          <span className="sr-only">
+                            {" "}
+                            — opens on the {SEALER.manufacturer} website
+                          </span>
+                        </a>
+                      ) : (
+                        <a
+                          href={mailtoHref(BUSINESS.generalEmail, `${SEALER.product} safety data sheet`)}
+                          className="link-action mt-2 flex text-bone"
+                        >
+                          Request the safety data sheet
+                          <Arrow />
+                        </a>
+                      ))}
                   </dd>
                 </div>
               </Reveal>

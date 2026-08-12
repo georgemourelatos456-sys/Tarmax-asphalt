@@ -47,7 +47,7 @@ export const PROBLEMS: Problem[] = [
     body: "Cracks are how water gets in. Once moisture reaches the layers underneath, seasonal temperature swings and continued traffic can drive further deterioration.",
     signs: ["Open cracks", "Widening crack edges", "Water pooling along the crack", "Vegetation growth"],
     solution: "Hot rubber crack sealing",
-    solutionHref: "/services#crack-sealing",
+    solutionHref: "/crack-sealing",
     cta: "Learn about crack sealing",
     surface: "crack",
     imageAlt: "A wide open crack running across dark asphalt pavement",
@@ -60,7 +60,7 @@ export const PROBLEMS: Problem[] = [
     body: "Potholes and depressions generally keep deteriorating under traffic, moisture and weather. A small damaged area left alone tends to become a larger one.",
     signs: ["Open potholes", "Surface depressions", "Broken, spalling edges", "Standing water"],
     solution: "Infrared asphalt repair",
-    solutionHref: "/services#infrared",
+    solutionHref: "/infrared-repair",
     cta: "Learn about infrared repair",
     surface: "pothole",
     imageAlt: "A pothole with a broken rim in an otherwise dark asphalt surface",
@@ -82,14 +82,17 @@ export const SERVICES: Service[] = [
     id: "sealcoating",
     name: "Sealcoating",
     summary:
-      "Professional penetrating sealcoating to help protect and refresh suitable asphalt surfaces.",
-    // Product is Blackmac (McAsphalt Industries, SDS 0165). Per that sheet it
-    // is asphalt/bitumen 40-70% plus hydrotreated heavy naphtha 30-60%,
-    // insoluble in water — a solvent cutback, NOT a water-based emulsion. Do
-    // not describe it as water-based or eco-friendly; neither is accurate and
-    // an unsubstantiated environmental claim is a Competition Act problem.
+      "Professional sealcoating to help protect and refresh suitable asphalt surfaces.",
+    // Product is Blackmac Emulsion Sealer (McAsphalt Industries) — asphalt
+    // carried in water, not in a petroleum solvent. Two rules before editing
+    // this copy. Keep environmental claims comparative and factual (no coal
+    // tar, no solvent carrier) rather than absolute — "eco-friendly" and
+    // "green" are exactly the unsubstantiated claims the Competition Act's
+    // greenwashing provisions target. And do not describe it as penetrating or
+    // as reconditioning binder: that is how a solvent cutback behaves, and it
+    // is a different product.
     detail:
-      "We apply Blackmac, a penetrating sealer manufactured in Canada by McAsphalt Industries and sourced locally. Rather than forming a film on top, it soaks into the surface and reconditions oxidized binder, which helps protect aging asphalt, helps reduce surface deterioration and restores a darker, maintained appearance. It contains no coal tar. Sealcoating is preventative maintenance — it does not structurally restore damaged asphalt.",
+      "We apply Blackmac Emulsion Sealer, made in Canada by McAsphalt Industries and sourced locally. It is asphalt carried in water rather than in a petroleum solvent, so there is no coal tar and no solvent odour — the water evaporates and asphalt is what stays on the surface. It helps protect aging asphalt, helps reduce surface deterioration and restores a darker, maintained appearance. Sealcoating is preventative maintenance — it does not structurally restore damaged asphalt.",
     bestFor: [
       "Faded or oxidized asphalt",
       "Aging surfaces still in sound condition",
