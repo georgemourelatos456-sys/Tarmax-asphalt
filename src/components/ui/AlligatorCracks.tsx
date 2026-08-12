@@ -48,7 +48,7 @@ export function AlligatorCracks({
       <g
         fill="none"
         stroke="var(--color-red)"
-        strokeWidth={2.6}
+        strokeWidth={3.1}
         strokeLinejoin="round"
         /* Weight is deliberate — this reads as cracked surface, not as a faint
            wireframe. The mask, not the stroke, is what keeps it off the copy.
