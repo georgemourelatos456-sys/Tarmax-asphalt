@@ -60,7 +60,7 @@ const PROCESS = [
 export default function CrackSealingPage() {
   return (
     <>
-      <header className="on-dark relative isolate overflow-hidden bg-ink pt-32 pb-20 md:pt-44 md:pb-28">
+      <header className="on-dark relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
         <div className="absolute inset-0 -z-10">
           <Surface name="crack" alt="" sizes="100vw" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40" />

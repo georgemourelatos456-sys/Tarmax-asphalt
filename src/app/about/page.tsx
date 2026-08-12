@@ -4,7 +4,6 @@ import { BUSINESS, DIRECTORS, mailtoHref, telHref } from "@/config/business";
 import { Surface } from "@/components/ui/Surface";
 import { Arrow, Eyebrow } from "@/components/ui/Labels";
 import { Reveal } from "@/components/ui/Reveal";
-import { Seam } from "@/components/ui/Seam";
 import { FinalCta } from "@/components/sections/FinalCta";
 
 export const metadata: Metadata = {
@@ -17,25 +16,11 @@ export const metadata: Metadata = {
 /** The founding story is George's, so it is signed by him. */
 const GEORGE = DIRECTORS.find((d) => d.firstName === "George") ?? DIRECTORS[1];
 
-const COMMITMENTS = [
-  {
-    title: "Not a side hustle",
-    body: "This is the business, not something run off the side of a truck between other jobs. That distinction decides how much care a job gets, and it was the first thing the two of us agreed on.",
-  },
-  {
-    title: "The product matters as much as the price",
-    body: "An expensive product applied carelessly is still careless work. We would rather explain why a surface needs preparation than skip it and hope the customer never finds out.",
-  },
-  {
-    title: "The right work, not the easy sell",
-    body: "Selling sealcoating for pavement that needs replacing is how this industry earned its reputation. We tell you what the surface actually needs — and then we do it, bringing in people we trust for anything outside our own crews. You get one company and a straight answer.",
-  },
-];
 
 export default function AboutPage() {
   return (
     <>
-      <header className="on-dark relative isolate overflow-hidden bg-ink pt-32 pb-20 md:pt-44 md:pb-28">
+      <header className="on-dark relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
         <div className="absolute inset-0 -z-10">
           <Surface name="driveway" alt="" sizes="100vw" />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/88 to-ink/45" />
@@ -94,23 +79,6 @@ export default function AboutPage() {
               </figcaption>
             </figure>
           </Reveal>
-        </div>
-      </section>
-
-      <section className="on-dark bg-ink">
-        <Seam />
-        <div className="section shell">
-          <Eyebrow>What that means in practice</Eyebrow>
-          <ul className="mt-12 border-t border-white/12">
-            {COMMITMENTS.map((c, i) => (
-              <Reveal as="li" key={c.title} delay={i * 70}>
-                <div className="grid gap-3 border-b border-white/12 py-8 md:grid-cols-[1fr_1.5fr] md:gap-12">
-                  <h3 className="display-sm">{c.title}</h3>
-                  <p className="max-w-[58ch] text-bone/70">{c.body}</p>
-                </div>
-              </Reveal>
-            ))}
-          </ul>
         </div>
       </section>
 

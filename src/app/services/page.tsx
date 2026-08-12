@@ -5,6 +5,7 @@ import { Surface } from "@/components/ui/Surface";
 import { Arrow, Eyebrow } from "@/components/ui/Labels";
 import { Reveal } from "@/components/ui/Reveal";
 import { Seam } from "@/components/ui/Seam";
+import { AlligatorCracks } from "@/components/ui/AlligatorCracks";
 import { FinalCta } from "@/components/sections/FinalCta";
 
 export const metadata: Metadata = {
@@ -17,7 +18,11 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <header className="on-dark bg-ink pt-32 pb-16 md:pt-40 md:pb-24">
+      <header className="on-dark relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink pt-28 pb-16 md:min-h-screen md:pt-32 md:pb-24">
+        {/* This is the one header with no photograph behind it, so at full
+            height it would otherwise be a screen of flat black. The cracking
+            fills it and ties the page to the hero. */}
+        <AlligatorCracks variant="hero" className="absolute inset-0 -z-10 h-full w-full" />
         <div className="shell max-w-3xl">
           <Eyebrow>Services</Eyebrow>
           <h1 className="display-lg mt-4">Complete asphalt maintenance</h1>
