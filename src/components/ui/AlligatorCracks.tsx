@@ -35,11 +35,13 @@ export function AlligatorCracks({ className = "" }: { className?: string }) {
       <g
         fill="none"
         stroke="var(--color-red)"
-        strokeWidth={1.2}
+        strokeWidth={2.6}
         strokeLinejoin="round"
-        /* Texture, not diagram. Full-strength red would compete with the
-           headline even where the mask has thinned it out. */
-        opacity={0.68}
+        /* Weight is deliberate — this reads as cracked surface, not as a faint
+           wireframe. The mask, not the stroke, is what keeps it off the copy.
+           Note the viewBox is scaled to cover the section, so the on-screen
+           width is roughly this value times that scale, not this value. */
+        opacity={0.92}
       >
         {CRACK_CELLS.map((d, i) => (
           <path key={i} d={d} />

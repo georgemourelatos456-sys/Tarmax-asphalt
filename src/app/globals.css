@@ -441,17 +441,17 @@
       -webkit-mask-image: linear-gradient(
         to right,
         transparent 0%,
-        rgba(0, 0, 0, 0.05) 30%,
-        rgba(0, 0, 0, 0.28) 52%,
-        rgba(0, 0, 0, 0.72) 76%,
+        rgba(0, 0, 0, 0.06) 26%,
+        rgba(0, 0, 0, 0.34) 48%,
+        rgba(0, 0, 0, 0.78) 72%,
         #000 100%
       );
       mask-image: linear-gradient(
         to right,
         transparent 0%,
-        rgba(0, 0, 0, 0.05) 30%,
-        rgba(0, 0, 0, 0.28) 52%,
-        rgba(0, 0, 0, 0.72) 76%,
+        rgba(0, 0, 0, 0.06) 26%,
+        rgba(0, 0, 0, 0.34) 48%,
+        rgba(0, 0, 0, 0.78) 72%,
         #000 100%
       );
       opacity: 1;
