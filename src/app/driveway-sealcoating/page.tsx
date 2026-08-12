@@ -302,15 +302,26 @@ export default function DrivewaySealcoatingPage() {
           <ul className="mt-8 border-t border-white/12">
             {COMPARISON.map((row, i) => (
               <Reveal as="li" key={row.product} delay={i * 70}>
+                {/* The highlighted row is pulled left by exactly the padding
+                    the red rule adds, so the rule sits out in the gutter and
+                    the text still lines up with every other row in the table.
+                    Padding alone would indent the whole row and read as a
+                    mistake. */}
                 <div
                   className={`grid gap-3 border-b border-white/12 py-7 md:grid-cols-[1fr_1.8fr] md:gap-12 ${
-                    row.highlight ? "border-l-2 border-l-red pl-5 md:pl-6" : ""
+                    row.highlight ? "-ml-5 border-l-2 border-l-red pl-5 md:-ml-6 md:pl-6" : ""
                   }`}
                 >
                   <h4 className={`display-sm ${row.highlight ? "text-bone" : "text-muted"}`}>
                     {row.product}
                   </h4>
-                  <p className="max-w-[58ch] text-bone/70">{row.behaviour}</p>
+                  <p
+                    className={`max-w-[58ch] ${
+                      row.highlight ? "font-semibold text-bone" : "text-bone/70"
+                    }`}
+                  >
+                    {row.behaviour}
+                  </p>
                 </div>
               </Reveal>
             ))}
