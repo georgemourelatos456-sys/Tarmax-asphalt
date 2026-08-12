@@ -150,7 +150,7 @@ export const SERVICES: Service[] = [
     name: "Residential Driveway Maintenance",
     summary: "Sealcoating, crack sealing and infrared repair for Calgary driveways.",
     detail:
-      "The same equipment and the same assessment-first approach used on commercial work, scaled to a driveway. We look at the surface, tell you what it needs, and quote only that.",
+      "The same equipment and the same materials that go onto a commercial lot, scaled to a driveway. Sealcoating, crack sealing and infrared repair on the surface you cross every morning — and the first thing anyone sees when they pull up to the house.",
     bestFor: ["Driveways", "Parking pads", "Shared residential lanes", "Preventative maintenance"],
     surface: "driveway",
     imageAlt: "A freshly sealed residential asphalt driveway",
