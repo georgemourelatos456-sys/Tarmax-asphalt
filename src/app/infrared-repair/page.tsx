@@ -69,9 +69,9 @@ export default function InfraredRepairPage() {
           <Eyebrow>Infrared asphalt repair</Eyebrow>
           <h1 className="display-lg mt-4">A repair with no seam to fail.</h1>
           <p className="lede mt-5 text-bone/80">
-            Cut a square out of a driveway and drop new asphalt into it and you have not removed the
-            problem — you have drawn a new edge around it. Infrared repair reheats the asphalt
-            already there and blends the repair into it.
+            Most pothole repairs are a patch dropped into a cut-out square. The join around that
+            patch is where it fails. Infrared heats the asphalt already there, so the repair
+            becomes part of the surface instead of sitting in a hole in it.
           </p>
           <Link href="/free-quote" className="btn btn-primary mt-9">
             Get a repair quote
