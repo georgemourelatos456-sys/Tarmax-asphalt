@@ -45,7 +45,11 @@ const SCOPE = [
 export default function CommercialPage() {
   return (
     <>
-      <header className="on-dark relative isolate overflow-hidden bg-ink pt-32 pb-20 md:pt-44 md:pb-28">
+      {/* Fills the viewport, so the fold lands on the header rather than on the
+          top edge of the bone section below it. svh rather than vh: on mobile
+          Safari, vh is the height with the browser chrome hidden, which leaves
+          a strip of the next section showing until the toolbar collapses. */}
+      <header className="on-dark relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
         <div className="absolute inset-0 -z-10">
           <Surface name="lot" alt="" sizes="100vw" />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40" />
@@ -54,7 +58,7 @@ export default function CommercialPage() {
 
         <div className="shell max-w-3xl">
           <Eyebrow>Commercial</Eyebrow>
-          <h1 className="display-lg mt-4">Parking lot maintenance</h1>
+          <h1 className="display-lg mt-4">Parking Lot Maintenance</h1>
           <p className="lede mt-5 text-bone/80">
             Preventative maintenance for Calgary parking lots, planned around what the pavement
             needs.
