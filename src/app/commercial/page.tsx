@@ -25,7 +25,7 @@ const AUDIENCES = [
 const SCOPE = [
   {
     title: "Pavement condition assessment",
-    body: "We walk the lot and record what we find: crack type and extent, surface oxidation, localized failures, drainage and any areas that will not respond to maintenance.",
+    body: "We walk the lot and record what we find: crack type and extent, surface oxidation, localized failures, drainage, and any section that needs rebuilding rather than maintaining.",
   },
   {
     title: "Priced to the property, not a flat rate",
@@ -38,6 +38,10 @@ const SCOPE = [
   {
     title: "Work staged around your tenants",
     body: "Sections, entrances and stall rows can be sequenced so the lot keeps operating. Curing times are part of the schedule we give you, not a surprise afterwards.",
+  },
+  {
+    title: "One contractor for the whole lot",
+    body: "Where a section needs more than maintenance — excavation, replacement, work outside our own crews — we bring in contractors we have worked with and stand behind, and we manage it. You are not left chasing a second company for the part we could not do.",
   },
   {
     title: "Runoff and surroundings considered",

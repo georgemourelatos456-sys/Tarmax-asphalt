@@ -196,8 +196,10 @@ export default function InfraredRepairPage() {
                 base problem across a whole area, not a localized failure to be patched.
               </p>
               <p className="mt-6 text-bone/75">
-                We look at the area before quoting and say which one you have. A method that is
-                wrong for your driveway is not a job we want.
+                We look at the area before quoting and tell you which one you have. If it needs
+                rebuilding rather than reheating, we arrange that too — through contractors we work
+                with and stand behind. Being told the right method is not the same as being sent
+                somewhere else.
               </p>
             </div>
 

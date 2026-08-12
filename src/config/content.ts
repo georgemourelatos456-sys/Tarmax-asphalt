@@ -124,7 +124,7 @@ export const SERVICES: Service[] = [
     summary:
       "Infrared equipment heats suitable existing asphalt so localized damaged areas can be reworked and repaired.",
     detail:
-      "Infrared heats the existing asphalt in place until it can be raked and reworked, then new material is added and compacted into the repair. It suits potholes, depressions and selected localized failures. It is not appropriate for every pavement failure — we assess the area first and say so when it is not the right method.",
+      "Infrared heats the existing asphalt in place until it can be raked and reworked, then new material is added and compacted into the repair. It suits potholes, depressions and selected localized failures. It is not appropriate for every pavement failure — we assess the area first, say so when another method is the right one, and arrange that work rather than leaving you to find someone else.",
     bestFor: ["Potholes", "Depressions", "Localized deterioration", "Selected pavement failures"],
     surface: "pothole",
     imageAlt: "A localized pavement failure suited to infrared repair",

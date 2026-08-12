@@ -51,7 +51,10 @@ export default function AboutPage() {
       <section className="section bg-bone text-ink">
         <div className="shell grid gap-12 md:grid-cols-[0.75fr_1.25fr] md:gap-20">
           <div>
-            <h2 className="label text-[0.625rem] text-ink/65">The why</h2>
+            {/* This column holds nothing else, so a 10px label left it looking
+                empty and the heading looked like a caption that had come
+                adrift. At display size it reads as the section title it is. */}
+            <h2 className="display-md sticky top-28 max-w-[8ch] text-ink">The why</h2>
           </div>
 
           {/* Attributed rather than an unsigned "I" — on a page that goes on to
