@@ -60,12 +60,39 @@ Nova and George never get copies and customers never get a receipt.
 
 ---
 
-## 2. Vercel
+## 2. Hosting
+
+The site runs on **Cloudflare Workers** (free tier, commercial use allowed) or
+**Vercel**. Both are supported from the same repository.
+
+### Cloudflare — the important part
+
+Cloudflare's setup wizard defaults the deploy command to `npx wrangler deploy`.
+**That will not work.** This is a Next.js app, not a hand-written Worker, so it
+has to be compiled first by the OpenNext adapter. Override the commands:
+
+| Setting | Value |
+|---|---|
+| Build command | `npm run build:cf` |
+| Deploy command | `npx opennextjs-cloudflare deploy` |
+| Build output directory | leave blank |
+
+`wrangler.jsonc` in the repo supplies everything else — the entry point, the
+`nodejs_compat` flag the Next runtime needs, and the static asset binding.
+
+To deploy by hand instead: `npm run deploy:cf`. To try the real Worker runtime
+locally before pushing: `npm run preview:cf`.
 
 ### 2.1 Add the variables
 
-Vercel → your project → **Settings** → **Environment Variables**. Tick
+**Cloudflare:** Workers & Pages → your project → **Settings** → **Variables and
+Secrets**. Add `RESEND_API_KEY` as type **Secret**; the rest as **Text**.
+
+**Vercel:** **Settings** → **Environment Variables**, ticking
 **Production**, **Preview** and **Development** for each.
+
+Names are **case sensitive** on both. `resend_api_key` is a different variable
+from `RESEND_API_KEY` and the code will never see it.
 
 | Name | Value |
 |---|---|
@@ -85,14 +112,16 @@ it and it still does not work".
 **Environment variables only take effect on a new build.** Adding them does
 nothing to the site already deployed.
 
-**Deployments** → most recent → **⋯** → **Redeploy**.
+- **Cloudflare:** Deployments → **Retry deployment**, or `npm run deploy:cf`.
+- **Vercel:** Deployments → most recent → **⋯** → **Redeploy**.
 
-From then on every push to `main` rebuilds automatically and picks them up.
+From then on every push to the production branch rebuilds and picks them up.
 
 ### 2.3 Check the branch settings
 
 - GitHub → repo → **Settings** → **General** → default branch should be `main`.
-- Vercel → **Settings** → **Git** → Production Branch should be `main`.
+- Whichever host you use, set its production branch to `main` too, so a push
+  cannot leave production behind.
 
 ---
 
@@ -132,8 +161,8 @@ the property, **Book the estimate** should open a prefilled calendar event.
 
 ### If nothing arrives
 
-Vercel → **Deployments** → the current one → **Runtime Logs**, and submit again
-while watching:
+Open the logs and submit again while watching — Cloudflare: Workers & Pages →
+your Worker → **Logs**. Vercel: Deployments → current → **Runtime Logs**.
 
 | Log line | Meaning |
 |---|---|
@@ -168,7 +197,7 @@ the property from, and a **Book the estimate** button that opens a prefilled
 calendar event with the time left blank for whoever takes the job.
 
 **One honest caveat.** With no database, that email is the only copy. If Resend
-is down at the moment a customer submits, the request exists only in the Vercel
+is down at the moment a customer submits, the request exists only in the host's
 runtime log until someone reads it. Adding a second channel later — a webhook
 into a spreadsheet, or a database — would remove that single point of failure.
 

@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "node scripts/resolve-surfaces.mjs && next dev",
+    "build": "node scripts/resolve-surfaces.mjs && next build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "textures": "node scripts/generate-textures.mjs"
+    "textures": "node scripts/generate-textures.mjs",
+    "build:cf": "node scripts/resolve-surfaces.mjs && opennextjs-cloudflare build",
+    "preview:cf": "npm run build:cf && opennextjs-cloudflare preview",
+    "deploy:cf": "npm run build:cf && opennextjs-cloudflare deploy"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -22,13 +25,16 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "@opennextjs/cloudflare": "^1.20.2",
     "@tailwindcss/postcss": "^4.1.4",
     "@types/node": "^22.15.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "eslint": "^9.25.1",
     "eslint-config-next": "^15.3.1",
+    "playwright": "^1.62.1",
     "tailwindcss": "^4.1.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "wrangler": "^4.122.0"
   }
 }

@@ -1,6 +1,5 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
 import Image from "next/image";
+import { SURFACE_SRC, type SurfaceName } from "./surfaces.generated";
 
 /**
  * The site's imagery layer.
@@ -14,40 +13,16 @@ import Image from "next/image";
  * photo degrades to the placeholder instead of breaking the page — and photos
  * can be added one at a time.
  *
+ * That decision is made at build time by scripts/resolve-surfaces.mjs rather
+ * than here, because this component also runs on Cloudflare Workers, where
+ * there is no filesystem to check.
+ *
  * Images render with `fill`, so a replacement photo of any dimensions crops
  * correctly without anyone editing code. Every call site provides a positioned,
  * sized parent.
  */
 
-export type SurfaceName =
-  | "hero"
-  | "oxidized"
-  | "crack"
-  | "pothole"
-  | "lot"
-  | "driveway";
-
-/** photo: preferred real photograph. texture: generated stand-in. */
-const SOURCES: Record<SurfaceName, { photo: string; texture: string }> = {
-  hero: { photo: "/photos/hero.jpg", texture: "/textures/asphalt-hero.jpg" },
-  oxidized: { photo: "/photos/dried-asphalt.jpg", texture: "/textures/asphalt-oxidized.jpg" },
-  crack: { photo: "/photos/crack-sealing.jpg", texture: "/textures/asphalt-crack.jpg" },
-  pothole: { photo: "/photos/pothole.jpg", texture: "/textures/asphalt-pothole.jpg" },
-  lot: { photo: "/photos/line-striping.jpg", texture: "/textures/asphalt-lot.jpg" },
-  driveway: { photo: "/photos/sealcoating.jpg", texture: "/textures/asphalt-driveway.jpg" },
-};
-
-/**
- * Resolved once at module load rather than per render. This runs on the server
- * during build, so it costs nothing at request time.
- */
-const RESOLVED: Record<SurfaceName, string> = Object.fromEntries(
-  (Object.keys(SOURCES) as SurfaceName[]).map((name) => {
-    const { photo, texture } = SOURCES[name];
-    const onDisk = join(process.cwd(), "public", photo);
-    return [name, existsSync(onDisk) ? photo : texture];
-  }),
-) as Record<SurfaceName, string>;
+export type { SurfaceName };
 
 export function Surface({
   name,
@@ -68,7 +43,7 @@ export function Surface({
 }) {
   return (
     <Image
-      src={RESOLVED[name]}
+      src={SURFACE_SRC[name]}
       alt={alt}
       fill
       sizes={sizes}

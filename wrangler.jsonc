@@ -1,0 +1,30 @@
+/**
+ * Cloudflare Workers configuration.
+ *
+ * The site is a Next.js App Router app, so it is not a hand-written Worker —
+ * @opennextjs/cloudflare compiles the Next build into one. `main` therefore
+ * points at generated output, not at anything in src/.
+ *
+ * Deploy with `npm run deploy:cf`, or let Cloudflare's git integration run
+ * `npm run build:cf`. Never `npx wrangler deploy` on its own: that skips the
+ * Next build entirely and uploads nothing useful.
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tarmax-asphalt",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-09-23",
+
+  // Required by the adapter: Next's server code, and the Resend SDK, expect
+  // Node built-ins that Workers only exposes behind this flag.
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}

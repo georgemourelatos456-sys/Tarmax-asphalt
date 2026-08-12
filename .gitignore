@@ -18,3 +18,9 @@ next-env.d.ts
 tsconfig.tsbuildinfo
 
 /screenshots
+
+# Cloudflare local development secrets and build output
+.dev.vars
+.dev.vars.*
+.open-next/
+.wrangler/

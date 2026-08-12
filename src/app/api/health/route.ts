@@ -53,7 +53,7 @@ export function GET() {
         : miscased.length > 0
           ? `Found ${miscased.join(", ")} — environment variable names are CASE SENSITIVE, so these are different variables from the ones the code reads. Rename them to uppercase in Vercel, then redeploy.`
           : found.length === 0
-            ? "None of this site's variables reached this build at all. Check you are editing the same Vercel project that serves this URL, that the Environment includes Production, and that you redeployed afterwards."
+            ? "None of this site's variables reached this build at all. Check you are editing the same project that serves this URL, that the environment includes production, and that you redeployed afterwards."
             : !apiKeyPresent
               ? "RESEND_API_KEY is not visible to this build. Add it in Vercel, then REDEPLOY — saving a variable does not affect a build that already happened."
               : "RESEND_FROM is missing or malformed. It must look like: TARMAX Asphalt <onboarding@resend.dev>",
@@ -70,12 +70,28 @@ export function GET() {
         overrideActive: Boolean(process.env.LEAD_EMAIL_TO),
       },
       siteUrl: SITE_URL,
-      commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? "local",
+      // Whichever host is serving this. Vercel and Cloudflare expose the same
+      // facts under different names, so both are read and the first hit wins.
+      host: process.env.VERCEL_DEPLOYMENT_ID
+        ? "vercel"
+        : process.env.CF_PAGES_COMMIT_SHA || process.env.WORKERS_CI_COMMIT_SHA
+          ? "cloudflare"
+          : "local",
+      commit:
+        (
+          process.env.VERCEL_GIT_COMMIT_SHA ??
+          process.env.WORKERS_CI_COMMIT_SHA ??
+          process.env.CF_PAGES_COMMIT_SHA
+        )?.slice(0, 7) ?? "local",
       // Changes on every deployment, including a redeploy of the same commit.
       // The commit alone cannot tell you whether a redeploy actually landed;
       // this can.
-      deployment: process.env.VERCEL_DEPLOYMENT_ID ?? "local",
-      branch: process.env.VERCEL_GIT_COMMIT_REF ?? "local",
+      deployment: process.env.VERCEL_DEPLOYMENT_ID ?? process.env.CF_VERSION_METADATA_ID ?? "local",
+      branch:
+        process.env.VERCEL_GIT_COMMIT_REF ??
+        process.env.WORKERS_CI_BRANCH ??
+        process.env.CF_PAGES_BRANCH ??
+        "local",
     },
     {
       status: 200,
