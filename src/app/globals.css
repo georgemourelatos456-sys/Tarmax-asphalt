@@ -413,6 +413,51 @@
   /* Multi-select service picker. A whole row is the target rather than the box
      alone, so it is comfortable to tap on a phone — the label wraps the input,
      which also means no id wiring and no way for the two to drift apart. */
+  /* Alligator-cracking background fade.
+     Kept in CSS rather than on the element so it can respond to viewport: on a
+     phone the copy runs the full width of the section, so the texture has to
+     retreat to the far edge or it sits under the words. On a desktop the copy
+     occupies the left half and the texture can build across the empty right. */
+  .crack-fade {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.03) 62%,
+      rgba(0, 0, 0, 0.3) 86%,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.03) 62%,
+      rgba(0, 0, 0, 0.3) 86%,
+      #000 100%
+    );
+    opacity: 0.45;
+  }
+
+  @media (min-width: 768px) {
+    .crack-fade {
+      -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0, 0, 0, 0.05) 30%,
+        rgba(0, 0, 0, 0.28) 52%,
+        rgba(0, 0, 0, 0.72) 76%,
+        #000 100%
+      );
+      mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0, 0, 0, 0.05) 30%,
+        rgba(0, 0, 0, 0.28) 52%,
+        rgba(0, 0, 0, 0.72) 76%,
+        #000 100%
+      );
+      opacity: 1;
+    }
+  }
+
   .field-check {
     display: flex;
     align-items: center;

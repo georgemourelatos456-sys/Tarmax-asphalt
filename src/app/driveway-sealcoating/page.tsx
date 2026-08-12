@@ -264,8 +264,11 @@ export default function DrivewaySealcoatingPage() {
       </section>
 
       {/* --- Product --- */}
-      <section className="on-dark bg-ink">
+      <section className="on-dark relative isolate overflow-hidden bg-ink">
         <Seam />
+        {/* Cracking runs the full width of the section behind everything,
+            fading out towards the copy on the left. */}
+        <AlligatorCracks className="pointer-events-none absolute inset-0 -z-10 h-full w-full" />
         <div className="section shell">
           <Eyebrow>The product</Eyebrow>
           <h2 className="display-lg mt-4 max-w-[16ch]">Stitches, not a bandaid.</h2>
@@ -275,7 +278,7 @@ export default function DrivewaySealcoatingPage() {
               One column of prose at a comfortable measure, the cracking figure
               filling the space beside it, and an even rhythm between
               paragraphs. */}
-          <div className="mt-10 grid items-start gap-10 md:mt-12 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
+          <div className="mt-10 md:mt-12">
             <div className="max-w-[54ch]">
               <p className="lede text-bone/75">
                 Coal tar and acrylic put a different material over the top of your driveway and
@@ -293,13 +296,6 @@ export default function DrivewaySealcoatingPage() {
                 a product built for freeze-thaw is the entire point.
               </p>
             </div>
-
-            <figure className="relative -mx-6 md:mx-0">
-              <AlligatorCracks className="h-auto w-full" />
-              <figcaption className="label mt-4 px-6 text-[0.625rem] text-muted md:px-0">
-                Alligator cracking — what a surface does once the binder can no longer flex
-              </figcaption>
-            </figure>
           </div>
 
           <h3 className="display-sm mt-16">How it compares</h3>

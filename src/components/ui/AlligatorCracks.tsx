@@ -1,52 +1,48 @@
-import { CRACK_PLATES, CRACK_VIEWBOX } from "./cracks.generated";
+import { CRACK_CELLS, CRACK_VIEWBOX } from "./cracks.generated";
 
 /**
- * Alligator cracking, drawn in the brand red.
+ * Alligator cracking as a full-bleed section background.
  *
- * The plates are filled dark and separated by a red stroke, so the cracks —
- * not the plates — are what the eye follows. That is the point being made in
- * the copy beside it: the failure is in the gaps, and a sealer that only coats
- * the top leaves them there.
+ * Two colours only: the section's own black shows through the cells, and the
+ * cracks between them are the brand red. Nothing is filled, so this adds
+ * texture to the background rather than sitting on it as a panel.
  *
- * Decorative, so it is hidden from assistive technology. The paragraph next to
- * it carries the meaning.
+ * It fades out from right to left, so the cracking is at full strength in the
+ * open half of the section and has thinned to nothing by the time it reaches
+ * the copy — texture behind the words, not competition with them.
  *
- * Two details that keep it from looking like a pasted-in rectangle: the whole
- * figure fades out through a radial mask, and the strokes sit on `paint-order:
- * stroke` so plate fills never clip the crack lines at shared edges.
+ * The fade is a CSS mask (`.crack-fade` in globals.css) rather than an SVG one,
+ * for two reasons. `slice` scales the viewBox up and crops whichever axis
+ * overflows, so a gradient defined inside the viewBox is cropped with it and
+ * arrives as a roughly even wash; a CSS mask always spans exactly what the
+ * visitor sees. And it needs a media query — on a phone the copy runs the full
+ * width, so the texture has to retreat to the far edge to stay out of the way.
+ *
+ * Decorative: hidden from assistive technology, and the copy carries the
+ * meaning.
  */
+
 export function AlligatorCracks({ className = "" }: { className?: string }) {
   return (
     <svg
       viewBox={CRACK_VIEWBOX}
-      className={className}
+      preserveAspectRatio="xMidYMid slice"
+      className={`crack-fade ${className}`}
       role="presentation"
       aria-hidden="true"
       focusable="false"
     >
-      <defs>
-        {/* Strongest through the middle, gone by the edges, so the figure sits
-            in the section rather than on top of it. */}
-        <radialGradient id="crack-fade" cx="50%" cy="46%" r="62%">
-          <stop offset="0%" stopColor="white" stopOpacity="1" />
-          <stop offset="62%" stopColor="white" stopOpacity="0.92" />
-          <stop offset="100%" stopColor="white" stopOpacity="0" />
-        </radialGradient>
-        <mask id="crack-mask">
-          <rect width="100%" height="100%" fill="url(#crack-fade)" />
-        </mask>
-      </defs>
-
-      <g mask="url(#crack-mask)" style={{ paintOrder: "stroke" }}>
-        {CRACK_PLATES.map((plate, i) => (
-          <path
-            key={i}
-            d={plate.d}
-            fill={plate.fill}
-            stroke="var(--color-red)"
-            strokeWidth={2.2}
-            strokeLinejoin="round"
-          />
+      <g
+        fill="none"
+        stroke="var(--color-red)"
+        strokeWidth={1.2}
+        strokeLinejoin="round"
+        /* Texture, not diagram. Full-strength red would compete with the
+           headline even where the mask has thinned it out. */
+        opacity={0.68}
+      >
+        {CRACK_CELLS.map((d, i) => (
+          <path key={i} d={d} />
         ))}
       </g>
     </svg>

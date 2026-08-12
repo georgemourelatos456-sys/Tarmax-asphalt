@@ -1,19 +1,23 @@
 /**
- * Builds the alligator-cracking figure used beside the sealer copy.
+ * Builds the alligator-cracking background used behind the sealer copy.
  *
  * Alligator (fatigue) cracking is what asphalt does when the binder has gone
  * brittle and the surface can no longer flex — it breaks into interlocking
- * plates. It is the exact failure the page is describing, so the decoration is
- * the subject rather than an abstract flourish.
+ * plates. It is the exact failure the page describes, so the background is the
+ * subject rather than an abstract flourish.
  *
- * Geometry is a jittered lattice: every cell is a quad built from four shared,
- * randomly displaced corner points, so neighbouring plates always meet exactly
- * and the cracks between them read as one continuous network rather than a set
- * of outlined shapes. Some quads are split on a diagonal, because real fatigue
- * cracking is a mix of four- and three-sided plates.
+ * Geometry is a honeycomb, because that is what fatigue cracking approximates
+ * and because a hex lattice reads as scales rather than as a grid. Every
+ * corner is shared by three cells, and the jitter is stored against the
+ * corner's position rather than against the cell — so neighbouring cells
+ * always displace a shared corner identically and the cracks stay one
+ * continuous network instead of splitting into outlined shapes.
  *
- * Seeded, so the output is identical on every run and the diff stays empty
- * unless the parameters actually change.
+ * No fills are emitted. The page background shows through the cells, so the
+ * figure is only ever black and red.
+ *
+ * Seeded, so output is identical on every run and the diff stays empty unless
+ * the parameters actually change.
  *
  *   node scripts/generate-cracks.mjs
  */
@@ -31,16 +35,20 @@ const OUT = join(
   "cracks.generated.ts",
 );
 
-const W = 620;
-const H = 760;
-const COLS = 7;
-const ROWS = 9;
-/** Corner displacement as a fraction of cell size. Too high and plates fold. */
-const JITTER = 0.34;
-/** Chance a quad is split into two triangles. */
-const SPLIT = 0.42;
+/** Wide, because this spans a full-bleed section behind text. */
+const W = 1800;
+const H = 1300;
+/**
+ * Hex circumradius, in viewBox units. The figure is drawn with `slice`, so it
+ * is scaled up to cover the section — keep this small and the viewBox large,
+ * or the cells arrive on screen the size of dinner plates and the texture
+ * reads as a graphic sitting on the page instead of a surface behind it.
+ */
+const R = 30;
+/** Corner displacement as a fraction of R. Too high and cells self-intersect. */
+const JITTER = 0.3;
 
-/** Mulberry32 — small, fast, and identical across runs. */
+/** Mulberry32 — small, fast, identical across runs. */
 function rng(seed) {
   return function () {
     seed |= 0;
@@ -52,80 +60,66 @@ function rng(seed) {
 }
 
 const rand = rng(20260812);
-const between = (a, b) => a + rand() * (b - a);
 
-// Lattice of shared corner points. Edge points are pinned on the axis they sit
-// on, so the figure keeps a clean rectangular boundary to fade out from.
-const cellW = W / COLS;
-const cellH = H / ROWS;
-const points = [];
-for (let r = 0; r <= ROWS; r++) {
-  const row = [];
-  for (let c = 0; c <= COLS; c++) {
-    const onLeft = c === 0;
-    const onRight = c === COLS;
-    const onTop = r === 0;
-    const onBottom = r === ROWS;
-    row.push({
-      x: c * cellW + (onLeft || onRight ? 0 : between(-JITTER, JITTER) * cellW),
-      y: r * cellH + (onTop || onBottom ? 0 : between(-JITTER, JITTER) * cellH),
-    });
+/**
+ * One displacement per physical corner, looked up by rounded position. Three
+ * hexes meeting at a corner all read the same entry, which is what keeps the
+ * lattice watertight.
+ */
+const corners = new Map();
+function jittered(x, y) {
+  const key = `${Math.round(x * 100)},${Math.round(y * 100)}`;
+  let p = corners.get(key);
+  if (!p) {
+    p = {
+      x: x + (rand() * 2 - 1) * JITTER * R,
+      y: y + (rand() * 2 - 1) * JITTER * R,
+    };
+    corners.set(key, p);
   }
-  points.push(row);
+  return p;
+}
+
+// Pointy-top honeycomb. Overdrawn past every edge so the lattice reaches the
+// bounds of the viewBox rather than stopping short of them.
+const hStep = Math.sqrt(3) * R;
+const vStep = 1.5 * R;
+const cells = [];
+
+for (let row = -2; row * vStep < H + 2 * R; row++) {
+  for (let col = -2; col * hStep < W + 2 * R; col++) {
+    const cx = col * hStep + (row % 2 === 0 ? 0 : hStep / 2);
+    const cy = row * vStep;
+
+    const pts = [];
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI / 180) * (60 * i - 30);
+      pts.push(jittered(cx + R * Math.cos(a), cy + R * Math.sin(a)));
+    }
+    cells.push(pts);
+  }
 }
 
 const n = (v) => Math.round(v * 10) / 10;
-const poly = (pts) => `M${pts.map((p) => `${n(p.x)} ${n(p.y)}`).join("L")}Z`;
-
-/**
- * Plate fill. A narrow band of near-black greys: enough variation that the
- * plates separate from one another, not so much that it reads as a pattern.
- */
-function plate() {
-  const l = Math.round(between(9, 19));
-  return `hsl(220 4% ${l}%)`;
-}
-
-const shapes = [];
-for (let r = 0; r < ROWS; r++) {
-  for (let c = 0; c < COLS; c++) {
-    const tl = points[r][c];
-    const tr = points[r][c + 1];
-    const br = points[r + 1][c + 1];
-    const bl = points[r + 1][c];
-
-    if (rand() < SPLIT) {
-      // Alternate the diagonal so the splits do not all lean the same way.
-      if (rand() < 0.5) {
-        shapes.push({ d: poly([tl, tr, br]), fill: plate() });
-        shapes.push({ d: poly([tl, br, bl]), fill: plate() });
-      } else {
-        shapes.push({ d: poly([tl, tr, bl]), fill: plate() });
-        shapes.push({ d: poly([tr, br, bl]), fill: plate() });
-      }
-    } else {
-      shapes.push({ d: poly([tl, tr, br, bl]), fill: plate() });
-    }
-  }
-}
+const paths = cells.map((pts) => `M${pts.map((p) => `${n(p.x)} ${n(p.y)}`).join("L")}Z`);
 
 const body = `// GENERATED by scripts/generate-cracks.mjs — do not edit by hand.
 //
-// Interlocking plates of an alligator-cracked surface. Every plate shares its
-// edges with its neighbours, so the gaps between them form one continuous
-// crack network rather than a set of separate outlines.
+// A jittered honeycomb whose cells share every corner, so the gaps between
+// them form one continuous crack network. Stroked only — the cells carry no
+// fill, so whatever is behind the figure shows through them.
 
 export const CRACK_VIEWBOX = "0 0 ${W} ${H}";
 
-export const CRACK_PLATES: readonly { d: string; fill: string }[] = [
-${shapes.map((s) => `  { d: "${s.d}", fill: "${s.fill}" },`).join("\n")}
+export const CRACK_CELLS: readonly string[] = [
+${paths.map((d) => `  "${d}",`).join("\n")}
 ];
 `;
 
 const previous = existsSync(OUT) ? readFileSync(OUT, "utf8") : "";
 if (previous !== body) {
   writeFileSync(OUT, body);
-  console.log(`cracks: wrote ${shapes.length} plates to ${OUT}`);
+  console.log(`cracks: wrote ${paths.length} cells (${corners.size} shared corners) to ${OUT}`);
 } else {
   console.log("cracks: unchanged");
 }
