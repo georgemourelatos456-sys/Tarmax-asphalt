@@ -1,13 +1,13 @@
-import { BUSINESS, DIRECTORS, mailtoHref, telHref } from "@/config/business";
+import { BUSINESS, mailtoHref, telHref } from "@/config/business";
 import { Eyebrow } from "@/components/ui/Labels";
 import { Reveal } from "@/components/ui/Reveal";
 
 const EMAIL_SUBJECT = "Asphalt quote request";
 
 /**
- * Direct lines to the two people who run the company. Deliberately not a
+ * The two ways to reach TARMAX without filling anything in. Deliberately not a
  * contact form — the form lives on /free-quote, and this section is the
- * alternative for anyone who would rather just phone.
+ * alternative for anyone who would rather just phone or write.
  */
 export function Contact() {
   return (
@@ -16,57 +16,43 @@ export function Contact() {
         <Eyebrow tone="light">Contact</Eyebrow>
         <h2 className="display-lg mt-4 max-w-[16ch]">Talk directly with TARMAX</h2>
 
+        {/* One number and one address. Two director cards made a visitor pick
+            a person before they could ask a question. */}
         <div className="mt-14 grid gap-px border border-ink/15 bg-ink/15 md:mt-20 md:grid-cols-2">
-          {DIRECTORS.map((d) => (
-            <Reveal key={d.name} className="bg-bone p-7 md:p-10">
-              <p className="display-sm">{d.name}</p>
-              <p className="label mt-1 text-[0.625rem] text-ink/65">{d.role}</p>
+          <Reveal className="bg-bone p-7 md:p-10">
+            <p className="label text-[0.625rem] text-ink/65">Phone</p>
+            <a
+              href={telHref()}
+              className="font-display mt-3 inline-flex min-h-11 items-center text-2xl font-bold hover:text-red md:text-3xl"
+            >
+              {BUSINESS.phone}
+            </a>
+            <div className="mt-8">
+              <a href={telHref()} className="btn btn-solid-dark w-full">
+                Call TARMAX
+              </a>
+            </div>
+          </Reveal>
 
-              {/* Links carry their own 44px tap height — they are real targets
-                  on a phone, not prose. */}
-              <dl className="mt-7 flex flex-col gap-1 text-sm">
-                <div className="flex flex-wrap items-center gap-x-3">
-                  <dt className="label text-[0.625rem] text-ink/65">Phone</dt>
-                  <dd>
-                    <a
-                      href={telHref(d)}
-                      className="font-display inline-flex min-h-11 items-center text-lg font-bold hover:text-red"
-                    >
-                      {d.phone}
-                    </a>
-                  </dd>
-                </div>
-              </dl>
-
-              {/* Directors are reachable by phone. Email goes to the single
-                  published address below, so a customer never has to choose
-                  which of two people to write to. */}
-              <div className="mt-8">
-                <a href={telHref(d)} className="btn btn-solid-dark w-full">
-                  Call {d.firstName}
-                </a>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal className="mt-6 flex flex-col gap-5 border border-ink/15 p-7 sm:flex-row sm:items-center sm:justify-between md:p-10">
-          <div>
+          <Reveal className="bg-bone p-7 md:p-10">
             <p className="label text-[0.625rem] text-ink/65">Email</p>
             <a
               href={mailtoHref(BUSINESS.generalEmail, EMAIL_SUBJECT)}
-              className="display-sm mt-2 inline-flex min-h-11 items-center break-all hover:text-red"
+              className="font-display mt-3 inline-flex min-h-11 items-center break-all text-lg font-bold hover:text-red md:text-xl"
             >
               {BUSINESS.generalEmail}
             </a>
-          </div>
-          <a
-            href={mailtoHref(BUSINESS.generalEmail, EMAIL_SUBJECT)}
-            className="btn btn-outline shrink-0"
-          >
-            Email TARMAX
-          </a>
-        </Reveal>
+            <div className="mt-8">
+              <a
+                href={mailtoHref(BUSINESS.generalEmail, EMAIL_SUBJECT)}
+                className="btn btn-outline w-full"
+              >
+                Email TARMAX
+              </a>
+            </div>
+          </Reveal>
+        </div>
+
       </div>
     </section>
   );

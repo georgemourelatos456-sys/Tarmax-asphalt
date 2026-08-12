@@ -25,7 +25,7 @@ const DECISIONS = [
   {
     kicker: "The order of operations",
     title: "Assess first, quote second.",
-    body: "We look at the pavement before recommending anything, and preparation is part of the job rather than an afterthought. Weather, drainage, curing conditions and runoff routes are all considered before work begins. If maintenance is not the right answer, we say so.",
+    body: "We look at the pavement before recommending anything, and preparation is part of the job rather than an afterthought. Weather, drainage, curing conditions and runoff routes are all considered before work begins. If a surface needs more than maintenance we say so, and we take care of that too.",
     link: null,
   },
 ];

@@ -1,4 +1,4 @@
-import { DIRECTORS, telHref, type Contact } from "@/config/business";
+import { BUSINESS, telHref } from "@/config/business";
 
 /**
  * The call action, which has to behave differently depending on the device.
@@ -19,23 +19,17 @@ import { DIRECTORS, telHref, type Contact } from "@/config/business";
  * The breakpoint matches the mobile action bar, so a visitor never sees the
  * bottom call bar and the desktop treatment at the same time.
  */
-export function CallButton({
-  contact = DIRECTORS[0],
-  className = "btn btn-ghost",
-}: {
-  contact?: Contact;
-  className?: string;
-}) {
+export function CallButton({ className = "btn btn-ghost" }: { className?: string }) {
   return (
     <a
-      href={telHref(contact)}
+      href={telHref()}
       className={className}
       // One accessible name for both layouts, containing each visible label so
       // speech control still matches what is on screen (WCAG 2.5.3).
-      aria-label={`Call TARMAX at ${contact.phone}`}
+      aria-label={`Call TARMAX at ${BUSINESS.phone}`}
     >
       <span className="md:hidden">Call TARMAX</span>
-      <span className="hidden md:inline">{contact.phone}</span>
+      <span className="hidden md:inline">{BUSINESS.phone}</span>
     </a>
   );
 }

@@ -4,16 +4,20 @@
  * from this file instead so a phone number only ever changes in one place.
  */
 
+/**
+ * A director. Names and roles appear on /about; the email addresses are how
+ * leads reach them and are not published anywhere on the site.
+ *
+ * No phone numbers. TARMAX has one business line and every "call us" on the
+ * site points at it, so a customer never has to choose which person to ring
+ * and a number can change without touching a component.
+ */
 export type Contact = {
   /** Full name as it should be displayed. */
   name: string;
-  /** Given name, used for short button labels like "CALL NOVA". */
+  /** Given name, for short labels. */
   firstName: string;
   role: string;
-  /** Display form, e.g. "587-897-0566". */
-  phone: string;
-  /** E.164 form for the tel: href. */
-  phoneHref: string;
   email: string;
 };
 
@@ -22,16 +26,12 @@ export const DIRECTORS: readonly Contact[] = [
     name: "Nova Sanoy",
     firstName: "Nova",
     role: "Director",
-    phone: "587-897-0566",
-    phoneHref: "+15878970566",
     email: "Nova@tarmaxasphalt.com",
   },
   {
     name: "George Mourelatos",
     firstName: "George",
     role: "Director",
-    phone: "403-605-3511",
-    phoneHref: "+14036053511",
     email: "George@tarmaxasphalt.com",
   },
 ] as const;
@@ -55,9 +55,10 @@ export const BUSINESS = {
    */
   generalEmail: "sales@tarmaxasphalt.com",
   directors: DIRECTORS,
-  /** Primary phone used for single-number contexts such as schema.org. */
-  primaryPhone: DIRECTORS[0].phone,
-  primaryPhoneHref: DIRECTORS[0].phoneHref,
+  /** The one number published anywhere on the site. Display form. */
+  phone: "403-902-1416",
+  /** E.164 form, for tel: hrefs and structured data. */
+  phoneHref: "+14039021416",
   tagline:
     "Preventative asphalt maintenance for Calgary driveways and parking lots.",
 } as const;
@@ -86,8 +87,11 @@ export const SEALER = {
   sdsUrl: "",
 } as const;
 
-/** `tel:` href for a contact. */
-export const telHref = (c: Contact) => `tel:${c.phoneHref}`;
+/**
+ * `tel:` href. Takes the E.164 string rather than a person, because there is
+ * one number and nothing should be able to introduce a second by accident.
+ */
+export const telHref = (phoneHref: string = BUSINESS.phoneHref) => `tel:${phoneHref}`;
 
 /** `mailto:` href, optionally with a prefilled subject. */
 export const mailtoHref = (email: string, subject?: string) =>

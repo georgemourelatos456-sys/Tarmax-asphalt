@@ -154,10 +154,8 @@ async function sendCustomerEmail(lead: QuoteData) {
   if (!client || !lead.email || !customerConfirmationEnabled) return false;
 
   const firstName = lead.fullName.split(" ")[0];
-  const contacts = DIRECTORS.map(
-    (d) =>
-      `<li style="margin-bottom:6px">${esc(d.name)}, ${esc(d.role)} — <a href="tel:${d.phoneHref}" style="color:#b51f24">${esc(d.phone)}</a></li>`,
-  ).join("");
+  const contacts = `<li style="margin-bottom:6px"><a href="tel:${BUSINESS.phoneHref}" style="color:#b51f24">${esc(BUSINESS.phone)}</a></li>
+    <li><a href="mailto:${BUSINESS.generalEmail}" style="color:#b51f24">${esc(BUSINESS.generalEmail)}</a></li>`;
 
   const body =
     header("We've received your quote request") +

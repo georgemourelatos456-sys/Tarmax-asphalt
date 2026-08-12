@@ -17,7 +17,7 @@ export function localBusinessSchema() {
     url: SITE_URL,
     description: BUSINESS.tagline,
     email: BUSINESS.generalEmail,
-    telephone: BUSINESS.primaryPhoneHref,
+    telephone: BUSINESS.phoneHref,
     address: {
       "@type": "PostalAddress",
       addressLocality: BUSINESS.city,
@@ -29,14 +29,13 @@ export function localBusinessSchema() {
       name: BUSINESS.city,
       containedInPlace: { "@type": "State", name: BUSINESS.regionName },
     },
-    // Phone only. The directors' individual addresses are not published
-    // anywhere on the site, and structured data is published data — putting
-    // them here would hand them to every crawler that reads the page.
+    // Name and role only. Structured data is published data, and neither the
+    // directors' addresses nor personal numbers appear anywhere on the site —
+    // putting them here would hand them to every crawler that reads the page.
     employee: DIRECTORS.map((d) => ({
       "@type": "Person",
       name: d.name,
       jobTitle: d.role,
-      telephone: d.phoneHref,
     })),
     hasOfferCatalog: {
       "@type": "OfferCatalog",

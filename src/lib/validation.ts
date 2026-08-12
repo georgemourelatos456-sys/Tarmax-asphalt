@@ -10,7 +10,7 @@ import { z } from "zod";
 
 /**
  * Loose on purpose. Canadians write phone numbers a dozen ways and none of
- * them should be rejected: 403-605-3511, (403) 605 3511, +1 403.605.3511.
+ * them should be rejected: 403-555-0142, (403) 555 0142, +1 403.555.0142.
  * Anything with 10 or 11 digits passes; correctness is settled by calling it.
  */
 const PHONE = /^[+]?[\d\s().-]{7,}$/;

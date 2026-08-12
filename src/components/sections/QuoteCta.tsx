@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { DIRECTORS, telHref } from "@/config/business";
+import { BUSINESS, telHref } from "@/config/business";
 import { Surface } from "@/components/ui/Surface";
 import { Eyebrow } from "@/components/ui/Labels";
 import { QuoteForm } from "@/components/forms/QuoteForm";
@@ -39,18 +39,12 @@ export function QuoteCta() {
             <div>
               <dt className="label text-[0.625rem] text-muted">Rather talk to someone?</dt>
               <dd className="mt-2 flex flex-wrap gap-x-6 gap-y-2">
-                {DIRECTORS.map((d) => (
-                  <a
-                    key={d.name}
-                    href={telHref(d)}
-                    className="font-display inline-flex min-h-11 items-center text-lg font-bold text-bone hover:text-alert"
-                  >
-                    {d.phone}
-                    <span className="label ml-2 text-[0.625rem] font-semibold text-muted">
-                      {d.firstName}
-                    </span>
-                  </a>
-                ))}
+                <a
+                  href={telHref()}
+                  className="font-display inline-flex min-h-11 items-center text-lg font-bold text-bone hover:text-alert"
+                >
+                  {BUSINESS.phone}
+                </a>
               </dd>
             </div>
           </dl>

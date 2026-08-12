@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { DIRECTORS, telHref } from "@/config/business";
+
 import { Surface } from "@/components/ui/Surface";
 import { Arrow, Eyebrow } from "@/components/ui/Labels";
+import { CallButton } from "@/components/ui/CallButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { FinalCta } from "@/components/sections/FinalCta";
 
@@ -71,9 +72,7 @@ export default function CommercialPage() {
               Get a commercial quote
               <Arrow />
             </Link>
-            <a href={telHref(DIRECTORS[1])} className="btn btn-ghost">
-              Call {DIRECTORS[1].firstName}
-            </a>
+            <CallButton />
           </div>
         </div>
       </header>

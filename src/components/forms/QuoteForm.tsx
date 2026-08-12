@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { quoteSchema, PROPERTY_TYPES, SERVICE_OPTIONS, type QuoteInput } from "@/lib/validation";
 import { submitQuote } from "@/app/actions/submit-quote";
-import { BUSINESS, DIRECTORS, mailtoHref, telHref } from "@/config/business";
+import { BUSINESS, mailtoHref, telHref } from "@/config/business";
 import { Arrow } from "@/components/ui/Labels";
 import { CallButton } from "@/components/ui/CallButton";
 
@@ -313,14 +313,11 @@ function SubmissionError({ message }: { message: string }) {
     <div role="alert" className="border border-alert/45 bg-alert/8 p-5">
       <p className="font-semibold text-bone">{message}</p>
       <ul className="mt-4 flex flex-col gap-2 text-sm">
-        {DIRECTORS.map((d) => (
-          <li key={d.name} className="flex flex-wrap items-baseline gap-x-3">
-            <span className="text-muted">{d.firstName}</span>
-            <a href={telHref(d)} className="font-display font-bold text-bone hover:text-alert">
-              {d.phone}
-            </a>
-          </li>
-        ))}
+        <li>
+          <a href={telHref()} className="font-display text-lg font-bold text-bone hover:text-alert">
+            {BUSINESS.phone}
+          </a>
+        </li>
         <li>
           <a href={mailtoHref(BUSINESS.generalEmail)} className="break-all text-bone hover:text-alert">
             {BUSINESS.generalEmail}

@@ -9,7 +9,7 @@ import { FinalCta } from "@/components/sections/FinalCta";
 export const metadata: Metadata = {
   title: "Infrared Pothole Repair in Calgary — A Repair With No Seam to Fail",
   description:
-    "How infrared asphalt repair works, why a seamless thermal bond outlasts a cut-and-fill patch, and when it is the wrong method. Free estimates from TARMAX Asphalt.",
+    "How infrared asphalt repair works, why a seamless thermal bond outlasts a cut-and-fill patch, and what happens when a surface needs more than a repair. Free estimates from TARMAX Asphalt.",
   alternates: { canonical: "/infrared-repair" },
 };
 
@@ -20,9 +20,11 @@ export const metadata: Metadata = {
  * showed the same photograph and a quote button. Someone following that link
  * has a hole in their driveway and wants to know what will be done about it.
  *
- * The honest limit is stated plainly rather than buried: infrared reworks the
- * surface layer. Where the base underneath has failed, it is the wrong method,
- * and the page says so in its own section instead of a footnote.
+ * The limit of the method is stated plainly rather than buried — infrared
+ * reworks the surface layer and does not rebuild a failed base — but it is
+ * framed as a different scope of work rather than as a job turned away. TARMAX
+ * arranges the rebuild through contractors it stands behind, so the customer
+ * deals with one company either way.
  */
 
 const PROCESS = [
@@ -180,8 +182,8 @@ export default function InfraredRepairPage() {
       <section className="on-dark bg-ink">
         <Seam />
         <div className="section shell">
-          <Eyebrow>When it is the wrong method</Eyebrow>
-          <h2 className="display-lg mt-4 max-w-[20ch]">Infrared does not fix everything.</h2>
+          <Eyebrow>When a surface needs more</Eyebrow>
+          <h2 className="display-lg mt-4 max-w-[20ch]">Some surfaces need rebuilding, not reheating.</h2>
 
           <div className="mt-10 grid gap-10 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
             <div className="max-w-[54ch]">
@@ -205,8 +207,8 @@ export default function InfraredRepairPage() {
 
             <Reveal className="border-l-2 border-red pl-6">
               <p className="display-sm">
-                Being told a repair is not the right answer is worth more than a repair that fails
-                quietly two winters from now.
+                One company, whatever the surface turns out to need. You should not have to work
+                out who to call next.
               </p>
             </Reveal>
           </div>

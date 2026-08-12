@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { BUSINESS, DIRECTORS, mailtoHref, telHref } from "@/config/business";
+import { BUSINESS, mailtoHref, telHref } from "@/config/business";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { Eyebrow } from "@/components/ui/Labels";
 
@@ -30,22 +30,17 @@ export default function FreeQuotePage() {
           <div className="flex flex-col gap-10">
             <section>
               <h2 className="label text-[0.6875rem] text-muted">Call</h2>
-              <ul className="mt-5 flex flex-col gap-4">
-                {DIRECTORS.map((d) => (
-                  <li key={d.name} className="border border-white/14 p-5">
-                    <p className="font-semibold">{d.name}</p>
-                    <a
-                      href={telHref(d)}
-                      className="font-display mt-1 inline-flex min-h-11 items-center text-xl font-bold hover:text-alert"
-                    >
-                      {d.phone}
-                    </a>
-                    <a href={telHref(d)} className="btn btn-ghost mt-4 w-full">
-                      Call {d.firstName}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-5 border border-white/14 p-5">
+                <a
+                  href={telHref()}
+                  className="font-display inline-flex min-h-11 items-center text-2xl font-bold hover:text-alert"
+                >
+                  {BUSINESS.phone}
+                </a>
+                <a href={telHref()} className="btn btn-ghost mt-4 w-full">
+                  Call TARMAX
+                </a>
+              </div>
             </section>
 
             {/* One address, not three. A visitor deciding which of several

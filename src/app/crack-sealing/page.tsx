@@ -32,7 +32,7 @@ const PROCESS = [
   {
     step: "01",
     title: "Assess before quoting",
-    body: "Not every crack should be sealed. A hairline in sound pavement can wait; a crack with broken, crumbling edges needs the edges dealt with first, and a surface that has gone to alligator cracking is past sealing altogether. We say which one you have before we quote it.",
+    body: "Different cracks need different work. A crack with broken, crumbling edges needs those edges cut back first; a surface that has gone to alligator cracking needs rebuilding rather than sealing. We tell you which one you have, quote the work that suits it, and handle it either way.",
   },
   {
     step: "02",

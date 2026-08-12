@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BUSINESS, DIRECTORS, mailtoHref, telHref } from "@/config/business";
+import { BUSINESS, mailtoHref, telHref } from "@/config/business";
 import { Wordmark } from "@/components/layout/Wordmark";
 import { Seam } from "@/components/ui/Seam";
 
@@ -60,21 +60,17 @@ export function Footer() {
           <div>
             <h2 className="label mb-4 text-[0.625rem] text-muted">Contact</h2>
             <ul className="flex flex-col gap-4">
-              {DIRECTORS.map((d) => (
-                <li key={d.name}>
-                  <p className="text-sm font-semibold text-bone">
-                    {d.name}
-                    <span className="ml-2 font-normal text-muted">{d.role}</span>
-                  </p>
-                  <p className="mt-1 text-sm">
-                    <a href={telHref(d)} className="text-bone/85 transition-colors hover:text-alert">
-                      {d.phone}
-                    </a>
-                  </p>
-                </li>
-              ))}
               <li>
-                <p className="label text-[0.625rem] text-muted">General</p>
+                <p className="label text-[0.625rem] text-muted">Phone</p>
+                <a
+                  href={telHref()}
+                  className="font-display mt-1 block text-lg font-bold text-bone transition-colors hover:text-alert"
+                >
+                  {BUSINESS.phone}
+                </a>
+              </li>
+              <li>
+                <p className="label text-[0.625rem] text-muted">Email</p>
                 <a
                   href={mailtoHref(BUSINESS.generalEmail)}
                   className="mt-1 block break-all text-sm text-bone/85 transition-colors hover:text-alert"

@@ -27,8 +27,8 @@ const COMMITMENTS = [
     body: "An expensive product applied carelessly is still careless work. We would rather explain why a surface needs preparation than skip it and hope the customer never finds out.",
   },
   {
-    title: "Honest assessment, including “no”",
-    body: "If maintenance is not the right answer for a surface, we say so. Selling sealcoating for pavement that needs replacement is how the industry earned its reputation.",
+    title: "The right work, not the easy sell",
+    body: "Selling sealcoating for pavement that needs replacing is how this industry earned its reputation. We tell you what the surface actually needs — and then we do it, bringing in people we trust for anything outside our own crews. You get one company and a straight answer.",
   },
 ];
 
@@ -128,20 +128,22 @@ export default function AboutPage() {
               <div key={d.name} className="bg-bone p-7 md:p-10">
                 <p className="display-sm">{d.name}</p>
                 <p className="label mt-1 text-[0.625rem] text-ink/65">{d.role}</p>
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <a href={telHref(d)} className="btn btn-solid-dark flex-1">
-                    Call {d.firstName}
-                  </a>
-                  {/* Email goes to the one published address, not to a person. */}
-                  <a
-                    href={mailtoHref(BUSINESS.generalEmail, "Asphalt enquiry")}
-                    className="btn btn-outline flex-1"
-                  >
-                    Email TARMAX
-                  </a>
-                </div>
               </div>
             ))}
+          </div>
+
+          {/* One line and one address for both of them, rather than a pair of
+              buttons per person asking the visitor to pick. */}
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <a href={telHref()} className="btn btn-solid-dark sm:flex-none sm:px-10">
+              Call {BUSINESS.phone}
+            </a>
+            <a
+              href={mailtoHref(BUSINESS.generalEmail, "Asphalt enquiry")}
+              className="btn btn-outline sm:flex-none sm:px-10"
+            >
+              Email TARMAX
+            </a>
           </div>
 
           <Link href="/driveway-sealcoating" className="link-action mt-12 text-ink">
