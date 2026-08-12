@@ -29,14 +29,6 @@ const SCOPE = [
     body: "We walk the lot and record what we find: crack type and extent, surface oxidation, localized failures, drainage, and any section that needs rebuilding rather than maintaining.",
   },
   {
-    title: "Priced to the property, not a flat rate",
-    body: "The quote comes from what is actually on your lot rather than a rate card, so you are not paying for square footage that does not need the work — or being quoted short for a surface that needs more. You see what each part of the job costs and why it is on the list.",
-  },
-  {
-    title: "The whole lot, in the right order",
-    body: "We set out everything the surface needs and what each part costs. Where that is more than one season allows, we sequence it so the work that protects the pavement goes first — the order is driven by what the lot is doing, not by what is easiest to schedule.",
-  },
-  {
     title: "Work staged around your tenants",
     body: "Sections, entrances and stall rows can be sequenced so the lot keeps operating. Curing times are part of the schedule we give you, not a surprise afterwards.",
   },
