@@ -30,11 +30,11 @@ const SCOPE = [
   },
   {
     title: "Priced to the property, not a flat rate",
-    body: "The quote comes from what is actually on your lot rather than a rate card, so you are not paying for square footage that does not need the work — or being quoted short for a surface that needs more. Tell us the budget you are working to and we will build the scope around it.",
+    body: "The quote comes from what is actually on your lot rather than a rate card, so you are not paying for square footage that does not need the work — or being quoted short for a surface that needs more. You see what each part of the job costs and why it is on the list.",
   },
   {
-    title: "A full plan, phased if you want it",
-    body: "We set out everything the lot needs and what each part costs. Take it in one season or spread it across your reporting year — that is your call, and the plan is priced either way so nothing is a surprise when you come back to it.",
+    title: "The whole lot, in the right order",
+    body: "We set out everything the surface needs and what each part costs. Where that is more than one season allows, we sequence it so the work that protects the pavement goes first — the order is driven by what the lot is doing, not by what is easiest to schedule.",
   },
   {
     title: "Work staged around your tenants",
@@ -64,8 +64,8 @@ export default function CommercialPage() {
           <Eyebrow>Commercial</Eyebrow>
           <h1 className="display-lg mt-4">Parking lot maintenance</h1>
           <p className="lede mt-5 text-bone/80">
-            Preventative maintenance for Calgary parking lots, planned around what the pavement
-            needs and what your budget allows.
+            Preventative maintenance for Calgary parking lots — planned around what the pavement
+            needs, and around keeping the property open while it happens.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link href="/free-quote?property=commercial" className="btn btn-primary">

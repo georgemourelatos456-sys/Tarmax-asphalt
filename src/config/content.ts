@@ -104,7 +104,7 @@ export const SERVICES: Service[] = [
   },
   {
     id: "crack-sealing",
-    name: "Hot rubber crack sealing",
+    name: "Hot Rubber Crack Sealing",
     summary:
       "Industrial hot-applied rubberized crack sealing to help reduce water penetration into suitable pavement cracks.",
     detail:
@@ -120,22 +120,22 @@ export const SERVICES: Service[] = [
   },
   {
     id: "infrared",
-    name: "Infrared asphalt repair",
+    name: "Infrared Asphalt Repair",
     summary:
       "Infrared equipment heats suitable existing asphalt so localized damaged areas can be reworked and repaired.",
     detail:
-      "Infrared heats the existing asphalt in place until it can be raked and reworked, then new material is added and compacted into the repair. It suits potholes, depressions and selected localized failures. It is not appropriate for every pavement failure — we assess the area first, say so when another method is the right one, and arrange that work rather than leaving you to find someone else.",
-    bestFor: ["Potholes", "Depressions", "Localized deterioration", "Selected pavement failures"],
+      "Infrared heats the existing asphalt in place until it can be raked and reworked, then new material is added and compacted into the repair. It suits potholes, depressions and deterioration. Because the surrounding asphalt is heated along with the repair, the area cools as one continuous piece — there is no cold joint around the edge for water to get into.",
+    bestFor: ["Potholes", "Depressions", "Localized deterioration"],
     surface: "pothole",
     imageAlt: "A localized pavement failure suited to infrared repair",
   },
   {
     id: "commercial",
-    name: "Commercial parking lot maintenance",
+    name: "Commercial Parking Lot Maintenance",
     summary:
       "Sealcoating, crack sealing and repair coordinated across a managed parking area, with a condition assessment first.",
     detail:
-      "For property managers, condo boards, retail and office properties, churches and other managed parking areas. We assess the pavement, price the work against what is actually there rather than a rate card, and build the scope around your budget — carrying out sealcoating, crack sealing, pothole repair and infrared repair as required.",
+      "For property managers, condo boards, retail and office properties, churches and other managed parking areas. A parking lot is the part of a property most likely to generate a complaint or a claim: potholes and broken edges are trip hazards, worn markings blur accessible stalls and traffic routes, and water that sits where drainage has failed turns to ice the moment the temperature drops. In Alberta an occupier owes a duty of care to everyone who uses the property, and a maintenance record is how that gets demonstrated. We assess the surface, quote the work it needs, and carry out sealcoating, crack sealing, pothole repair and infrared repair across the lot.",
     bestFor: [
       "Property managers and condo boards",
       "Retail and office properties",
@@ -147,7 +147,7 @@ export const SERVICES: Service[] = [
   },
   {
     id: "residential",
-    name: "Residential driveway maintenance",
+    name: "Residential Driveway Maintenance",
     summary: "Sealcoating, crack sealing and infrared repair for Calgary driveways.",
     detail:
       "The same equipment and the same assessment-first approach used on commercial work, scaled to a driveway. We look at the surface, tell you what it needs, and quote only that.",
