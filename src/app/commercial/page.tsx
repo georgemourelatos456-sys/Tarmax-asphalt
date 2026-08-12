@@ -28,8 +28,12 @@ const SCOPE = [
     body: "We walk the lot and record what we find: crack type and extent, surface oxidation, localized failures, drainage and any areas that will not respond to maintenance.",
   },
   {
-    title: "A ranked plan, not a single price",
-    body: "You get what needs attention now, what can wait a season, and what is beyond maintenance. Budgets are finite and lots are large — the order matters more than the total.",
+    title: "Priced to the property, not a flat rate",
+    body: "The quote comes from what is actually on your lot rather than a rate card, so you are not paying for square footage that does not need the work — or being quoted short for a surface that needs more. Tell us the budget you are working to and we will build the scope around it.",
+  },
+  {
+    title: "A full plan, phased if you want it",
+    body: "We set out everything the lot needs and what each part costs. Take it in one season or spread it across your reporting year — that is your call, and the plan is priced either way so nothing is a surprise when you come back to it.",
   },
   {
     title: "Work staged around your tenants",

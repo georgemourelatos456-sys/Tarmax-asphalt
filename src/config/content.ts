@@ -135,7 +135,7 @@ export const SERVICES: Service[] = [
     summary:
       "Sealcoating, crack sealing and repair coordinated across a managed parking area, with a condition assessment first.",
     detail:
-      "For property managers, condo boards, retail and office properties, churches and other managed parking areas. We assess pavement condition, identify what needs attention now versus what can wait, and carry out sealcoating, crack sealing, pothole repair and infrared repair as required.",
+      "For property managers, condo boards, retail and office properties, churches and other managed parking areas. We assess the pavement, price the work against what is actually there rather than a rate card, and build the scope around your budget — carrying out sealcoating, crack sealing, pothole repair and infrared repair as required.",
     bestFor: [
       "Property managers and condo boards",
       "Retail and office properties",
