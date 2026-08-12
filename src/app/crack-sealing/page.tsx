@@ -56,20 +56,6 @@ const PROCESS = [
   },
 ];
 
-const SHORTCUTS = [
-  {
-    title: "Cold pour from a bottle",
-    body: "Hardware store crack filler goes in cold and stays soft. It shrinks as it cures, so a filled crack becomes a dished crack, and it does not bond to the crack walls the way hot-applied rubber does.",
-  },
-  {
-    title: "Sealing a dirty crack",
-    body: "Fast, invisible on the day, and failed by spring. Sealant bonded to debris is bonded to nothing.",
-  },
-  {
-    title: "Sealing the wrong crack",
-    body: "Filling a crack in pavement that has already failed underneath hides the problem for a season and charges you for it. That is a repair, and we will say so.",
-  },
-];
 
 export default function CrackSealingPage() {
   return (
@@ -204,27 +190,9 @@ export default function CrackSealingPage() {
               </Reveal>
             ))}
           </ol>
-        </div>
-      </section>
-
-      {/* --- What we don't do --- */}
-      <section className="on-dark bg-ink">
-        <Seam />
-        <div className="section shell">
-          <Eyebrow>What we will not do</Eyebrow>
-          <h2 className="display-lg mt-4 max-w-[18ch]">The shortcuts that cost you twice.</h2>
-
-          <div className="mt-12 grid gap-px border border-white/12 bg-white/12 md:grid-cols-3">
-            {SHORTCUTS.map((item) => (
-              <div key={item.title} className="bg-ink p-7 md:p-9">
-                <h3 className="display-sm">{item.title}</h3>
-                <p className="mt-4 text-sm text-bone/70">{item.body}</p>
-              </div>
-            ))}
-          </div>
 
           <Reveal className="mt-12">
-            <Link href="/services" className="link-action text-bone">
+            <Link href="/services" className="link-action text-ink">
               See every service
               <Arrow />
             </Link>
