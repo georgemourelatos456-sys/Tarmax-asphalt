@@ -34,7 +34,7 @@ const SCOPE = [
   },
   {
     title: "One contractor for the whole lot",
-    body: "Where a section needs more than maintenance — excavation, replacement, work outside our own crews — we bring in contractors we have worked with and stand behind, and we manage it. You are not left chasing a second company for the part we could not do.",
+    body: "Where a section needs more than maintenance — excavation, replacement, work outside our own crews — we bring in contractors we have worked with and stand behind.",
   },
   {
     title: "Runoff and surroundings considered",
