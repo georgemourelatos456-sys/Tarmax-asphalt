@@ -441,6 +441,17 @@
      Weaker overall than the section variant — it sits over a photographic
      surface here rather than flat black, and two textures competing reads as
      noise. */
+  /* The aura. Two stacked drop-shadows give a tight core and a wider bloom, so
+     the lines read as lit rather than as outlined. Applied to the element
+     rather than as an SVG filter: the browser rasterises the whole lattice once
+     and composites it, instead of running a blur over a thousand separate
+     paths. A hotter red than the brand stroke, because a glow the same colour
+     as the line it surrounds just reads as a thicker line. */
+  .crack-glow {
+    filter: drop-shadow(0 0 2px rgba(228, 60, 66, 0.55))
+      drop-shadow(0 0 9px rgba(200, 23, 30, 0.45));
+  }
+
   .crack-fade-hero {
     -webkit-mask-image: linear-gradient(
       to top right,

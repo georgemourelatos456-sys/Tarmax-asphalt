@@ -40,7 +40,7 @@ export function AlligatorCracks({
     <svg
       viewBox={CRACK_VIEWBOX}
       preserveAspectRatio="xMidYMid slice"
-      className={`${variant === "hero" ? "crack-fade-hero" : "crack-fade"} ${className}`}
+      className={`${variant === "hero" ? "crack-fade-hero crack-glow" : "crack-fade"} ${className}`}
       role="presentation"
       aria-hidden="true"
       focusable="false"
@@ -48,7 +48,7 @@ export function AlligatorCracks({
       <g
         fill="none"
         stroke="var(--color-red)"
-        strokeWidth={3.1}
+        strokeWidth={3.4}
         strokeLinejoin="round"
         /* Weight is deliberate — this reads as cracked surface, not as a faint
            wireframe. The mask, not the stroke, is what keeps it off the copy.

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Surface } from "@/components/ui/Surface";
 import { Arrow } from "@/components/ui/Labels";
 import { CallButton } from "@/components/ui/CallButton";
 import { AlligatorCracks } from "@/components/ui/AlligatorCracks";
@@ -9,14 +8,10 @@ const TRUST = ["Calgary based", "Residential", "Commercial", "Free estimates"];
 export function Hero() {
   return (
     <section className="on-dark relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink pt-28 md:min-h-[100svh] md:pt-32">
-      {/* Full-bleed sealed asphalt. The scrim is weighted to the lower-left,
-          where the copy sits, so the right side stays visibly material. */}
+      {/* Flat ink and the cracking, nothing else. No photograph behind it, so
+          the red is the only colour in the frame and the hero paints from a few
+          kilobytes of inline SVG rather than waiting on a full-bleed image. */}
       <div className="absolute inset-0 -z-10">
-        <Surface name="hero" alt="" priority sizes="100vw" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/15" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/35 to-transparent md:via-ink/15" />
-        {/* Above the scrim, so the red is not dimmed by it, and masked on the
-            diagonal so it stays out of the headline's corner. */}
         <AlligatorCracks variant="hero" className="absolute inset-0 h-full w-full" />
       </div>
 
