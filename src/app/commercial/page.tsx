@@ -64,8 +64,8 @@ export default function CommercialPage() {
           <Eyebrow>Commercial</Eyebrow>
           <h1 className="display-lg mt-4">Parking lot maintenance</h1>
           <p className="lede mt-5 text-bone/80">
-            Preventative maintenance for Calgary parking lots — planned around what the pavement
-            needs, and around keeping the property open while it happens.
+            Preventative maintenance for Calgary parking lots, planned around what the pavement
+            needs.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link href="/free-quote?property=commercial" className="btn btn-primary">
