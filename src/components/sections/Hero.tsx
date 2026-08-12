@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Surface } from "@/components/ui/Surface";
 import { Arrow } from "@/components/ui/Labels";
 import { CallButton } from "@/components/ui/CallButton";
+import { AlligatorCracks } from "@/components/ui/AlligatorCracks";
 
 const TRUST = ["Calgary based", "Residential", "Commercial", "Free estimates"];
 
@@ -14,6 +15,9 @@ export function Hero() {
         <Surface name="hero" alt="" priority sizes="100vw" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/15" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/35 to-transparent md:via-ink/15" />
+        {/* Above the scrim, so the red is not dimmed by it, and masked on the
+            diagonal so it stays out of the headline's corner. */}
+        <AlligatorCracks variant="hero" className="absolute inset-0 h-full w-full" />
       </div>
 
       <div className="shell w-full pb-14 md:pb-20">

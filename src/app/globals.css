@@ -436,7 +436,34 @@
     opacity: 0.45;
   }
 
+  /* Hero variant. The headline sits bottom-left and the open space is the
+     top-right corner, so the texture builds on the diagonal instead of across.
+     Weaker overall than the section variant — it sits over a photographic
+     surface here rather than flat black, and two textures competing reads as
+     noise. */
+  .crack-fade-hero {
+    -webkit-mask-image: linear-gradient(
+      to top right,
+      transparent 26%,
+      rgba(0, 0, 0, 0.24) 48%,
+      rgba(0, 0, 0, 0.72) 72%,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to top right,
+      transparent 26%,
+      rgba(0, 0, 0, 0.24) 48%,
+      rgba(0, 0, 0, 0.72) 72%,
+      #000 100%
+    );
+    opacity: 0.55;
+  }
+
   @media (min-width: 768px) {
+    .crack-fade-hero {
+      opacity: 0.85;
+    }
+
     .crack-fade {
       -webkit-mask-image: linear-gradient(
         to right,

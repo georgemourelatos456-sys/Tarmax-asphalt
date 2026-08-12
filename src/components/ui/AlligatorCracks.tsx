@@ -22,12 +22,25 @@ import { CRACK_CELLS, CRACK_VIEWBOX } from "./cracks.generated";
  * meaning.
  */
 
-export function AlligatorCracks({ className = "" }: { className?: string }) {
+export function AlligatorCracks({
+  className = "",
+  /**
+   * Where the texture is allowed to be strong.
+   *
+   * "section" fades left to right, for a section whose copy sits in a left
+   * column. "hero" fades on the diagonal, because the hero's headline sits at
+   * the bottom-left and the open space is the top-right corner.
+   */
+  variant = "section",
+}: {
+  className?: string;
+  variant?: "section" | "hero";
+}) {
   return (
     <svg
       viewBox={CRACK_VIEWBOX}
       preserveAspectRatio="xMidYMid slice"
-      className={`crack-fade ${className}`}
+      className={`${variant === "hero" ? "crack-fade-hero" : "crack-fade"} ${className}`}
       role="presentation"
       aria-hidden="true"
       focusable="false"
