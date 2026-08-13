@@ -1,7 +1,7 @@
 import "server-only";
 
 import { Resend } from "resend";
-import { BUSINESS, DIRECTORS, mapsSearchUrl } from "@/config/business";
+import { BUSINESS, mapsSearchUrl } from "@/config/business";
 import { googleCalendarUrl } from "@/lib/calendar";
 import type { QuoteData } from "@/lib/validation";
 
@@ -13,8 +13,7 @@ import type { QuoteData } from "@/lib/validation";
  * and a one-click calendar event, so the whole job can be worked from the
  * inbox without opening anything else.
  *
- * It goes to the shared mailbox and to both directors, so a lead is sitting in
- * three inboxes rather than one.
+ * It goes to the shared sales mailbox, which both directors can read.
  */
 
 const apiKey = process.env.RESEND_API_KEY;
@@ -25,22 +24,20 @@ export const emailConfigured = Boolean(apiKey);
 const client = apiKey ? new Resend(apiKey) : null;
 
 /**
- * Everyone who should receive a new lead. Deduplicated and lowercased because
- * some providers treat a repeated recipient as an error.
+ * Where a new lead goes. One address, deliberately.
  *
- * LEAD_EMAIL_TO overrides the list. That exists for one specific situation: an
- * unverified Resend account may only send to the address it was registered
- * with, and it rejects the *entire* message if any recipient fails that check —
- * so the default three-address list means nothing arrives at all until the
- * sending domain is verified. Setting LEAD_EMAIL_TO to that one address makes
- * the pipeline testable on day one. Clear it once the domain is verified.
+ * Every recipient is a mailbox that has to exist. Adding the directors
+ * individually meant a lead depended on three mailboxes being live, and a
+ * single address that has not been created yet can take the whole message down
+ * with it — the failure looks identical to the site being broken. The shared
+ * sales mailbox is the one address the business controls and can forward from,
+ * so routing is a mail setting rather than a code change.
+ *
+ * LEAD_EMAIL_TO still overrides it, comma separated, for testing.
  */
 export const RECIPIENTS = Array.from(
   new Set(
-    (process.env.LEAD_EMAIL_TO
-      ? process.env.LEAD_EMAIL_TO.split(",")
-      : [BUSINESS.generalEmail, ...DIRECTORS.map((d) => d.email)]
-    )
+    (process.env.LEAD_EMAIL_TO ? process.env.LEAD_EMAIL_TO.split(",") : [BUSINESS.generalEmail])
       .map((e) => e.trim().toLowerCase())
       .filter(Boolean),
   ),

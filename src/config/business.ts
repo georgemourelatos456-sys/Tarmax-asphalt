@@ -50,8 +50,10 @@ export const BUSINESS = {
    * customer never has to guess who to write to, and TARMAX can change who
    * actually reads it without the website going stale.
    *
-   * The directors' own addresses stay in DIRECTORS below: they still receive
-   * every lead, they are simply not printed anywhere a visitor can see.
+   * Every quote request is delivered here. Who reads it is a mail-forwarding
+   * decision, not a code change — adding or removing a director never requires
+   * a redeploy, and a lead can never be lost to a mailbox that was never
+   * created.
    */
   generalEmail: "sales@tarmaxasphalt.com",
   directors: DIRECTORS,
