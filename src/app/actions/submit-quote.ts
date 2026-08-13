@@ -14,10 +14,10 @@ export type QuoteResult =
  * The one thing this site exists to do.
  *
  * There is no database and no dashboard. A validated request is emailed to the
- * shared mailbox and both directors, and that email is the lead record. So the
- * send is the only thing standing between a customer and a lost enquiry — if
- * it fails, the request is written to the server log in full and the customer
- * is given phone numbers rather than a dead end.
+ * shared sales mailbox, and that email is the lead record. So the send is the
+ * only thing standing between a customer and a lost enquiry — if it fails, the
+ * request is written to the server log in full and the customer is given a
+ * phone number rather than a dead end.
  *
  * Validation runs again here regardless of what the browser did. Nothing the
  * customer sees on failure comes from the email provider — the detail is
