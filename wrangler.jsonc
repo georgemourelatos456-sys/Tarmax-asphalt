@@ -11,13 +11,31 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "tarmax-asphalt",
+  // Must match the Worker that owns the custom domains, or a deploy silently
+  // creates a second Worker and the live site never changes.
+  "name": "tarmax-asphaltwebsite",
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-09-23",
 
   // Required by the adapter: Next's server code, and the Resend SDK, expect
   // Node built-ins that Workers only exposes behind this flag.
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+
+  /**
+   * Non-secret configuration, kept here rather than in the dashboard.
+   *
+   * A deploy replaces the Worker's plain-text variables with whatever this
+   * file declares — anything typed into the dashboard and not repeated here is
+   * wiped on the next deploy. Declaring them in the repo makes them survive.
+   *
+   * Neither value is sensitive: the from address appears in the header of
+   * every email sent, and the site URL is public. RESEND_API_KEY is a secret
+   * and stays in the dashboard, where deploys leave it alone.
+   */
+  "vars": {
+    "RESEND_FROM": "TARMAX Asphalt <quotes@tarmaxasphalt.com>",
+    "NEXT_PUBLIC_SITE_URL": "https://tarmaxasphalt.com"
+  },
 
   "assets": {
     "directory": ".open-next/assets",
