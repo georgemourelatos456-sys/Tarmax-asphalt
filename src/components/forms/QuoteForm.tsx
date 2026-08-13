@@ -75,7 +75,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
    * Surface something rather than dying quietly.
    */
   function onInvalid() {
-    const shown = new Set(["propertyAddress", "fullName", "phone", "email"]);
+    const shown = new Set(["propertyAddress", "fullName", "phone", "email", "services", "propertyType", "message"]);
     const hidden = Object.keys(errors).filter((key) => !shown.has(key));
     if (hidden.length > 0) {
       setFormError("Something in the form couldn't be read. Please contact TARMAX directly.");
@@ -122,12 +122,11 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
       </Field>
 
       <fieldset className="border-0 p-0">
-        <legend className="label mb-1 text-[0.6875rem] text-muted">
-          Phone or email — at least one
-        </legend>
+        <legend className="label mb-1 text-[0.6875rem] text-muted">How to reach you</legend>
         <div className="mt-3 grid gap-6 sm:grid-cols-2">
           <Field
             label="Phone"
+            required
             id={fieldId("phone")}
             error={errors.phone?.message}
             errorId={errorId("phone")}
@@ -146,6 +145,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
 
           <Field
             label="Email"
+            required
             id={fieldId("email")}
             error={errors.email?.message}
             errorId={errorId("email")}
@@ -255,8 +255,8 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
       {/* The compact layout already states this beside the form. */}
       {!compact && (
         <p className="text-xs text-muted">
-          No photos, measurements or account needed. TARMAX measures the property from the map or on
-          site.
+          No photos, measurements or account needed. TARMAX measures the property from the map or
+          on site.
         </p>
       )}
     </form>

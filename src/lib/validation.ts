@@ -3,9 +3,9 @@ import { z } from "zod";
 /**
  * One schema, used by the browser form and the server route.
  *
- * The rule that matters: TARMAX needs an address and a way to reach you.
- * Everything else is optional, because every extra required field costs
- * submissions.
+ * Required: the property address, a name, a phone number and an email. Every
+ * required field costs submissions, so nothing else is mandatory — the
+ * property type, the service checkboxes and the message are all optional.
  */
 
 /**
@@ -74,23 +74,23 @@ export const quoteSchema = z
       .trim()
       .min(2, "Enter your name.")
       .max(120, "That name is longer than we can accept."),
+    // Both required. TARMAX wants to be able to call and to write, so the form
+    // asks for both rather than either.
     phone: z
       .string()
       .trim()
+      .min(1, "Enter a phone number so we can reach you.")
       .max(40)
-      .optional()
-      .transform((v) => (v === "" ? undefined : v))
-      .refine((v) => v === undefined || (PHONE.test(v) && digitsOf(v).length >= 10 && digitsOf(v).length <= 11), {
-        message: "Enter a phone number we can reach you on, or leave it blank.",
+      .refine((v) => PHONE.test(v) && digitsOf(v).length >= 10 && digitsOf(v).length <= 11, {
+        message: "Enter a phone number we can reach you on.",
       }),
     email: z
       .string()
       .trim()
+      .min(1, "Enter an email address so we can send your quote.")
       .max(200)
-      .optional()
-      .transform((v) => (v === "" ? undefined : v))
-      .refine((v) => v === undefined || z.string().email().safeParse(v).success, {
-        message: "Enter a valid email address, or leave it blank.",
+      .refine((v) => z.string().email().safeParse(v).success, {
+        message: "Enter a valid email address.",
       }),
     propertyType: optionalEnum(PROPERTY_TYPES),
     services: optionalMultiEnum(SERVICE_OPTIONS),
@@ -105,10 +105,6 @@ export const quoteSchema = z
      * submitQuote instead.
      */
     company: z.string().max(200).optional(),
-  })
-  .refine((data) => Boolean(data.phone) || Boolean(data.email), {
-    message: "Add a phone number or an email so we can send your quote.",
-    path: ["phone"],
   });
 
 export type QuoteInput = z.input<typeof quoteSchema>;

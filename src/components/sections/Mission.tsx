@@ -18,13 +18,10 @@ export function Mission() {
             <div className="flex flex-col gap-6 text-lg text-bone/75">
               <p>Asphalt does not fail overnight.</p>
               <p>
-                Weather, traffic, moisture, ultraviolet exposure and seasonal temperature changes
-                gradually deteriorate pavement.
+                Weather, traffic and temperature swings wear it down season by season.
               </p>
               <p>
-                TARMAX focuses on identifying problems early and recommending appropriate
-                preventative maintenance before deterioration becomes significantly more expensive
-                to address.
+                We catch it early, while the fix is still maintenance and not replacement.
               </p>
             </div>
             <Link href="/free-quote" className="btn btn-primary mt-10">

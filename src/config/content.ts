@@ -4,9 +4,12 @@ import type { SurfaceName } from "@/components/ui/Surface";
  * Service and condition copy, shared by the homepage, /services and
  * /commercial so the same claim is never written twice.
  *
- * Language is deliberately bounded: sealcoating "helps protect", crack sealing
- * "helps reduce" water entry, infrared suits "selected" areas. Nothing here
- * promises a lifespan, permanence, or that maintenance stops freeze-thaw.
+ * Describe what the work does, not what it might do. Hedging every noun —
+ * "suitable" cracks, sealing that "helps reduce" water entry — reads as evasion
+ * and tells a customer nothing, since they cannot know whether their crack is
+ * a "suitable" one. The hard limits are still stated outright where they
+ * matter: sealcoating will not rebuild damaged asphalt, and nothing here
+ * promises a lifespan or claims maintenance stops freeze-thaw.
  */
 
 export type Problem = {
@@ -31,7 +34,7 @@ export const PROBLEMS: Problem[] = [
     field: "Surface condition",
     reading: "Oxidized",
     title: "Dried + aged asphalt",
-    body: "Sunlight, weather, traffic and oxidation dry the surface over time. The binder that held it dark and tight gives way, and the pavement fades toward grey.",
+    body: "Sun, weather and traffic dry the surface out. The binder that held it black and tight gives way, and the pavement fades to grey.",
     signs: ["Faded grey appearance", "Dry, porous surface", "Visible oxidation", "General surface wear"],
     solution: "Sealcoating",
     solutionHref: "/driveway-sealcoating",
@@ -44,7 +47,7 @@ export const PROBLEMS: Problem[] = [
     field: "Defect type",
     reading: "Linear cracking",
     title: "Large cracks",
-    body: "Cracks are how water gets in. Once moisture reaches the layers underneath, seasonal temperature swings and continued traffic can drive further deterioration.",
+    body: "Cracks are how water gets in. Once it reaches the base underneath, freezing and traffic do the rest.",
     signs: ["Open cracks", "Widening crack edges", "Water pooling along the crack", "Vegetation growth"],
     solution: "Hot rubber crack sealing",
     solutionHref: "/crack-sealing",
@@ -57,7 +60,7 @@ export const PROBLEMS: Problem[] = [
     field: "Defect type",
     reading: "Localized failure",
     title: "Potholes + depressions",
-    body: "Potholes and depressions generally keep deteriorating under traffic, moisture and weather. A small damaged area left alone tends to become a larger one.",
+    body: "Traffic and water keep working on a pothole once it opens. Left alone, a small one becomes a big one.",
     signs: ["Open potholes", "Surface depressions", "Broken, spalling edges", "Standing water"],
     solution: "Infrared asphalt repair",
     solutionHref: "/infrared-repair",
@@ -82,7 +85,7 @@ export const SERVICES: Service[] = [
     id: "sealcoating",
     name: "Sealcoating",
     summary:
-      "Professional sealcoating to help protect and refresh suitable asphalt surfaces.",
+      "Sealcoating that protects the surface and brings the colour back.",
     // Product is Blackmac Emulsion Sealer (McAsphalt Industries) — asphalt
     // carried in water, not in a petroleum solvent. Two rules before editing
     // this copy. Keep environmental claims comparative and factual (no coal
@@ -92,7 +95,7 @@ export const SERVICES: Service[] = [
     // as reconditioning binder: that is how a solvent cutback behaves, and it
     // is a different product.
     detail:
-      "We apply Blackmac Emulsion Sealer, made in Canada by McAsphalt Industries and sourced locally. It is asphalt carried in water rather than in a petroleum solvent, so there is no coal tar and no solvent odour — the water evaporates and asphalt is what stays on the surface. It helps protect aging asphalt, helps reduce surface deterioration and restores a darker, maintained appearance. Sealcoating is preventative maintenance — it does not structurally restore damaged asphalt.",
+      "We apply Blackmac Emulsion Sealer, made in Canada by McAsphalt Industries and sourced locally. It is asphalt carried in water rather than a petroleum solvent, so there is no coal tar and no solvent odour — the water evaporates and the asphalt stays on the surface. It protects aging pavement, slows further wear, and brings back a deep black finish. Sealcoating is maintenance, not repair: it will not rebuild damaged asphalt.",
     bestFor: [
       "Faded or oxidized asphalt",
       "Aging surfaces still in sound condition",
@@ -106,9 +109,9 @@ export const SERVICES: Service[] = [
     id: "crack-sealing",
     name: "Hot Rubber Crack Sealing",
     summary:
-      "Industrial hot-applied rubberized crack sealing to help reduce water penetration into suitable pavement cracks.",
+      "Hot-applied rubberized sealing that keeps water out of open cracks.",
     detail:
-      "We use industrial hot-applied rubberized crack-sealing equipment to fill suitable cracks. The material stays flexible as the pavement moves through Alberta's temperature swings, and helps restrict water from entering. It is most useful before further deterioration develops around the crack.",
+      "Rubberized sealant is melted and poured in hot, so it reaches the bottom of the crack and bonds to both walls instead of sitting on top. It stays flexible as the pavement moves through Alberta's temperature swings. The sooner a crack is sealed, the less there is to repair around it.",
     bestFor: [
       "Open and widening cracks",
       "Water entry points",
@@ -122,7 +125,7 @@ export const SERVICES: Service[] = [
     id: "infrared",
     name: "Infrared Asphalt Repair",
     summary:
-      "Infrared equipment heats suitable existing asphalt so localized damaged areas can be reworked and repaired.",
+      "Heats the asphalt already in place so a damaged area can be reworked and repaired on the spot.",
     detail:
       "Infrared heats the existing asphalt in place until it can be raked and reworked, then new material is added and compacted into the repair. It suits potholes, depressions and deterioration. Because the surrounding asphalt is heated along with the repair, the area cools as one continuous piece — there is no cold joint around the edge for water to get into.",
     bestFor: ["Potholes", "Depressions", "Localized deterioration"],
@@ -133,7 +136,7 @@ export const SERVICES: Service[] = [
     id: "commercial",
     name: "Commercial Parking Lot Maintenance",
     summary:
-      "Sealcoating, crack sealing and repair coordinated across a managed parking area, with a condition assessment first.",
+      "Sealcoating, crack sealing and repair across a managed lot, assessed before anything is quoted.",
     detail:
       "For property managers, condo boards, retail and office properties, churches and other managed parking areas. A parking lot is the part of a property most likely to generate a complaint or a claim: potholes and broken edges are trip hazards, worn markings blur accessible stalls and traffic routes, and water that sits where drainage has failed turns to ice the moment the temperature drops. In Alberta an occupier owes a duty of care to everyone who uses the property, and a maintenance record is how that gets demonstrated. We assess the surface, quote the work it needs, and carry out sealcoating, crack sealing, pothole repair and infrared repair across the lot.",
     bestFor: [
@@ -165,22 +168,22 @@ export const SERVICES: Service[] = [
 export const FREEZE_THAW = [
   {
     step: "01",
-    title: "Water enters",
-    body: "Moisture enters cracks and vulnerable pavement areas.",
+    title: "Water gets in",
+    body: "Rain and melt run into open cracks and pores.",
   },
   {
     step: "02",
-    title: "Temperature drops",
-    body: "Water freezes during cold Alberta weather.",
+    title: "It freezes",
+    body: "Overnight the temperature drops and the water turns to ice.",
   },
   {
     step: "03",
-    title: "Movement occurs",
-    body: "Repeated freezing and thawing can place additional stress around existing pavement defects.",
+    title: "Ice expands",
+    body: "Freezing water swells and levers the crack wider from the inside.",
   },
   {
     step: "04",
-    title: "Damage can grow",
-    body: "Repeated cycles can contribute to larger cracks, surface deterioration and potholes.",
+    title: "The damage spreads",
+    body: "Each cycle takes another bite. Cracks widen, the surface breaks up, potholes open.",
   },
 ] as const;

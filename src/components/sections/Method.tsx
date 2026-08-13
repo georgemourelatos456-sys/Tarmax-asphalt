@@ -19,13 +19,13 @@ const DECISIONS = [
   {
     kicker: "The equipment",
     title: "Industrial gear, not buckets.",
-    body: "Hot-applied rubberized crack sealing needs a proper melter and wand to get material into the crack at temperature. Infrared repair needs a heater that brings existing asphalt back to a workable state. Neither job can be done properly off a hardware store shelf, and we do not pretend otherwise.",
+    body: "Hot-applied rubberized crack sealing needs a proper melter and wand to get material into the crack at temperature. Infrared repair needs a heater that brings existing asphalt back to a workable state. Neither job can be done properly off a hardware store shelf.",
     link: { label: "See the services", href: "/services" },
   },
   {
     kicker: "The order of operations",
     title: "Assess first, quote second.",
-    body: "We look at the pavement before recommending anything, and preparation is part of the job rather than an afterthought. Weather, drainage, curing conditions and runoff routes are all considered before work begins. If a surface needs more than maintenance we say so, and we take care of that too.",
+    body: "We look at the pavement before recommending anything. Weather, drainage, curing conditions and runoff routes are all checked before work starts. If a surface needs more than maintenance, we say so and we take care of that too.",
     link: null,
   },
 ];

@@ -27,8 +27,8 @@ export default function ServicesPage() {
           <Eyebrow>Services</Eyebrow>
           <h1 className="display-lg mt-4">Complete asphalt maintenance</h1>
           <p className="lede mt-5 text-bone/75">
-            Five services, one approach: look at the pavement first, then recommend only what the
-            surface actually needs.
+            Five services, one approach: look at the pavement first, then recommend only what it
+            needs.
           </p>
         </div>
       </header>
