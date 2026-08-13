@@ -70,8 +70,8 @@ export default function InfraredRepairPage() {
           <h1 className="display-lg mt-4">A repair with no seam to fail.</h1>
           <p className="lede mt-5 text-bone/80">
             Most pothole repairs are a patch dropped into a cut-out square. The join around that
-            patch is where it fails. Infrared heats the asphalt already there, so the repair
-            becomes part of the surface instead of sitting in a hole in it.
+            patch is where it fails. Infrared heats the asphalt already there, so the repair and
+            the surface around it become one piece.
           </p>
           <Link href="/free-quote" className="btn btn-primary mt-9">
             Get a repair quote
