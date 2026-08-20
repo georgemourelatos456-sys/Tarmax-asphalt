@@ -39,8 +39,8 @@ export const PROBLEMS: Problem[] = [
     solution: "Sealcoating",
     solutionHref: "/driveway-sealcoating",
     cta: "Learn about sealcoating",
-    surface: "oxidized",
-    imageAlt: "Sun-faded asphalt with an oxidized, grey, porous surface",
+    surface: "sealerEdge",
+    imageAlt: "Asphalt photographed across a seal line: dry grey aggregate on one side, sealed black on the other",
   },
   {
     id: "cracks",
@@ -102,7 +102,7 @@ export const SERVICES: Service[] = [
       "Residential driveways",
       "Commercial parking lots",
     ],
-    surface: "oxidized",
+    surface: "sealerEdge",
     imageAlt: "Oxidized asphalt of the kind suited to sealcoating",
   },
   {

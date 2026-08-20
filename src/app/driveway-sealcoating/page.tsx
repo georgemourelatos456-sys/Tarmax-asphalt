@@ -135,22 +135,23 @@ function faqSchema() {
 export default function DrivewaySealcoatingPage() {
   return (
     <>
-      <header className="on-dark relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
+      <header className="on-dark relative isolate flex min-h-[92svh] items-center overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
         <div className="absolute inset-0 -z-10">
           <Surface name="sealerEdge" alt="" sizes="100vw" priority />
-          {/* Lighter on the right than the other page heroes: the point of this
-              photograph is the sealed/unsealed split, and the usual wash flattens
-              it into one dark texture. */}
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/25" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink to-transparent" />
+          {/* An even scrim rather than the side-weighted wash the other heroes
+              use. The type sits centred over the seal line, so both halves need
+              darkening by the same amount — weighting one side would tip the
+              photograph back into a single flat texture and lose the split. */}
+          <div className="absolute inset-0 bg-ink/55" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/20" />
         </div>
 
-        <div className="shell max-w-3xl">
+        <div className="shell text-center">
           <Eyebrow>Driveway sealcoating</Eyebrow>
-          <h1 className="display-lg mt-4">
+          <h1 className="display-lg mx-auto mt-4 max-w-[16ch]">
             The first thing you drive off every day.
           </h1>
-          <p className="lede mt-5 text-bone/80">
+          <p className="lede mx-auto mt-5 max-w-[52ch] text-bone/80">
             A cracked driveway raises a question about the whole property. Here is what actually
             happens to Calgary asphalt, and what sealing it does about that.
           </p>

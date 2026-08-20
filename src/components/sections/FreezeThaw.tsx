@@ -8,8 +8,10 @@ import { Reveal } from "@/components/ui/Reveal";
  *
  * The seam starts as a hairline at "water enters" and opens to a gaping void
  * by "damage can grow" — the section's argument, drawn rather than described.
- * X is rendered 1:1 (viewBox width matches the column width) so only the
- * vertical axis stretches and the crack never fattens on tall viewports.
+ * The track is 80px wide on a desktop, where X is rendered 1:1 so only the
+ * vertical axis stretches and the crack never fattens on tall viewports. On a
+ * phone the same path is squeezed into a 36px track — the seam reads narrower
+ * but still opens from hairline to void, which is the whole argument.
  */
 const VIEW_W = 80;
 const VIEW_H = 1200;
@@ -56,11 +58,11 @@ export function FreezeThaw() {
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-[80px_1fr] md:gap-12">
+        <div className="grid grid-cols-[36px_1fr] gap-x-4 gap-y-8 md:grid-cols-[80px_1fr] md:gap-x-12 md:gap-y-12">
           {/* The crack. Decorative — every stage it marks is stated in text. */}
-          <div className="relative hidden md:block" aria-hidden="true">
+          <div className="relative" aria-hidden="true">
             <svg
-              className="h-full w-[80px]"
+              className="h-full w-full"
               viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
               preserveAspectRatio="none"
               focusable="false"
@@ -80,19 +82,9 @@ export function FreezeThaw() {
           <ol className="flex flex-col gap-12 md:gap-20">
             {FREEZE_THAW.map((stage, i) => (
               <Reveal as="li" key={stage.step} delay={i * 80}>
-                <div className="flex gap-5 md:gap-8">
-                  {/* Mobile rail: a plain hairline stands in for the crack. */}
-                  <span
-                    aria-hidden="true"
-                    className="mt-2 h-auto w-px shrink-0 self-stretch bg-gradient-to-b from-white/25 to-white/5 md:hidden"
-                    style={i === FREEZE_THAW.length - 1 ? { background: "#B51F24" } : undefined}
-                  />
-                  <div>
-                    <span className="label block text-[0.6875rem] text-alert">{stage.step}</span>
-                    <h3 className="display-md mt-3">{stage.title}</h3>
-                    <p className="mt-3 max-w-[42ch] text-bone/70">{stage.body}</p>
-                  </div>
-                </div>
+                <span className="label block text-[0.6875rem] text-alert">{stage.step}</span>
+                <h3 className="display-md mt-3">{stage.title}</h3>
+                <p className="mt-3 max-w-[42ch] text-bone/70">{stage.body}</p>
               </Reveal>
             ))}
           </ol>
