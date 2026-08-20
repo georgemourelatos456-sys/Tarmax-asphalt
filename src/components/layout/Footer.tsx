@@ -13,6 +13,7 @@ const SERVICE_LINKS = [
 
 const COMPANY_LINKS = [
   { label: "Driveway Sealcoating Guide", href: "/driveway-sealcoating" },
+  { label: "Service Areas", href: "/service-areas" },
   { label: "Why We Started TARMAX", href: "/about" },
   { label: "Get a Free Quote", href: "/free-quote" },
 ];

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/config/business";
+import { LOCATIONS } from "@/config/locations";
 
 /** Every page on the site. There is no private area to exclude. */
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -13,7 +14,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/crack-sealing", priority: 0.8, changeFrequency: "monthly" },
     { path: "/infrared-repair", priority: 0.8, changeFrequency: "monthly" },
     { path: "/commercial", priority: 0.7, changeFrequency: "monthly" },
+    { path: "/service-areas", priority: 0.7, changeFrequency: "monthly" },
     { path: "/about", priority: 0.5, changeFrequency: "yearly" },
+    ...LOCATIONS.map((l) => ({
+      path: `/service-areas/${l.slug}`,
+      priority: 0.6,
+      changeFrequency: "monthly" as const,
+    })),
   ];
 
   return routes.map(({ path, priority, changeFrequency }) => ({
