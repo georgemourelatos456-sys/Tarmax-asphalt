@@ -32,6 +32,7 @@ const SOURCES = {
   pothole: { photo: "/photos/pothole.jpg", texture: "/textures/asphalt-pothole.jpg" },
   lot: { photo: "/photos/line-striping.jpg", texture: "/textures/asphalt-lot.jpg" },
   driveway: { photo: "/photos/sealcoating.jpg", texture: "/textures/asphalt-driveway.jpg" },
+  sealerEdge: { photo: "/photos/sealer-edge.jpg", texture: "/textures/asphalt-driveway.jpg" },
 };
 
 const entries = Object.entries(SOURCES).map(([name, { photo, texture }]) => {

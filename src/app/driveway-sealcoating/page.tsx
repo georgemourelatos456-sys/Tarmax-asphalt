@@ -6,6 +6,7 @@ import { Arrow, DataLabel, Eyebrow } from "@/components/ui/Labels";
 import { Reveal } from "@/components/ui/Reveal";
 import { Seam } from "@/components/ui/Seam";
 import { AlligatorCracks } from "@/components/ui/AlligatorCracks";
+import { BeforeAfter } from "@/components/ui/BeforeAfter";
 import { FinalCta } from "@/components/sections/FinalCta";
 
 export const metadata: Metadata = {
@@ -136,8 +137,11 @@ export default function DrivewaySealcoatingPage() {
     <>
       <header className="on-dark relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
         <div className="absolute inset-0 -z-10">
-          <Surface name="driveway" alt="" sizes="100vw" />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40" />
+          <Surface name="sealerEdge" alt="" sizes="100vw" priority />
+          {/* Lighter on the right than the other page heroes: the point of this
+              photograph is the sealed/unsealed split, and the usual wash flattens
+              it into one dark texture. */}
+          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/25" />
           <div className="absolute inset-0 bg-gradient-to-t from-ink to-transparent" />
         </div>
 
@@ -156,6 +160,43 @@ export default function DrivewaySealcoatingPage() {
           </Link>
         </div>
       </header>
+
+      {/* --- Proof ---
+          Placed before any argument about cost or chemistry, because this is
+          the only claim on the page a visitor can check for themselves. */}
+      <section className="on-dark bg-ink">
+        <Seam />
+        <div className="section shell grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
+          <Reveal>
+            <Eyebrow>Before and after</Eyebrow>
+            <h2 className="display-lg mt-4 max-w-[14ch]">The same surface, same week.</h2>
+            <div className="mt-6 flex max-w-[46ch] flex-col gap-5 text-bone/75">
+              <p>
+                One of ours, photographed from the same spot before we started and after we
+                finished. Drag the handle across to see it.
+              </p>
+              <p>
+                The cracking you can see in the first frame is where water was getting in. Sealing
+                closes the surface back up and puts the colour back, so the pavement stops taking
+                damage every time the temperature crosses zero.
+              </p>
+              <p className="text-bone">
+                Worth being straight about what this is: a sealed surface is a protected surface,
+                not a rebuilt one. Sealing keeps sound asphalt sound. It is not a substitute for
+                repair where the pavement has already broken up.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={70}>
+            <BeforeAfter
+              before="/photos/lot-before.jpg"
+              after="/photos/lot-after.jpg"
+              beforeAlt="A parking stall with cracking spread across the surface and a faded line"
+              afterAlt="The same stall after sealing, an even black surface edge to edge"
+            />
+          </Reveal>
+        </div>
+      </section>
 
       {/* --- Economics --- */}
       <section className="section bg-bone text-ink">
