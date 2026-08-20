@@ -92,7 +92,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
         id={fieldId("propertyAddress")}
         error={errors.propertyAddress?.message}
         errorId={errorId("propertyAddress")}
-        hint="Street address of the driveway or lot. We'll measure it from the map."
+        hint="Street address of the driveway or lot. We'll measure it using Google Earth."
       >
         <input
           id={fieldId("propertyAddress")}
@@ -195,7 +195,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
           <legend className="label text-[0.6875rem] text-muted">
             What do you need?
             <span className="ml-2 normal-case tracking-normal opacity-60">
-              Optional — tick as many as apply
+              Optional — tick as many that apply
             </span>
           </legend>
           <div className="mt-3 grid gap-2 sm:grid-cols-2">
@@ -255,8 +255,8 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
       {/* The compact layout already states this beside the form. */}
       {!compact && (
         <p className="text-xs text-muted">
-          No photos, measurements or account needed. TARMAX measures the property from the map or
-          on site.
+          No photos, measurements or account needed. TARMAX measures the property using Google Earth
+          or on site.
         </p>
       )}
     </form>

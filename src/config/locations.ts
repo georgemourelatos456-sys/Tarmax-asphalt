@@ -86,7 +86,7 @@ export const LOCATIONS: readonly Location[] = [
       "Predominantly residential, with wide double and triple driveways on newer lots. Sealing a larger driveway costs more than a small one, but the same is far more true of replacing it.",
     notes: [
       "A newer driveway is not too new to seal. Protecting sound asphalt is the entire point of the product.",
-      "Wide driveways take more material. We measure from the map or on site before quoting, never by guess.",
+      "Wide driveways take more material. We measure using Google Earth or on site before quoting, never by guess.",
       "The short drive from Calgary means we can usually fit Chestermere work into a normal schedule.",
     ],
   },

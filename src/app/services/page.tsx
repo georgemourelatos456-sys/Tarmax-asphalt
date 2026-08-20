@@ -18,15 +18,15 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <header className="on-dark relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink pt-28 pb-16 md:min-h-screen md:pt-32 md:pb-24">
+      <header className="on-dark relative isolate flex min-h-[92svh] items-center overflow-hidden bg-ink pt-28 pb-16 md:min-h-screen md:pt-32 md:pb-24">
         {/* This is the one header with no photograph behind it, so at full
             height it would otherwise be a screen of flat black. The cracking
             fills it and ties the page to the hero. */}
         <AlligatorCracks variant="hero" className="absolute inset-0 -z-10 h-full w-full" />
-        <div className="shell max-w-3xl">
+        <div className="shell max-w-3xl text-center">
           <Eyebrow>Services</Eyebrow>
           <h1 className="display-lg mt-4">Complete asphalt maintenance</h1>
-          <p className="lede mt-5 text-bone/75">
+          <p className="lede mx-auto mt-5 text-bone/75">
             Five services, one approach: look at the pavement first, then recommend only what it
             needs.
           </p>

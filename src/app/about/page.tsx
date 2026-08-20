@@ -20,14 +20,17 @@ const GEORGE = DIRECTORS.find((d) => d.firstName === "George") ?? DIRECTORS[1];
 export default function AboutPage() {
   return (
     <>
-      <header className="on-dark relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
+      <header className="on-dark relative isolate flex min-h-[92svh] items-center overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
         <div className="absolute inset-0 -z-10">
           <Surface name="driveway" alt="" sizes="100vw" />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/88 to-ink/45" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink to-transparent" />
+          {/* An even scrim, not the side-weighted wash this used when the type
+              sat on the left. Centred type needs the whole frame darkened by
+              the same amount, or the headline reads as lit from one side. */}
+          <div className="absolute inset-0 bg-ink/55" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/20" />
         </div>
 
-        <div className="shell max-w-3xl">
+        <div className="shell max-w-3xl text-center">
           <Eyebrow>About TARMAX</Eyebrow>
           <h1 className="display-lg mt-4">Why we started this.</h1>
         </div>

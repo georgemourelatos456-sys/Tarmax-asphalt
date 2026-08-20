@@ -110,21 +110,26 @@ export default async function ServiceAreaPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(areaSchema(location.name, location.slug)) }}
       />
 
-      <header className="on-dark relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
+      <header className="on-dark relative isolate flex min-h-[92svh] items-center overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
         <div className="absolute inset-0 -z-10">
           <Surface name="sealerEdge" alt="" sizes="100vw" priority />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink to-transparent" />
+          {/* An even scrim, not the side-weighted wash these used when the type
+              sat on the left. Centred type needs the whole frame darkened by
+              the same amount, or the headline reads as lit from one side. */}
+          <div className="absolute inset-0 bg-ink/55" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/20" />
         </div>
 
-        <div className="shell max-w-3xl">
-          <Eyebrow>Asphalt maintenance in {location.name}</Eyebrow>
-          <h1 className="display-lg mt-4">{location.lede}</h1>
-          <p className="lede mt-5 text-bone/80">
-            {location.proximity}. Sealcoating, crack sealing and pothole repair for driveways and
-            parking lots, quoted the same way we quote them in Calgary.
+        <div className="shell max-w-3xl text-center">
+          <Eyebrow>Service area</Eyebrow>
+          {/* Short enough to read as a title. The longer characterisation of the
+              town belongs in the paragraph, not stretched across six lines. */}
+          <h1 className="display-lg mt-4">Asphalt maintenance in {location.name}.</h1>
+          <p className="lede mx-auto mt-5 text-bone/80">
+            {location.lede} Sealcoating, crack sealing and pothole repair for driveways and parking
+            lots. {location.proximity}.
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/free-quote" className="btn btn-primary">
               Get a free quote
               <Arrow />

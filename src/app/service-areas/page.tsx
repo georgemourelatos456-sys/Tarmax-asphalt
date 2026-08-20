@@ -26,12 +26,12 @@ export const metadata: Metadata = {
 export default function ServiceAreasPage() {
   return (
     <>
-      <header className="on-dark relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
+      <header className="on-dark relative isolate flex min-h-[92svh] items-center overflow-hidden bg-ink pt-28 pb-20 md:min-h-screen md:pt-32 md:pb-28">
         <div className="absolute inset-0 -z-10 bg-ink" />
-        <div className="shell max-w-3xl">
+        <div className="shell max-w-3xl text-center">
           <Eyebrow>Where we work</Eyebrow>
           <h1 className="display-lg mt-4">Calgary, the towns around it, and further for the right job.</h1>
-          <p className="lede mt-5 text-bone/80">
+          <p className="lede mx-auto mt-5 text-bone/80">
             {BUSINESS.name} is based in {BUSINESS.city}. Driveways and parking lots across the city
             and the communities around it, with larger commercial contracts taking us further across
             Alberta.

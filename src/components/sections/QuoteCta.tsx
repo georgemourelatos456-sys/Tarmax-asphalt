@@ -33,7 +33,7 @@ export function QuoteCta() {
             <div>
               <dt className="label text-[0.625rem] text-muted">No measuring required</dt>
               <dd className="mt-1 text-sm text-bone/70">
-                No photos, square footage or account. We size it from the map or on site.
+                No photos, square footage or account. We size it using Google Earth or on site.
               </dd>
             </div>
             <div>
