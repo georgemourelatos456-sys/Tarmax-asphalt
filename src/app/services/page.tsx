@@ -23,7 +23,7 @@ export default function ServicesPage() {
             height it would otherwise be a screen of flat black. The cracking
             fills it and ties the page to the hero. */}
         <AlligatorCracks variant="hero" className="absolute inset-0 -z-10 h-full w-full" />
-        <div className="shell max-w-3xl text-center">
+        <div className="shell text-center">
           <Eyebrow>Services</Eyebrow>
           <h1 className="display-lg mt-4">Complete asphalt maintenance</h1>
           <p className="lede mx-auto mt-5 text-bone/75">

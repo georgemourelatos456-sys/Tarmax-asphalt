@@ -146,7 +146,7 @@ export default function DrivewaySealcoatingPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/20" />
         </div>
 
-        <div className="shell text-center">
+        <div className="hero-type shell text-center">
           <Eyebrow>Driveway sealcoating</Eyebrow>
           <h1 className="display-lg mx-auto mt-4 max-w-[16ch]">
             The first thing you drive off every day.

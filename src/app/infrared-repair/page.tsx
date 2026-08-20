@@ -64,11 +64,15 @@ export default function InfraredRepairPage() {
           {/* An even scrim, not the side-weighted wash these used when the type
               sat on the left. Centred type needs the whole frame darkened by
               the same amount, or the headline reads as lit from one side. */}
-          <div className="absolute inset-0 bg-ink/55" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/20" />
+          <div className="absolute inset-0 bg-ink/38" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/25 to-ink/10" />
+          {/* The nav sits on the photograph with no bar of its own. Lifting
+              the scrim brightened the top of the frame enough to swallow it,
+              so the band behind it is darkened on its own. */}
+          <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-ink/85 via-ink/45 to-transparent" />
         </div>
 
-        <div className="shell max-w-3xl text-center">
+        <div className="hero-type shell text-center">
           <Eyebrow>Infrared asphalt repair</Eyebrow>
           <h1 className="display-lg mt-4">A repair with no seam to fail.</h1>
           <p className="lede mx-auto mt-5 text-bone/80">

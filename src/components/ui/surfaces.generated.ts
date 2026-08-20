@@ -11,6 +11,7 @@ export const SURFACE_SRC = {
   lot: "/photos/line-striping.jpg",
   driveway: "/photos/sealcoating.jpg",
   sealerEdge: "/photos/sealer-edge.jpg",
+  crackedLot: "/photos/lot-before.jpg",
 } as const;
 
 export type SurfaceName = keyof typeof SURFACE_SRC;

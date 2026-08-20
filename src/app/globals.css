@@ -496,6 +496,17 @@
     }
   }
 
+  /* Hero type sits directly on a photograph with no panel behind it. The
+     scrim is deliberately light so the image still reads, which leaves the
+     copy competing with whatever happens to be bright in the frame — a wet
+     patch, a strip of grass. A shadow buys the contrast back without darkening
+     the photograph any further. */
+  .hero-type {
+    text-shadow:
+      0 1px 28px rgb(11 11 12 / 0.75),
+      0 1px 4px rgb(11 11 12 / 0.55);
+  }
+
   /* --- Before / after comparison ------------------------------------- */
 
   /* The finished surface is clipped to the handle position. clip-path is
