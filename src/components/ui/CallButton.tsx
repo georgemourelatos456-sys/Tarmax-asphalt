@@ -29,6 +29,13 @@ export function CallButton({ className = "btn btn-ghost" }: { className?: string
       aria-label={`Call TARMAX at ${BUSINESS.phone}`}
     >
       <span className="md:hidden">Call TARMAX</span>
+      {/* Both labels sit in the HTML so the viewport can choose between them
+          without JavaScript — but a crawler reads the markup with the CSS
+          stripped and runs them together as "Call TARMAX403-902-1416", which
+          then turns up in search results. This space separates them there. It
+          costs nothing on screen: .btn is inline-flex, and whitespace-only
+          text between flex items is discarded rather than laid out. */}
+      {" "}
       <span className="hidden md:inline">{BUSINESS.phone}</span>
     </a>
   );

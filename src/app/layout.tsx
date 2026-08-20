@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     template: "%s | TARMAX Asphalt",
   },
   description:
-    "Preventative asphalt maintenance in Calgary. Sealcoating, hot rubber crack sealing and infrared asphalt repair for residential driveways and commercial parking lots. Free estimates.",
+    "Preventative asphalt maintenance in Calgary. Sealcoating, hot rubber crack sealing and infrared pothole repair for residential driveways and commercial parking lots. Free estimates.",
   keywords: [
     "Calgary asphalt maintenance",
     "Calgary driveway sealing",
@@ -54,14 +54,14 @@ export const metadata: Metadata = {
     siteName: BUSINESS.name,
     title: "TARMAX Asphalt — Calgary Asphalt Maintenance",
     description:
-      "Sealcoating, hot rubber crack sealing and infrared asphalt repair for Calgary driveways and parking lots.",
+      "Sealcoating, hot rubber crack sealing and pothole repair for Calgary driveways and parking lots.",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: BUSINESS.name }],
   },
   twitter: {
     card: "summary_large_image",
     title: "TARMAX Asphalt — Calgary Asphalt Maintenance",
     description:
-      "Sealcoating, hot rubber crack sealing and infrared asphalt repair for Calgary driveways and parking lots.",
+      "Sealcoating, hot rubber crack sealing and pothole repair for Calgary driveways and parking lots.",
   },
   robots: { index: true, follow: true },
 };
