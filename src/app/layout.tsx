@@ -5,6 +5,7 @@ import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
 import { localBusinessSchema } from "@/lib/schema";
+import { Analytics } from "@/components/Analytics";
 import "./globals.css";
 
 /**
@@ -102,6 +103,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </div>
         <MobileActionBar />
+        <Analytics />
         <script
           type="application/ld+json"
           // Static, developer-authored schema built from src/config/business.ts.
